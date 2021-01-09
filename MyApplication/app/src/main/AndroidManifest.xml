@@ -12,13 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".RetrofitActivity"></activity>
-        <activity android:name=".NetworkActivity">
+        <activity android:name=".RetrofitService"></activity>
+        <activity android:name=".RetrofitActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".NetworkActivity">
+
         </activity>
         <activity android:name=".AsyncActivity" />
         <activity android:name=".Realm" />
