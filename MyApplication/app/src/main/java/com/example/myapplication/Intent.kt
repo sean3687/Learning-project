@@ -12,7 +12,13 @@ class Intent1 : AppCompatActivity() {
 
         change_activity.setOnClickListener{
 
-            Intent()
+            val intent = Intent(this@Intent1, Intent2::class.java) //인텐트(요청)를 만든상태
+            intent.putExtra()
+            startActivity(intent)//요청을 보내는작업
+
+
         }
     }
+
+    
 }
