@@ -1,17 +1,24 @@
 package com.example.rockscissorpaper
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import com.example.rockscissorpaper.AboutScreen
+import kotlinx.android.synthetic.main.activity_main_screen.*
 
 class MainScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_screen)
 
+       about.setOnClickListener{
+           val intent = Intent(this, AboutScreen::class.java)
+           startActivity(intent)
+       }
 
 
 
@@ -26,9 +33,7 @@ class MainScreen : AppCompatActivity() {
         var RandomChoice = findViewById<TextView>(R.id.AiC)
         var resultText = findViewById<TextView>(R.id.result)
 
-        about.setOnclickListener{
 
-        }
 
         rockbtn.setOnClickListener {
             UserChoice.text = "input: Rock"
