@@ -26,7 +26,9 @@ class MainScreen : AppCompatActivity() {
         var RandomChoice = findViewById<TextView>(R.id.AiC)
         var resultText = findViewById<TextView>(R.id.result)
 
+        about.setOnclickListener{
 
+        }
 
         rockbtn.setOnClickListener {
             UserChoice.text = "input: Rock"
