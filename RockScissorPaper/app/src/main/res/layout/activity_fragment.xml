@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FragmentActivity">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:text="안녕하세요"
+        android:textSize="50dp"
+        android:layout_width="wrap_content" />
+
+    <fragment
+        android:id="@+id/fragment_one"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:name="com.example.rockscissorpaper.FragmentOne"
+        />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="open"/>
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="close"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:id="@+id/container"
+        android:background="@color/purple_200"/>
+
+</LinearLayout>
