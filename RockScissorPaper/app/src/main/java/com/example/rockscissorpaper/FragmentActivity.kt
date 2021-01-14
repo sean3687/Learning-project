@@ -13,7 +13,15 @@ class FragmentActivity : AppCompatActivity() {
         Log.d("life_cycle", "onCreate")
 
 
-        val fragmentOne: FragmentOne = FragmentOne()//이렇게
+        val fragmentOne: FragmentOne = FragmentOne()
+        //프라그먼트에 데이터를 넣어주는방법
+        val bundle : Bundle = Bundle() //데이터를 넣어줄때는 bundle을 사용해야한다.
+        bundle.putString("hello","hello")
+        fragmentOne.arguments = bundle
+
+
+
+
         button.setOnClickListener {
             //프라그먼트를 동적으로 작동하는방법.
             //프라그먼트붙이는방법 replace또는/add 거의 동일
