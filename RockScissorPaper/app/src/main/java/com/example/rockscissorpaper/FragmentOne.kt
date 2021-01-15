@@ -62,7 +62,8 @@ class FragmentOne : Fragment() {
         Log.d("life_cycle", "FonActivityCreated")
 
         val data = arguments?.getString("hello")
-        Log.d("data",data)
+//            Log.d("data", data)
+
 
         super.onActivityCreated(savedInstanceState)
     }

@@ -50,7 +50,7 @@ class FragmentActivity : AppCompatActivity(), FragmentOne.OnDataPassListener {
             //프라그먼트 remove/ detach 하는방법
             val fragmentManager = supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.detach(fragmentOne) //다시 안붙고
+            fragmentTransaction.remove(fragmentOne) //다시 안붙고
             //fragmentTransaction.remove(fragmentOne) //다시붙는다.
             fragmentTransaction.commit()
         }
