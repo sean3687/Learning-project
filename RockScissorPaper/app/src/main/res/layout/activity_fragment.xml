@@ -13,12 +13,12 @@
         android:textSize="50dp"
         android:layout_width="wrap_content" />
 
-    <fragment
-        android:id="@+id/fragment_one"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:name="com.example.rockscissorpaper.FragmentOne"
-        />
+<!--    <fragment-->
+<!--        android:id="@+id/fragment_one"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="300dp"-->
+<!--        android:name="com.example.rockscissorpaper.FragmentOne"-->
+<!--        />-->
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"

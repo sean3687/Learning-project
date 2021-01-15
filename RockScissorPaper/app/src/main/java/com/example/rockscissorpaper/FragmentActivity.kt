@@ -6,7 +6,12 @@ import android.util.Log
 import androidx.fragment.app.FragmentManager
 import kotlinx.android.synthetic.main.activity_fragment.*
 
-class FragmentActivity : AppCompatActivity() {
+class FragmentActivity : AppCompatActivity(), FragmentOne.OnDataPassListener {
+
+    override fun onDataPass(data: String?) {
+        Log.d("pass", ""+ data)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fragment)
@@ -14,10 +19,12 @@ class FragmentActivity : AppCompatActivity() {
 
 
         val fragmentOne: FragmentOne = FragmentOne()
-        //프라그먼트에 데이터를 넣어주는방법
+        //프라그먼트에서 데이터를 넣어주는방법
         val bundle : Bundle = Bundle() //데이터를 넣어줄때는 bundle을 사용해야한다.
         bundle.putString("hello","hello")
-        fragmentOne.arguments = bundle
+        fragmentOne.arguments = bundle //argument에 번들을 넣어줬기때문에 꺼내줘야한다.
+        //어디서 이 번들을 꺼내야하나? 바로 fragmentone Activity에 onActivityCreated
+
 
 
 
