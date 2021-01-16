@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_list_view.*
 
 class ListViewActivity : AppCompatActivity() {
@@ -17,16 +18,19 @@ class ListViewActivity : AppCompatActivity() {
 
         //자동차 리스트
         val carList = ArrayList<CarForList>()
-        for (i in 0 until 10) {
+        for (i in 0 until 50) {
             carList.add(CarForList("" + i + " 번째 자동차", "" + i + "순위 엔진"))
         }
 
         val adapter = ListViewAdapter(carList, LayoutInflater.from(this@ListViewActivity))
         listView.adapter = adapter
         //리스트뷰에 리스너를 장착하는방법
-        listView.setOnItemClickListener{parent, view, postion, id -> //넘어오는 정보들
+        listView.setOnItemClickListener { parent, view, position, id -> //넘어오는 정보들
             //리스너를 눌렀을때 토스트 메세지를 띄울것이다.
-            adapter.getItem(postion)
+            val carName = (adapter.getItem(position) as CarForList).name
+            val carEngine = (adapter.getItem(position) as CarForList).engine
+
+            Toast.makeText(this@ListViewActivity, carName + " " + carEngine, Toast.LENGTH_SHORT).show()
 
 
         }
@@ -36,10 +40,9 @@ class ListViewActivity : AppCompatActivity() {
 
 //이 어답터가 화면에 총 몇개를 보여줄건지 조정을한다.
 class ListViewAdapter(
-    val carForList : ArrayList<CarForList>,
+    val carForList: ArrayList<CarForList>,
     val layoutInflater: LayoutInflater
-): BaseAdapter() {
-
+) : BaseAdapter() {
 
 
     override fun getCount(): Int {
@@ -58,14 +61,31 @@ class ListViewAdapter(
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-    //뷰를 그리는 부분
-        val view = layoutInflater.inflate(R.layout.item_view, null)
-        val carNameTextView = view.findViewById<TextView>(R.id.car_name)
-        val carEngineTextView = view.findViewById<TextView>(R.id.car_engine)
+        //뷰를 그리는 부분
+        val view:View
+        val holder: ViewHolder
 
-        carNameTextView.setText(carForList.get(position).name)
-        carEngineTextView.setText(carForList.get(position).engine)
+        if(convertView == null) { //convertview가 없다면 아래코드를 실행
+            view = layoutInflater.inflate(R.layout.item_view, null)
+            holder = ViewHolder()
+            holder.carName = view.findViewById(R.id.car_name)
+            holder.carEngine = view.findViewById(R.id.car_engine)
+
+            view.tag = holder
+        } else{ //있다면 convertview를 그려서 view에 넣어준다.
+            holder = convertView.tag as ViewHolder
+            view = convertView
+        }
+        //그려진뷰에 text들을 넣는다.
+        holder.carName?.setText(carForList.get(position).name)
+        holder.carEngine?.setText(carForList.get(position).engine)
 
         return view
     }
+}
+
+class ViewHolder{
+    var carName: TextView? = null
+    var carEngine: TextView? = null
+
 }
