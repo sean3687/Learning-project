@@ -9,19 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RockScissorPaper">
-        <activity android:name=".AddViewActivity">
+        <activity android:name=".ListViewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FragmentOne"></activity>
-        <activity android:name=".FragmentActivity">
+        <activity android:name=".AddViewActivity">
 
         </activity>
+        <activity android:name=".FragmentOne" />
+        <activity android:name=".FragmentActivity"></activity>
         <activity android:name=".AboutScreen" />
-        <activity android:name=".MainScreen"></activity>
+        <activity android:name=".MainScreen" />
         <activity android:name=".MainActivity" />
     </application>
 
