@@ -1,12 +1,16 @@
 package com.tassiechat
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
+import android.provider.MediaStore.Images.Media.getBitmap
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
+import android.graphics.drawable.BitmapDrawable as BitmapDrawable
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -33,6 +37,24 @@ class RegisterActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
+            // proceed and check what the selected image was....
+            Log.d("RegiesterActivity", "Photo was selected")
+            // location that where image is stored  on the device
+            val uri = data.data
+
+            val bitmap = MediaStore.Images.getBitmap(contentResolver,uri)
+
+            val bitmapDrawable = BitmapDrawable(bitmap)
+            selectphoto_button_register.setBackgroundDrawable(bitmapDrawable)
+
+
+        }
     }
 
     private fun performRegister() {
