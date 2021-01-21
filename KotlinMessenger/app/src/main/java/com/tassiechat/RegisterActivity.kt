@@ -19,6 +19,9 @@ import android.graphics.drawable.BitmapDrawable as BitmapDrawable
 
 class RegisterActivity : AppCompatActivity() {
 
+    companion object{
+        val TAG = "RegiesterActivity"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -51,7 +54,7 @@ class RegisterActivity : AppCompatActivity() {
 
         if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
             // proceed and check what the selected image was....
-            Log.d("RegiesterActivity", "Photo was selected")
+            Log.d(TAG, "Photo was selected")
             // location that where image is stored  on the device
             selectedPhotoUri = data.data
 
@@ -83,13 +86,13 @@ class RegisterActivity : AppCompatActivity() {
                 if (!it.isSuccessful) return@addOnCompleteListener
                 //else if successful
                 Log.d(
-                    "RegisterActivity", "Succesfully created user with uid: ${it.result?.user?.uid}"
+                    TAG, "Succesfully created user with uid: ${it.result?.user?.uid}"
                 )
 
                 uploadImageToFirebaseStorage()
             }
             .addOnFailureListener {
-                Log.d("RegisterActivity", "Failed to create user: ${it.message}")
+                Log.d(TAG, "Failed to create user: ${it.message}")
                 Toast.makeText(this, "Failed to create user: ${it.message}", Toast.LENGTH_SHORT)
                     .show()
             }
@@ -104,17 +107,18 @@ class RegisterActivity : AppCompatActivity() {
 
         ref.putFile(selectedPhotoUri!!)
             .addOnSuccessListener {
-                Log.d("RegisterActivity", "Succesfully uploaded image: ${it.metadata?.path}")
+                Log.d(TAG, "Succesfully uploaded image: ${it.metadata?.path}")
 
                 ref.downloadUrl.addOnSuccessListener {
                     it.toString()
-                    Log.d("RegisterActivity", "File Location: $it")
+                    Log.d(TAG, "File Location: $it")
 
                     saveUserToFirebaseDatabase(it.toString())
                 }
             }
             .addOnFailureListener {
                 // do some logging here
+                Log.d(TAG, "Failed to upload image to storage: ${it.message}")
             }
 
     }
@@ -128,7 +132,16 @@ class RegisterActivity : AppCompatActivity() {
 
         ref.setValue(user)
             .addOnSuccessListener {
-                Log.d("registerActivity", "Finally we saved the user to Firebase Database")
+                Log.d(TAG, "Finally we saved the user to Firebase Database")
+
+                val intent = Intent(this, LatestMessageActivity::class.java)
+                //different from other intent is that as you are creating, different list of item by user you have to create new activity everytime you open messanger
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+
+            }
+            .addOnFailureListener{
+                Log.d(TAG,"Failed to set value to database: ${it.message}")
             }
     }
 }
