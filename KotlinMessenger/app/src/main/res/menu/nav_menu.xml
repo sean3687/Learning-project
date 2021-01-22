@@ -6,6 +6,6 @@
         android:title = "sign Out"
         app:showAsAction = "ifRoom"/>
     <item android:id="@+id/menu_new_message"
-        android:title = "Sign Out"
+        android:title = "New"
         app:showAsAction="ifRoom"/>
 </menu>
