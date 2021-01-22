@@ -35,10 +35,14 @@ class NewMessageActivity : AppCompatActivity() {
         val ref = FirebaseDatabase.getInstance().getReference("/users")
         ref.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
+                val adapter = GroupAdapter<ViewHolder>()
+
                 p0.children.forEach{
                     Log.d("NewMessanger", it.toString())
                     val user = it.getValue(User::class.java)
                 }
+                recyclerview_newmessage.adapter = adapter
+
             }
 
             override fun onCancelled(p0: DatabaseError) {
