@@ -1,12 +1,14 @@
-package com.tassiechat
+package com.tassiechat.messages
 
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
+import com.tassiechat.NewMessageActivity
+import com.tassiechat.R
+import com.tassiechat.RegisterActivity
 
 class LatestMessageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

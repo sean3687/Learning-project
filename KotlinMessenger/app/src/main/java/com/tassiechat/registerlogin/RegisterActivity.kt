@@ -6,16 +6,15 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.MediaStore.Images.Media.getBitmap
 import android.util.Log
-import android.widget.LinearLayout
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.tassiechat.messages.LatestMessageActivity
+import com.tassiechat.registerlogin.LoginActivity
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
-import android.graphics.drawable.BitmapDrawable as BitmapDrawable
 
 class RegisterActivity : AppCompatActivity() {
 
