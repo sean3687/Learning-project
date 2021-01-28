@@ -35,23 +35,25 @@ class NewMessageActivity : AppCompatActivity() {
         fetchUsers()
     }
 
-    private fun fetchUsers(){
+    private fun fetchUsers() {
         val ref = FirebaseDatabase.getInstance().getReference("/users")
-        ref.addListenerForSingleValueEvent(object: ValueEventListener {
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 val adapter = GroupAdapter<ViewHolder>()
 
-                p0.children.forEach{
+                p0.children.forEach {
                     Log.d("NewMessanger", it.toString())
                     val user = it.getValue(User::class.java)
-                    if(user !=null) {
+                    if (user != null) {
                         adapter.add(UserItem(user))
                     }
                 }
 
-                adapter.setOnItemClickListener { item, view->
+                adapter.setOnItemClickListener { item, view ->
                     val intent = Intent(this, chatLogActivity::class.java)
-                    startActivity()
+                    startActivity(intent)
+
+                    finish()
                 }
                 recyclerview_newmessage.adapter = adapter
 
@@ -65,11 +67,11 @@ class NewMessageActivity : AppCompatActivity() {
 }
 
 
-class UserItem(val user:User): Item<ViewHolder>() {
+class UserItem(val user: User) : Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
-    viewHolder.itemView.username_textview_new_message.text = user.username
+        viewHolder.itemView.username_textview_new_message.text = user.username
 
-    Picasso.get().load(user.profileImageUrl).into(viewHolder.itemView.imageView_new_message)
+        Picasso.get().load(user.profileImageUrl).into(viewHolder.itemView.imageView_new_message)
     }
 
     override fun getLayout(): Int {

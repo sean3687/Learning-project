@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinMessenger">
-        <activity android:name=".messages.chatLogActivity"></activity>
+        <activity android:name=".messages.chatLogActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".messages.LatestMessageActivity" />
+        </activity>
         <activity android:name=".messages.LatestMessageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
