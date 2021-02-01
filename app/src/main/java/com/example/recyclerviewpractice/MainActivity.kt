@@ -34,10 +34,9 @@ class MainActivity : AppCompatActivity(),MyRecyclerviewInterface {
                 profileImage = "https://img1.daumcdn.net/thumb/C100x100.mplusfriend/?fname=http%3A%2F%2Fk.kakaocdn.net%2Fdn%2FIxxPp%2FbtqC9MkM3oH%2FPpvHOkfOiOpKUwvvWcxhJ0%2Fimg_s.jpg"
             )
 
-            //이제 만들어진걸 arraylist에 넣어줘야한다.
-            //this를 적으면 현재 클래스가 선택되고,그다음 모델리스트가 선택된다.
-            //이제 my model이라는게 추가되는게 10번이 반복된다.
+            //이제 만들어진걸 arraylist(var modelList)에 넣어줘야한다.
             this.modelList.add(myModel)
+            //이클래스안에 있는 modelList에 my model을 넣어줘라
         }
         Log.d(TAG, "MainActivity - 반복문 후 this.modelList.size: ${this.modelList.size}")
 
@@ -56,6 +55,8 @@ class MainActivity : AppCompatActivity(),MyRecyclerviewInterface {
     }
 
     override fun onItemClicked() {
+        Log.d(TAG, "MainActivity - onItemCLicked() called")
+
     }
 }
 

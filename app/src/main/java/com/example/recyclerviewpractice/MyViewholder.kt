@@ -16,7 +16,6 @@ class MyViewholder(itemView: View,
 {
     val TAG: String = "로그"
     private val usernameTextView = itemView.user_name_txt
-
     private val profileImageView = itemView.profile_img
     private var myRecyclerviewInterface: MyRecyclerviewInterface? = null
     //기본생성자
