@@ -46,4 +46,7 @@ dependencies {
 
     //countdown library
     implementation 'com.github.iwgang:countdownview:2.1.6'
+
+    //groupie
+    implementation "com.xwray:groupie:2.1.0"
 }
