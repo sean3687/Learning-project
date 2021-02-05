@@ -5,48 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <cn.iwgang.countdownview.CountdownView
-        android:id="@+id/daysleft_subtitle_main"
+    <TextView
+        android:id="@+id/daysleft_subtitle_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:isHideTimeBackground="true"
-        app:isShowDay="true"
-        app:isShowHour="false"
-        app:isShowMillisecond="false"
-        app:isShowMinute="false"
-        app:isShowSecond="false"
-        app:isTimeTextBold="false"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:suffixDay="d"
-        app:suffixGravity="bottom"
-        app:suffixHour="h"
-        app:suffixMillisecond="ms"
-        app:suffixMinute="m"
-        app:suffixSecond="s"
-        app:suffixTextColor="#000000"
-        app:suffixTextSize="15dp"
-        app:timeTextColor="#000000"
-        app:timeTextSize="20dp"
-        android:paddingRight="10dp"
-        tools:layout_editor_absoluteX="98dp" />
+        android:text="130d"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_img"
+        app:layout_constraintStart_toEndOf="@+id/icon_img"
+        app:layout_constraintTop_toTopOf="@+id/icon_img" />
 
     <TextView
-        android:id="@+id/holidaysName_row"
+        android:id="@+id/dateHoliday_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Holiday1"
         android:textAlignment="center"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/dateHoliday_row"
+
+        app:layout_constraintBottom_toBottomOf="@+id/holidaysName_row"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dateHoliday_row"
-        app:layout_constraintTop_toTopOf="@+id/dateHoliday_row"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toEndOf="@+id/holidaysName_row"
+        app:layout_constraintTop_toTopOf="@+id/holidaysName_row" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/icon_img"
         android:layout_width="63dp"
         android:layout_height="60dp"
         android:layout_marginStart="15dp"
@@ -56,14 +41,16 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/dateHoliday_row"
+        android:id="@+id/holidaysName_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:text="1/12/20"
         android:textColor="@color/black"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/daysleft_subtitle_main"
-        app:layout_constraintStart_toEndOf="@+id/daysleft_subtitle_main"
-        app:layout_constraintTop_toTopOf="@+id/daysleft_subtitle_main" />
+        app:layout_constraintBottom_toBottomOf="@+id/daysleft_subtitle_row"
+        app:layout_constraintStart_toEndOf="@+id/daysleft_subtitle_row"
+        app:layout_constraintTop_toTopOf="@+id/daysleft_subtitle_row"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

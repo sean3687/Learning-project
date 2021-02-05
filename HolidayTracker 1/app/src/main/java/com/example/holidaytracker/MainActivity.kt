@@ -16,16 +16,31 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-    val displayListDate = mutableListOf<Long>()
-    val displayListName = mutableListOf<String>()
-    val displayDaysLeft = mutableListOf<Long>()
-    val displayDaysLeft_sub = mutableListOf<Int>()
+    var displayListDate = mutableListOf<Long>()
+    var displayListName = mutableListOf<String>()
+    var displayDaysLeft = mutableListOf<Long>()
+
+    //recycler view contents
+    var displayDaysLeft_sub = mutableListOf<Int>()
+    var displayMDformat_sub = mutableListOf<String>()
+    var displayIcon_sub = mutableListOf<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val HolidaysList_sub = arrayOf(
+            "Jan-01",
+            "Jan-18",
+            "May-31",
+            "Jul-05",
+            "Sep-07",
+            "Nov-11",
+            "Nov-25",
+            "Dec-24",
+            "Dec-31"
 
+        )
         val holidaysList_date = arrayOf(
             "01-01-2021 00:00:00",
             "18-01-2021 00:00:00",
@@ -70,6 +85,8 @@ class MainActivity : AppCompatActivity() {
 
                 displayListDate.add(holidaysList)
                 displayListName.add(holidayList_name[i])
+                displayMDformat_sub.add(HolidaysList_sub[i])
+                displayIcon_sub.add(android.R.drawable.btn_dialog)
 
             } else {
 
@@ -82,6 +99,8 @@ class MainActivity : AppCompatActivity() {
             displayDaysLeft.add(StartCountDown)
             displayDaysLeft_sub.add(startCountDown_sub.toInt())
         }
+
+
         Log.d("TAG", "$displayDaysLeft_sub")
         // title count down
 
@@ -94,9 +113,13 @@ class MainActivity : AppCompatActivity() {
         }
 
 //make recyclerView
+        recycler_sub_main.layoutManager = LinearLayoutManager(this)
+        recycler_sub_main.adapter = RecyclerAdapter(displayDaysLeft_sub, displayListName, displayMDformat_sub,displayIcon_sub )
+
 
 
     }
+
 
 }
 
