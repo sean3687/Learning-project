@@ -49,4 +49,7 @@ dependencies {
 
     //groupie
     implementation "com.xwray:groupie:2.1.0"
+
+    //Cardview
+    implementation "androidx.cardview:cardview:1.0.0"
 }

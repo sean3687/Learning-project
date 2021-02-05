@@ -4,58 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/title_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical"
+        android:background="#9C27B0"
         android:gravity="center_vertical"
-        android:background="#9C27B0">
+        android:orientation="vertical">
 
         <cn.iwgang.countdownview.CountdownView
             android:id="@+id/daysleft_title_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="20dp"
             app:isHideTimeBackground="true"
             app:isShowDay="true"
             app:isShowHour="true"
+            app:isShowMillisecond="false"
             app:isShowMinute="true"
             app:isShowSecond="true"
-            app:isShowMillisecond="false"
-            app:timeTextColor="#F3F3F3"
-            app:timeTextSize="30dp"
             app:isTimeTextBold="true"
-            app:suffixGravity="bottom"
-            app:suffixTextColor="#FFFFFF"
-            app:suffixTextSize="20sp"
             app:suffixDay="d"
+            app:suffixGravity="bottom"
             app:suffixHour="h"
+            app:suffixMillisecond="ms"
             app:suffixMinute="m"
             app:suffixSecond="s"
-            app:suffixMillisecond="ms"
-            android:layout_gravity="center"
-            android:padding="20dp"/>
+            app:suffixTextColor="#FFFFFF"
+            app:suffixTextSize="20sp"
+            app:timeTextColor="#F3F3F3"
+            app:timeTextSize="30dp" />
+
         <TextView
             android:id="@+id/holiday_title_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:background="#FFFFFF"
+            android:padding="20dp"
             android:text="Thanksgivings day"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:padding="20dp"
-            android:background="#FFFFFF"
-            />
+            android:textSize="30dp" />
     </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_sub_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2">
+        android:layout_weight="2"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
     </androidx.recyclerview.widget.RecyclerView>
 

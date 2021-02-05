@@ -4,6 +4,11 @@ package com.example.holidaytracker
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Item
+import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -13,6 +18,8 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     val displayListDate = mutableListOf<Long>()
     val displayListName = mutableListOf<String>()
+    val displayDaysLeft = mutableListOf<Long>()
+    val displayDaysLeft_sub = mutableListOf<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +63,9 @@ class MainActivity : AppCompatActivity() {
             val currentTime = Date()
             val currentDate = currentTime.getTime()
 
+
+
+
             if (holidaysList > currentDate) {
 
                 displayListDate.add(holidaysList)
@@ -65,18 +75,31 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+        //making days difference List
+        for (i in displayListDate.indices){
+            val StartCountDown = displayListDate[i] - Date().getTime()
+            val startCountDown_sub = (displayListDate[i] - Date().getTime())*1.1574E-8
+            displayDaysLeft.add(StartCountDown)
+            displayDaysLeft_sub.add(startCountDown_sub.toInt())
+        }
+        Log.d("TAG", "$displayDaysLeft_sub")
+        // title count down
+
 
         try {
-
-            val StartCountDown = displayListDate[0] - Date().getTime()
-            Log.d("TAG2", "3. $StartCountDown") //3. 29028082117
-            daysleft_title_main.start(StartCountDown)
+            daysleft_title_main.start(displayDaysLeft[0]) // start count down number
+            holiday_title_main.setText(displayListName[0])
         } catch (e: ParseException) {
             e.printStackTrace()
         }
 
+//make recyclerView
+
+
     }
+
 }
+
 
 
 

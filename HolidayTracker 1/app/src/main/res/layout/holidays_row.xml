@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <cn.iwgang.countdownview.CountdownView
+        android:id="@+id/daysleft_subtitle_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:isHideTimeBackground="true"
+        app:isShowDay="true"
+        app:isShowHour="false"
+        app:isShowMillisecond="false"
+        app:isShowMinute="false"
+        app:isShowSecond="false"
+        app:isTimeTextBold="false"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:suffixDay="d"
+        app:suffixGravity="bottom"
+        app:suffixHour="h"
+        app:suffixMillisecond="ms"
+        app:suffixMinute="m"
+        app:suffixSecond="s"
+        app:suffixTextColor="#000000"
+        app:suffixTextSize="15dp"
+        app:timeTextColor="#000000"
+        app:timeTextSize="20dp"
+        android:paddingRight="10dp"
+        tools:layout_editor_absoluteX="98dp" />
+
+    <TextView
+        android:id="@+id/holidaysName_row"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Holiday1"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/dateHoliday_row"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dateHoliday_row"
+        app:layout_constraintTop_toTopOf="@+id/dateHoliday_row"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="63dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/dateHoliday_row"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1/12/20"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/daysleft_subtitle_main"
+        app:layout_constraintStart_toEndOf="@+id/daysleft_subtitle_main"
+        app:layout_constraintTop_toTopOf="@+id/daysleft_subtitle_main" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
