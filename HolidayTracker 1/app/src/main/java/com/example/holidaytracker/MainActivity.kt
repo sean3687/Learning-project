@@ -70,7 +70,6 @@ class MainActivity : AppCompatActivity() {
 
             val StartCountDown = displayListDate[0] - Date().getTime()
             Log.d("TAG2", "3. $StartCountDown") //3. 29028082117
-            holiday_title_main.setText(displayListName[0])
             daysleft_title_main.start(StartCountDown)
         } catch (e: ParseException) {
             e.printStackTrace()
