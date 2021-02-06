@@ -40,6 +40,6 @@ class RecyclerAdapter (private var daysleft: List<Int>, private var date: List<S
         holder.daySub.text = daysleft[position].toString()
         holder.dateSub.text = date[position].toString()
         holder.nameSub.text = holidayname[position].toString()
-        holder.iconSub.setImageResource(icon[position])
+        holder.iconSub.setImageDrawable(holder.view.context.getDrawable(icon[position]))
     }
 }

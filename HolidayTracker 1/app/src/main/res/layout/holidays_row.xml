@@ -13,9 +13,8 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/icon_img"
-        app:layout_constraintStart_toEndOf="@+id/icon_img"
-        app:layout_constraintTop_toTopOf="@+id/icon_img" />
+        tools:layout_editor_absoluteX="98dp"
+        tools:layout_editor_absoluteY="24dp" />
 
     <TextView
         android:id="@+id/dateHoliday_row"
@@ -25,10 +24,8 @@
         android:textAlignment="center"
         android:textSize="20dp"
 
-        app:layout_constraintBottom_toBottomOf="@+id/holidaysName_row"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/holidaysName_row"
-        app:layout_constraintTop_toTopOf="@+id/holidaysName_row" />
+        tools:layout_editor_absoluteX="289dp"
+        tools:layout_editor_absoluteY="24dp" />
 
     <ImageView
         android:id="@+id/icon_img"
@@ -44,13 +41,10 @@
         android:id="@+id/holidaysName_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:text="1/12/20"
         android:textColor="@color/black"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/daysleft_subtitle_row"
-        app:layout_constraintStart_toEndOf="@+id/daysleft_subtitle_row"
-        app:layout_constraintTop_toTopOf="@+id/daysleft_subtitle_row"
-        app:layout_constraintVertical_bias="0.0" />
+        tools:layout_editor_absoluteX="164dp"
+        tools:layout_editor_absoluteY="24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
