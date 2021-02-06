@@ -5,12 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerAdapter (private var daysleft: List<Int>, private var date: List<String>, private var holidayname: List<String>, private var icon:List<Int>) :
+class RecyclerAdapter(private var daysleft: List<Int>, private var date: List<String>, private var holidayname: List<String>, private var icon: MutableList<Any>) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>(){
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+
 
             val daySub: TextView = itemView.findViewById(R.id.daysleft_subtitle_row)
             val dateSub: TextView = itemView.findViewById(R.id.dateHoliday_row)
@@ -40,6 +40,10 @@ class RecyclerAdapter (private var daysleft: List<Int>, private var date: List<S
         holder.daySub.text = daysleft[position].toString()
         holder.dateSub.text = date[position].toString()
         holder.nameSub.text = holidayname[position].toString()
-        holder.iconSub.setImageDrawable(holder.view.context.getDrawable(icon[position]))
+        holder.iconSub.setImageDrawable(icon[position])
     }
+}
+
+private fun ImageView.setImageDrawable(any: Any) {
+
 }

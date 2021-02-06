@@ -5,10 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.Item
-import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -24,19 +20,33 @@ class MainActivity : AppCompatActivity() {
     //recycler view contents
     var displayDaysLeft_sub = mutableListOf<Int>()
     var displayMDformat_sub = mutableListOf<String>()
-
+    var displayIcon_sub = mutableListOf<Any>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var displayIcon_sub = listOf(
-            R.drawable.Independence,
-
-        )
         val displayIcon = listOf(
-            R.drawable.
+            R.drawable.newyear,
+            R.drawable.martin,
+            R.drawable.memorial,
+            R.drawable.independence,
+            R.drawable.labor,
+            R.drawable.veterans,
+            R.drawable.thanks,
+            R.drawable.christmas,
+            R.drawable.newyear,
+            R.drawable.newyear,
+            R.drawable.martin,
+            R.drawable.memorial,
+            R.drawable.independence,
+            R.drawable.labor,
+            R.drawable.veterans,
+            R.drawable.thanks,
+            R.drawable.christmas,
+            R.drawable.newyear
         )
+
 
         val HolidaysList_sub = arrayOf(
             "Sat Jan 1",
@@ -122,7 +132,7 @@ class MainActivity : AppCompatActivity() {
                 displayListDate.add(holidaysList)
                 displayListName.add(holidayList_name[i])
                 displayMDformat_sub.add(HolidaysList_sub[i])
-                displayIcon_sub.add(android.R.drawable.[i])
+                displayIcon_sub.add(displayIcon[i])
 
             } else {
 
@@ -150,7 +160,7 @@ class MainActivity : AppCompatActivity() {
 
 //make recyclerView
         recycler_sub_main.layoutManager = LinearLayoutManager(this)
-        recycler_sub_main.adapter = RecyclerAdapter(displayDaysLeft_sub, displayListName, displayMDformat_sub,displayIcon_sub )
+        recycler_sub_main.adapter = RecyclerAdapter(displayDaysLeft_sub, displayListName, displayMDformat_sub, displayIcon_sub)
 
 
 
