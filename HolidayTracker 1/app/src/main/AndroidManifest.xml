@@ -13,7 +13,7 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8358259317968297~6889546052"/>
         <activity android:name=".MainActivity">
-            holidaytracker   <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />

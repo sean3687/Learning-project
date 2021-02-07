@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
         )
         val holidayList_name = arrayOf(
             "New Year's Day",
-            "Martin Luther King Jr.Day",
+            "MLK Jr.Day",
             "Memorial Day",
             "Independence Day",
             "Labor Day",
@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
             "Christmas Day",
             "New Year's Day",
             "New Year's Day",
-            "Martin Luther King Jr.Day",
+            "MLK Jr.Day",
             "Memorial Day",
             "Independence Day",
             "Labor Day",
