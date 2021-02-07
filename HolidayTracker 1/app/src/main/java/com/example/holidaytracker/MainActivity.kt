@@ -5,11 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     var displayDaysLeft = mutableListOf<Long>()
 
     //recycler view contents
-    var displayDaysLeft_sub = mutableListOf<Int>()
+    var displayDaysLeft_sub = mutableListOf<String>()
     var displayMDformat_sub = mutableListOf<String>()
     var displayIcon_sub = mutableListOf<Any>()
 
@@ -26,7 +27,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val displayIcon = listOf(
+        //Google ad Initilize
+        MobileAds.initialize(this) {}
+
+        val displayIcon = intArrayOf(
             R.drawable.newyear,
             R.drawable.martin,
             R.drawable.memorial,
@@ -141,9 +145,10 @@ class MainActivity : AppCompatActivity() {
         //making days difference List
         for (i in displayListDate.indices){
             val StartCountDown = displayListDate[i] - Date().getTime()
-            val startCountDown_sub = (displayListDate[i] - Date().getTime())*1.1574E-8
+            val startCountDown_sub = "D-${((displayListDate[i] - Date().getTime())*1.1574E-8).toInt()}"
             displayDaysLeft.add(StartCountDown)
-            displayDaysLeft_sub.add(startCountDown_sub.toInt())
+            displayDaysLeft_sub.add(startCountDown_sub)
+
         }
 
 
@@ -154,6 +159,8 @@ class MainActivity : AppCompatActivity() {
         try {
             daysleft_title_main.start(displayDaysLeft[0]) // start count down number
             holiday_title_main.setText(displayListName[0])
+            holiday_image_main.setImageResource(displayIcon_sub[0] as Int)
+//            holder.iconSub.setImageResource(icon[position] as Int)
         } catch (e: ParseException) {
             e.printStackTrace()
         }
@@ -168,6 +175,8 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+
+
 
 
 

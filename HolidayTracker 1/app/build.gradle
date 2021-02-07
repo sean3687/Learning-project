@@ -52,4 +52,7 @@ dependencies {
 
     //Cardview
     implementation "androidx.cardview:cardview:1.0.0"
+
+    //google ad
+    implementation 'com.google.android.gms:play-services-ads:19.7.0'
 }

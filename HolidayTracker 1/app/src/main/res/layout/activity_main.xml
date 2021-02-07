@@ -5,52 +5,113 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:forceDarkAllowed="false">
 
     <LinearLayout
         android:id="@+id/title_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#9C27B0"
+        android:background="#FFFFFF"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
-        <cn.iwgang.countdownview.CountdownView
-            android:id="@+id/daysleft_title_main"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="20dp"
-            app:isHideTimeBackground="true"
-            app:isShowDay="true"
-            app:isShowHour="true"
-            app:isShowMillisecond="false"
-            app:isShowMinute="true"
-            app:isShowSecond="true"
-            app:isTimeTextBold="true"
-            app:suffixDay="d"
-            app:suffixGravity="bottom"
-            app:suffixHour="h"
-            app:suffixMillisecond="ms"
-            app:suffixMinute="m"
-            app:suffixSecond="s"
-            app:suffixTextColor="#FFFFFF"
-            app:suffixTextSize="20sp"
-            app:timeTextColor="#F3F3F3"
-            app:timeTextSize="30dp" />
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Recent Holiday"
+            android:textColor="@color/black"
+            android:textSize="25dp"
+            android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/holiday_title_main"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:padding="20dp"
-            android:text="Thanksgivings day"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="30dp" />
+            android:layout_margin="20dp"
+            android:focusable="true"
+            app:cardBackgroundColor="#2C365A"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="10dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/holiday_image_main"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <cn.iwgang.countdownview.CountdownView
+                    android:id="@+id/daysleft_title_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:isHideTimeBackground="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    app:isShowDay="true"
+                    app:isShowHour="true"
+                    app:isShowMillisecond="false"
+                    app:isShowMinute="true"
+                    app:isShowSecond="true"
+                    app:isTimeTextBold="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/holiday_title_main"
+                    app:layout_constraintStart_toStartOf="@+id/holiday_title_main"
+                    app:layout_constraintTop_toBottomOf="@+id/holiday_title_main"
+                    app:suffixDay="D"
+                    app:suffixGravity="bottom"
+                    app:suffixHour="h"
+                    app:suffixMillisecond="ms"
+                    app:suffixMinute="m"
+                    app:suffixSecond="s"
+                    app:suffixTextColor="#FFFFFF"
+                    app:suffixTextSize="15sp"
+                    app:timeTextColor="#F3F3F3"
+                    app:timeTextSize="15dp" />
+
+                <TextView
+                    android:id="@+id/holiday_title_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thanksgivings day"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="23dp"
+                    app:layout_constraintEnd_toEndOf="@+id/holiday_image_main"
+                    app:layout_constraintStart_toStartOf="@+id/holiday_image_main"
+                    app:layout_constraintTop_toBottomOf="@+id/holiday_image_main" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Holidays Calander"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_sub_main"
