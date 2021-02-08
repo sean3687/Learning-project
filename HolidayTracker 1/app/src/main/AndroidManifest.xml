@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.holidaytracker">
+    package="com.tassiecomp.holidaytracker">
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/holidayimage"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/holidayimage_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HolidayTracker">
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8358259317968297~6889546052"/>
-        <activity android:name=".MainActivity">
+        <activity android:name="com.tassiecomp.holidaytracker.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">HolidayTracker</string>
+    <string name="app_name">MyHoliday</string>
+    <string name="admob_app_id">ca-app-pub-8358259317968297~6889546052</string>
+
+    <string name="banner_ad_unit_id">ca-app-pub-8358259317968297/2871421759</string>
+
+    <string name="banner_ad_unit_id_for_test">ca-app-pub-3940256099942544/6300978111</string>
+
 </resources>
