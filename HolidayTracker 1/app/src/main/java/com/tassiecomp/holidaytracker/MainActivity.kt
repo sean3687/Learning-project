@@ -31,6 +31,13 @@ class MainActivity : AppCompatActivity() {
 
         adView.loadAd(AdRequest.Builder().build())
 
+        //adding holiday
+        //1. add image on drawable folder
+            //add R.drawable displayicon list
+        //2. add holiday sub date
+        //3. add holiday json sytle date
+        //4. add holiday name
+        //5. change 'for' counts
         val displayIcon = intArrayOf(
             R.drawable.newyear,
             R.drawable.martin,

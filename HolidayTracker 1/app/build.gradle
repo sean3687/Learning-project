@@ -9,7 +9,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.example.holidaytracker"
+        applicationId "com.tassiecomp.holidaytracker"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
@@ -55,4 +55,7 @@ dependencies {
 
     //google ad
     implementation 'com.google.android.gms:play-services-ads:19.7.0'
+
+    //lottie animation
+    implementation "com.airbnb.android:lottie:3.6.0"
 }
