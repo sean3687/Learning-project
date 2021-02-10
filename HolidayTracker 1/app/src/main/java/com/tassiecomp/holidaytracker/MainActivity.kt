@@ -162,7 +162,7 @@ class MainActivity : AppCompatActivity() {
 //        Log.d("string", "1. $now") //1. Wed Feb 03 00:36:25 GMT 2021
 
 
-        for (i in 0..17) {
+        for (i in 0..12) {
             val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
             val holidaysList = sdf.parse(holidaysList_date[i]).getTime()
             val currentTime = Date()

@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:forceDarkAllowed="false"
     android:orientation="vertical"
-    tools:context=".MainActivity"
-    android:forceDarkAllowed="false">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/title_main"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#FFFFFF"
+        android:layout_height="wrap_content"
+
+        android:background="#F6F6F6"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="Recent Holiday"
             android:textColor="@color/black"
             android:textSize="25dp"
@@ -38,13 +38,15 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+
+                >
 
                 <ImageView
-                    android:layout_marginTop="10dp"
                     android:id="@+id/holiday_image_main"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
+                    android:layout_marginTop="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -54,9 +56,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    app:isHideTimeBackground="true"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    app:isHideTimeBackground="true"
                     app:isShowDay="true"
                     app:isShowHour="true"
                     app:isShowMillisecond="false"
@@ -82,11 +84,11 @@
                     android:id="@+id/holiday_title_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Thanksgivings day"
                     android:layout_marginTop="10dp"
+                    android:text="Thanksgivings day"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:textSize="23dp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="@+id/holiday_image_main"
                     app:layout_constraintStart_toStartOf="@+id/holiday_image_main"
                     app:layout_constraintTop_toBottomOf="@+id/holiday_image_main" />
@@ -96,10 +98,12 @@
 
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -109,7 +113,8 @@
             android:text="Holidays Calander"
             android:textColor="@color/black"
             android:textSize="18dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            />
     </LinearLayout>
 
 
@@ -121,14 +126,13 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
     </androidx.recyclerview.widget.RecyclerView>
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-8358259317968297/2871421759">
-    </com.google.android.gms.ads.AdView>
+        ads:adUnitId="ca-app-pub-8358259317968297/2871421759"></com.google.android.gms.ads.AdView>
 </LinearLayout>
