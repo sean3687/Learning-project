@@ -27,100 +27,132 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //Google ad Initilize
-        MobileAds.initialize(this,"ca-app-pub-8358259317968297/2871421759")
+        MobileAds.initialize(this, "ca-app-pub-8358259317968297/2871421759")
 
         adView.loadAd(AdRequest.Builder().build())
 
         //adding holiday
         //1. add image on drawable folder
-            //add R.drawable displayicon list
+        //add R.drawable displayicon list
         //2. add holiday sub date
         //3. add holiday json sytle date
         //4. add holiday name
         //5. change 'for' counts
         val displayIcon = intArrayOf(
+            //Jan
             R.drawable.newyear,
             R.drawable.martin,
+            //Feb
+            R.drawable.valentines,
+            //Mar
+            //April
+            R.drawable.easter,
+            //May
+            R.drawable.mothers,
             R.drawable.memorial,
+            //Jun
+            R.drawable.fathers,
+            //Jul
             R.drawable.independence,
+            //Aug
+            //sep
             R.drawable.labor,
+            //Oct
+            //Nov
             R.drawable.veterans,
             R.drawable.thanks,
-            R.drawable.christmas,
-            R.drawable.newyear,
-            R.drawable.newyear,
-            R.drawable.martin,
-            R.drawable.memorial,
-            R.drawable.independence,
-            R.drawable.labor,
-            R.drawable.veterans,
-            R.drawable.thanks,
+            //Dec
             R.drawable.christmas,
             R.drawable.newyear
+
         )
 
 
         val HolidaysList_sub = arrayOf(
+            //Jan
             "Sat Jan 1",
             "Mon Jan 18",
+            //Feb
+            "Sun Feb 14",
+            //Mar
+            //April
+            "Sun Apr 4",
+            //May
+            "Sun May 9",
             "Mon May 31",
+            //Jun
+            "Sun Jun 20",
+            //Jul
             "Mon Jul 05",
+            //Aug
+            //sep
             "Tue Sep 07",
+            //Oct
+            //Nov
             "Thu Nov 11",
             "Thu Nov 25",
-            "Mon Dec 24",
-            "Fri Dec 31",
-            "Sat Jan 1",
-            "Mon Jan 17",
-            "Mon May 30",
-            "Mon Jul 04",
-            "Tue Sep 05",
-            "Thu Nov 11",
-            "Thu Nov 24",
+            //Dec
             "Mon Dec 26",
             "Sat Dec 31"
 
+
         )
         val holidaysList_date = arrayOf(
+            //Jan
             "01-01-2021 00:00:00",
             "18-01-2021 00:00:00",
+            //Feb
+            "14-02-2021 00:00:00",
+            //Mar
+            //April
+            "04-04-2021 00:00:00",
+            //May
+            "09-05-2021 00:00:00",
             "31-05-2021 00:00:00",
+            //Jun
+            "20-06-2021 00:00:00",
+            //Jul
             "05-07-2021 00:00:00",
+            //Aug
+            //sep
             "07-09-2021 00:00:00",
+            //Oct
+            //Nov
             "11-11-2021 00:00:00",
             "25-11-2021 00:00:00",
+            //Dec
             "24-12-2021 00:00:00",
             "31-12-2021 00:00:00",
-            "01-01-2022 00:00:00",
-            "17-01-2022 00:00:00",
-            "30-05-2022 00:00:00",
-            "04-07-2022 00:00:00",
-            "05-09-2022 00:00:00",
-            "11-11-2022 00:00:00",
-            "24-11-2022 00:00:00",
-            "26-12-2022 00:00:00",
-            "31-12-2022 00:00:00"
-        )
+
+            )
         val holidayList_name = arrayOf(
+
+            //Jan
             "New Year's Day",
             "MLK Jr.Day",
+            //Feb
+            "Valentine's Day",
+            //Mar
+            //April
+            "Easter Sunday",
+            //May
+            "Mother's Day",
             "Memorial Day",
+            //Jun
+            "Father's Day",
+            //Jul
             "Independence Day",
+            //Aug
+            //sep
             "Labor Day",
+            //Oct
+            //Nov
             "Veterans Day",
             "Thanksgiving",
+            //Dec
             "Christmas Day",
             "New Year's Day",
-            "New Year's Day",
-            "MLK Jr.Day",
-            "Memorial Day",
-            "Independence Day",
-            "Labor Day",
-            "Veterans Day",
-            "Thanksgiving",
-            "Christmas Day",
-            "New Year's Day"
-        )
+            )
 
 //making list
 
@@ -151,9 +183,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
         //making days difference List
-        for (i in displayListDate.indices){
+        for (i in displayListDate.indices) {
             val StartCountDown = displayListDate[i] - Date().getTime()
-            val startCountDown_sub = "D-${((displayListDate[i] - Date().getTime())*1.1574E-8).toInt()}"
+            val startCountDown_sub =
+                "D-${((displayListDate[i] - Date().getTime()) * 1.1574E-8).toInt()}"
             displayDaysLeft.add(StartCountDown)
             displayDaysLeft_sub.add(startCountDown_sub)
 
@@ -175,8 +208,12 @@ class MainActivity : AppCompatActivity() {
 
 //make recyclerView
         recycler_sub_main.layoutManager = LinearLayoutManager(this)
-        recycler_sub_main.adapter = RecyclerAdapter(displayDaysLeft_sub, displayListName, displayMDformat_sub, displayIcon_sub)
-
+        recycler_sub_main.adapter = RecyclerAdapter(
+            displayDaysLeft_sub,
+            displayListName,
+            displayMDformat_sub,
+            displayIcon_sub
+        )
 
 
     }
