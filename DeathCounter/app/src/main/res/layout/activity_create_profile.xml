@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateProfile">
+
+
+    <TextView
+        android:id="@+id/title_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="204dp"
+        android:text="Create Profile"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/username_create"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="@+id/title_create"
+        app:layout_constraintStart_toStartOf="@+id/title_create"
+        app:layout_constraintTop_toBottomOf="@+id/title_create" />
+
+    <EditText
+        android:id="@+id/userAge_create"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintEnd_toEndOf="@+id/username_create"
+        app:layout_constraintStart_toStartOf="@+id/username_create"
+        app:layout_constraintTop_toBottomOf="@+id/username_create" />
+
+    <EditText
+        android:id="@+id/dieDate_create"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintEnd_toEndOf="@+id/userAge_create"
+        app:layout_constraintStart_toStartOf="@+id/userAge_create"
+        app:layout_constraintTop_toBottomOf="@+id/userAge_create" />
+
+    <Button
+        android:id="@+id/Save_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:text="Save"
+        app:layout_constraintEnd_toEndOf="@+id/dieDate_create"
+        app:layout_constraintStart_toStartOf="@+id/dieDate_create"
+        app:layout_constraintTop_toBottomOf="@+id/dieDate_create" />
+
+    <Button
+        android:id="@+id/display_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Display"
+        app:layout_constraintEnd_toEndOf="@+id/Save_create"
+        app:layout_constraintStart_toStartOf="@+id/Save_create"
+        app:layout_constraintTop_toBottomOf="@+id/Save_create" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
