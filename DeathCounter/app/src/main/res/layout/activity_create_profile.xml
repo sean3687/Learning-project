@@ -8,6 +8,7 @@
 
 
     <TextView
+
         android:id="@+id/title_create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,6 +25,7 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
+        android:hint="Username"
         app:layout_constraintEnd_toEndOf="@+id/title_create"
         app:layout_constraintStart_toStartOf="@+id/title_create"
         app:layout_constraintTop_toBottomOf="@+id/title_create" />
@@ -32,38 +34,41 @@
         android:id="@+id/userAge_create"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-
+        android:hint="Your age"
         app:layout_constraintEnd_toEndOf="@+id/username_create"
         app:layout_constraintStart_toStartOf="@+id/username_create"
         app:layout_constraintTop_toBottomOf="@+id/username_create" />
+
 
     <EditText
         android:id="@+id/dieDate_create"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-
+        android:hint="Final age"
         app:layout_constraintEnd_toEndOf="@+id/userAge_create"
         app:layout_constraintStart_toStartOf="@+id/userAge_create"
         app:layout_constraintTop_toBottomOf="@+id/userAge_create" />
 
-    <Button
-        android:id="@+id/Save_create"
+    <TextView
+        android:id="@+id/notification"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:text="Save"
+        android:layout_height="20dp"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#FF4C4C"
         app:layout_constraintEnd_toEndOf="@+id/dieDate_create"
         app:layout_constraintStart_toStartOf="@+id/dieDate_create"
         app:layout_constraintTop_toBottomOf="@+id/dieDate_create" />
 
     <Button
-        android:id="@+id/display_create"
+        android:id="@+id/Save_create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="Display"
-        app:layout_constraintEnd_toEndOf="@+id/Save_create"
-        app:layout_constraintStart_toStartOf="@+id/Save_create"
-        app:layout_constraintTop_toBottomOf="@+id/Save_create" />
+        android:text="Next"
+        app:layout_constraintEnd_toEndOf="@+id/notification"
+        app:layout_constraintStart_toStartOf="@+id/notification"
+        app:layout_constraintTop_toBottomOf="@+id/notification" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,8 @@
 package com.tassiecomp.deathcounter
 
+import android.app.DatePickerDialog
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,83 +10,99 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_create_profile.*
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
+import java.lang.Double.parseDouble
+import java.util.*
 
-class CreateProfile : AppCompatActivity() {
-
-
+open class CreateProfile : AppCompatActivity() {
 
 
     //setting up internal data storage
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_profile)
 
+        Log.d("TAG", "Create profile activity loaded")
+
+
         Save_create.setOnClickListener {
-            performRegister()
+            val userName = username_create.text.toString()
+            val userAge = userAge_create.text.toString()
+            val userDie = dieDate_create.text.toString()
+
+            //set up for checking if age is numeric
+            var numericAge = true
+            var numericDie = true
+
+            try {
+                val num = parseDouble(userAge)
+            } catch (e: NumberFormatException) {
+                numericAge = false
+            }
+
+            try {
+                val num = parseDouble(userDie)
+            } catch (e: NumberFormatException) {
+                numericDie = false
+            }
+
+
+            // login error message
+            when {
+                userName.isEmpty() -> notification.text = "User Name is empty"
+                userAge.isEmpty() -> notification.text = "Please set your age"
+                userDie.isEmpty() -> notification.text = "Please set die age "
+
+                //check if age is Numeric
+                //if it is not numeric
+                !numericAge -> notification.text = "Please enter age in numeric(Age)"
+                !numericDie -> notification.text = "Please enter age in numeric(Die age)"
+                userDie.toInt() < userAge.toInt() -> notification.text =
+                    "Your Age is bigger than die age"
+
+
+                else -> { //excute save button
+                    Log.d("TAG"," button clicked")
+                    saveButton()
+                    finish()
+                }
+            }
+
+
         }
 
 
-
     }
 
-
-    //function extension for toast.makeText
-    fun Context.showToast(text: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
-        Toast.makeText(this, text, duration).show()
-    }
-
-    fun performRegister() {
-        //bring text in edittext box and make it to string and assign as each variable
+    //save button function
+    private fun saveButton() {
         val userName = username_create.text.toString()
         val userAge = userAge_create.text.toString()
         val userDie = dieDate_create.text.toString()
 
-        //assigning text file name
-        val userdatafile: String = "userDatafile.txt"
-        //setting up internal data storage
-        val fileOutputStream: FileOutputStream
+        Log.d("TAG", "username: $userName")
+        Log.d("TAG", "userAge: $userAge")
+        Log.d("TAG", "userDie: $userDie")
 
-        for(i in 0..1)
-        //no more than 3 digit userAge
-        if(userAge.length > 3 || userDie.length > 3){
-            showToast("userAge no longer than 3 digit")
-                break
+        val sharedPreference = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreference.edit()
 
-            }else if(userAge.length > userDie.length){
+        //save data
+        editor.apply {
+            putString(
+                "username",
+                userName
+            ) //"putString("name of key",value you are going to insert)"
+            putInt("userAge", userAge.toInt())
+            putInt("userDie", userDie.toInt())
+        }.apply()
 
-                showToast("your current age is smaller than death age")
-                break
-
-            }else{
-            try {
-                //assigning textfile name
-                fileOutputStream = openFileOutput(userdatafile, Context.MODE_PRIVATE)
-                //assigning what to put on this data file
-                //we write username inside
-                fileOutputStream.write(userName.toByteArray())
-                fileOutputStream.write(userAge.toByteArray())
-                fileOutputStream.write(userDie.toByteArray())
-
-                //just in case there's no data we add exception
-            } catch (e: FileNotFoundException) {
-                e.printStackTrace()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-                showToast("Saved")
-
-            }
-
-
-
-
-
-
-
-
-
+        Log.d("TAG", "sharedPreference: $sharedPreference")
 
     }
+
+
 }
+
+
+
