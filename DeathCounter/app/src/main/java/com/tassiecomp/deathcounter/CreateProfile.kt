@@ -26,6 +26,7 @@ open class CreateProfile : AppCompatActivity() {
 
 
         Save_create.setOnClickListener {
+            Log.d("TAG"," button clicked")
             val userName = username_create.text.toString()
             val userAge = userAge_create.text.toString()
             val userDie = dieDate_create.text.toString()
@@ -61,10 +62,11 @@ open class CreateProfile : AppCompatActivity() {
                     "Your Age is bigger than die age"
 
 
-                else -> { //excute save button
-                    Log.d("TAG"," button clicked")
+                else -> { //execute save button
+
                     saveButton()
-                    finish()
+                    val intent = Intent(this@CreateProfile, MainActivity::class.java)
+
                 }
             }
 
@@ -90,12 +92,13 @@ open class CreateProfile : AppCompatActivity() {
         //save data
         editor.apply {
             putString(
-                "username",
+                "userName",
                 userName
             ) //"putString("name of key",value you are going to insert)"
             putInt("userAge", userAge.toInt())
             putInt("userDie", userDie.toInt())
         }.apply()
+        editor.commit()
 
         Log.d("TAG", "sharedPreference: $sharedPreference")
 
@@ -103,6 +106,7 @@ open class CreateProfile : AppCompatActivity() {
 
 
 }
+
 
 
 
