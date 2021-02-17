@@ -18,27 +18,35 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //checking if want to register
-        val openCreateProfile = Intent(this@MainActivity, CreateProfile::class.java) //인텐트(요청)를 만든상태
+        //load data
+        val sharedPreference = getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
+        val savedUserName = sharedPreference.getString("userName", null)
+        val savedUserAge = sharedPreference.getInt("userAge", 0)
+        val savedDieAge = sharedPreference.getInt("userDie", 0)
+        Log.d("TAG", "MainActivity: SavedUserName: $savedUserName, SavedUserAge: $savedUserAge")
 
+
+        //checking if registered
 
         when {
-            userNameValue() -> {
+            savedUserName != "null" -> {
                 Log.d("TAG", "Empty")
+                val intent = Intent(this@MainActivity, CreateProfile::class.java)
+                startActivity(intent)
+
             }
             else -> {
+                Log.d("TAG", "there is value")
+                Log.d("TAG", "saved value: $savedUserName")
+
             } //nothing happen
         }
 
-    }
 
 
-    private fun loadData() {
-        val pref = PreferenceManager.getDefaultSharedPreferences(this)
-        val savedUserName = SharedPreferences.getString("userName", null)
-        val savedUserAge = SharedPreferences.getInt("userAge", null)
 
     }
+
 
 }
 

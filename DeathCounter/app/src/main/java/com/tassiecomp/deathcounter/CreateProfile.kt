@@ -1,8 +1,10 @@
 package com.tassiecomp.deathcounter
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -65,7 +67,9 @@ open class CreateProfile : AppCompatActivity() {
                 else -> { //execute save button
 
                     saveButton()
+                    finish()
                     val intent = Intent(this@CreateProfile, MainActivity::class.java)
+                    startActivity(intent)
 
                 }
             }
@@ -77,6 +81,7 @@ open class CreateProfile : AppCompatActivity() {
     }
 
     //save button function
+
     private fun saveButton() {
         val userName = username_create.text.toString()
         val userAge = userAge_create.text.toString()
@@ -86,19 +91,13 @@ open class CreateProfile : AppCompatActivity() {
         Log.d("TAG", "userAge: $userAge")
         Log.d("TAG", "userDie: $userDie")
 
-        val sharedPreference = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-        val editor = sharedPreference.edit()
+        val sharedPreference = getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPreference.edit()
 
-        //save data
-        editor.apply {
-            putString(
-                "userName",
-                userName
-            ) //"putString("name of key",value you are going to insert)"
-            putInt("userAge", userAge.toInt())
-            putInt("userDie", userDie.toInt())
-        }.apply()
-        editor.commit()
+        editor.putString("userName", userName)
+        editor.putInt("userAge", userAge.toInt())
+        editor.putInt("userDie", userDie.toInt())
+        editor.apply()
 
         Log.d("TAG", "sharedPreference: $sharedPreference")
 
