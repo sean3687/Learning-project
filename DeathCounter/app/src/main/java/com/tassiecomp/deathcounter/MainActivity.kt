@@ -8,11 +8,19 @@ import android.preference.PreferenceManager
 import android.provider.Settings.Global.getString
 import android.provider.Settings.Secure.getString
 import android.util.Log
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_create_profile.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    lateinit var toolbar: Toolbar
+    lateinit var drawerLayout: DrawerLayout
+    lateinit var navView:NavigationView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
