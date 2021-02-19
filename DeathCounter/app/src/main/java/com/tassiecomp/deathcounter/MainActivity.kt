@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         //checking if registered
 
         when {
-            savedUserName != "null" -> {
+            savedUserName === null -> {
                 Log.d("TAG", "Empty")
                 val intent = Intent(this@MainActivity, CreateProfile::class.java)
                 startActivity(intent)
