@@ -82,7 +82,7 @@ open class CreateProfile : AppCompatActivity() {
 
     //save button function
 
-    private fun saveButton() {
+    open fun saveButton() {
         val userName = username_create.text.toString()
         val userAge = userAge_create.text.toString()
         val userDie = dieDate_create.text.toString()

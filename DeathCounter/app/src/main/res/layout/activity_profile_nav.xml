@@ -4,55 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateProfile">
+    tools:context=".Nav.ProfileNav">
 
 
     <TextView
-        android:id="@+id/title_create"
+        android:id="@+id/title_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="204dp"
-        android:text="Create Profile"
+        android:layout_marginTop="228dp"
+        android:text="Edit Profile"
         android:textColor="@color/black"
         android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/username_create"
+        android:id="@+id/username_profile"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="56dp"
         android:hint="Username"
-        android:textSize="15dp"
         android:maxLength="20"
-        app:layout_constraintEnd_toEndOf="@+id/title_create"
-        app:layout_constraintStart_toStartOf="@+id/title_create"
-        app:layout_constraintTop_toBottomOf="@+id/title_create" />
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/title_profile"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toStartOf="@+id/title_profile"
+        app:layout_constraintTop_toBottomOf="@+id/title_profile" />
 
     <EditText
-        android:id="@+id/userAge_create"
+        android:id="@+id/userage_profile"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:hint="Your age"
-        android:textSize="15dp"
         android:maxLength="3"
-        app:layout_constraintEnd_toEndOf="@+id/username_create"
-        app:layout_constraintStart_toStartOf="@+id/username_create"
-        app:layout_constraintTop_toBottomOf="@+id/username_create" />
-
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/username_profile"
+        app:layout_constraintStart_toStartOf="@+id/username_profile"
+        app:layout_constraintTop_toBottomOf="@+id/username_profile" />
 
     <EditText
-        android:id="@+id/dieDate_create"
+        android:id="@+id/diedate_profile"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="Final age"
-        android:textSize="15dp"
+        android:hint="Die age"
         android:maxLength="3"
-        app:layout_constraintEnd_toEndOf="@+id/userAge_create"
-        app:layout_constraintStart_toStartOf="@+id/userAge_create"
-        app:layout_constraintTop_toBottomOf="@+id/userAge_create" />
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/userage_profile"
+        app:layout_constraintStart_toStartOf="@+id/userage_profile"
+        app:layout_constraintTop_toBottomOf="@+id/userage_profile" />
+
 
     <TextView
         android:id="@+id/notification"
@@ -61,19 +62,17 @@
         android:gravity="center"
         android:text=""
         android:textColor="#FF4C4C"
-        app:layout_constraintEnd_toEndOf="@+id/dieDate_create"
-        app:layout_constraintStart_toStartOf="@+id/dieDate_create"
-        app:layout_constraintTop_toBottomOf="@+id/dieDate_create" />
+        app:layout_constraintEnd_toEndOf="@+id/diedate_profile"
+        app:layout_constraintStart_toStartOf="@+id/diedate_profile"
+        app:layout_constraintTop_toBottomOf="@+id/diedate_profile" />
 
     <Button
-        android:id="@+id/Save_create"
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Next"
+        android:text="Save"
         app:layout_constraintEnd_toEndOf="@+id/notification"
         app:layout_constraintStart_toStartOf="@+id/notification"
-        app:layout_constraintTop_toBottomOf="@+id/notification" />
-
-
+        tools:layout_editor_absoluteY="460dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

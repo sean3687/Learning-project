@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import com.tassiecomp.deathcounter.Nav.ProfileNav
 import kotlinx.android.synthetic.main.activity_create_profile.*
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -26,20 +27,21 @@ class MainActivity : AppCompatActivity() {
         drawerlayout.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val IntentProfile = Intent(this@MainActivity, ProfileNav::class.java)
 
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.miItem1 -> Toast.makeText(
+                R.id.profileIcon ->
+                startActivity(IntentProfile)
+
+
+                R.id.settingIcon -> Toast.makeText(
                     applicationContext,
-                    "Clicked Item 1", Toast.LENGTH_SHORT
+                    "Clicked setting", Toast.LENGTH_SHORT
                 ).show()
-                R.id.miItem2 -> Toast.makeText(
+                R.id.helpIcon-> Toast.makeText(
                     applicationContext,
-                    "Clicked Item 2", Toast.LENGTH_SHORT
-                ).show()
-                R.id.miItem3 -> Toast.makeText(
-                    applicationContext,
-                    "Clicked Item 3", Toast.LENGTH_SHORT
+                    "Clicked help", Toast.LENGTH_SHORT
                 ).show()
 
             }

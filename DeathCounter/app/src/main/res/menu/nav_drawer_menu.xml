@@ -2,12 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/miItem1"
-        android:title="profile"/>
+        android:id="@+id/profileIcon"
+        android:icon="@drawable/profile_icon"
+        android:title="Profile"/>
     <item
-        android:id="@+id/miItem2"
-        android:title="setting"/>
+        android:id="@+id/settingIcon"
+        android:icon="@drawable/setting_icon"
+        android:title="Setting"/>
     <item
-        android:id="@+id/miItem3"
-        android:title="help"/>
+        android:id="@+id/helpIcon"
+        android:icon="@drawable/help_icon"
+        android:title="Help"/>
 </menu>
