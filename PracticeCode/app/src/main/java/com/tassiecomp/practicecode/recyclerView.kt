@@ -1,14 +1,18 @@
 package com.tassiecomp.practicecode
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
+
 class recyclerView : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerAdapter: RecyclerAdapter
+
 
     private var countryList = mutableListOf<String>()
     private var displayList = mutableListOf<String>()
@@ -39,6 +43,8 @@ class recyclerView : AppCompatActivity() {
         val itemTouchedHelper = ItemTouchHelper(simpleCallback)
         itemTouchedHelper.attachToRecyclerView(recyclerView)
 
+
+
     }
 
     private var simpleCallback = object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP.or(ItemTouchHelper.DOWN),0){
@@ -60,5 +66,4 @@ class recyclerView : AppCompatActivity() {
         }
     }
 
-    private SharedPre
 }
