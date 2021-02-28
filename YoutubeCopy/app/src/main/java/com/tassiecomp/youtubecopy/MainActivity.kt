@@ -21,22 +21,29 @@ class MainActivity() : AppCompatActivity() {
         fetchJson()
     }
 
+    //connecting json
     fun fetchJson() {
         println("Attempting to Fetch JSON")
 
+        //1. create value of url
         val url = "https://api.letsbuildthatapp.com/youtube/home_feed"
 
+        //2. downloading url(it's on okhttp instruction)
         val request = Request.Builder().url(url).build()
         val client = OkHttpClient()
+
+
         client.newCall(request).enqueue(object : Callback {
             override fun onResponse(call: Call, response: Response) {
                 //body로 url에서 json파일을 가져왔다.
-                val body = response.body?.string()
+                val body = response.body?.string() //it brings contents in json file in string
                 println(body)
 
+                //now we have to convert JSON to readable
                 val gson = GsonBuilder().create()
 
-                val homeFeed = gson.fromJson(body, HomeFeed::class.java)
+                //by using gson.fromJson body string is changing to Gson
+                val homeFeed = gson.fromJson(body, Models.HomeFeed::class.java)
 
 
 
@@ -52,23 +59,20 @@ class MainActivity() : AppCompatActivity() {
         })
     }
 }
-//"videos": [
-//{
-//    "id": 1,
-//    "name": "Instagram Firebase - Learn How to Create Users, Follow, and Send Push Notifications",
-//    "link": "https://www.letsbuildthatapp.com/course/instagram-firebase",
-//    "imageUrl": "https://letsbuildthatapp-videos.s3-us-west-2.amazonaws.com/04782e30-d72a-4917-9d7a-c862226e0a93",
-//    "numberOfViews": 20000,
-//    "channel": {
-//    "name": "Lets Build That App",
-//    "profileImageUrl": "https://letsbuildthatapp-videos.s3-us-west-2.amazonaws.com/dda5bc77-327f-4944-8f51-ba4f3651ffdf",
-//    "numberOfSubscribers": 100000
-//}
-//}
 
 
-class HomeFeed(val videos: List<Video>)
+// converting json file to int and strings
+// but how do we convert this?? -> use GSON Library
 
-class Video(val id: Int, val name: String, val link: String, val imageUrl: String, numberOfViews: Int, val channel: Channel)
+//    class HomeFeed(val videos: List<Video>)
 
-class Channel(val name:String, val profileImageUrl: String)
+// now we are trying to bring all the component of video list
+
+//    class Video(val id: Int, val name: String, val link: String, val imageUrl: String, numberOfViews: Int,
+//    val channel: Channel)
+
+// you have to mention channel here
+// make another class for channel too
+
+//    class Channel(val name:String, val profileImageUrl: String)
+
