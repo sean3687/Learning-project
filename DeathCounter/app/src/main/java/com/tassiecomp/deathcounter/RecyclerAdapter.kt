@@ -27,7 +27,7 @@ class RecyclerAdapter(countryList: MutableList<String>): RecyclerView.Adapter<Re
         return countries.size
     }
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemTitle: TextView
         var itemImage: ImageView
 
@@ -35,9 +35,14 @@ class RecyclerAdapter(countryList: MutableList<String>): RecyclerView.Adapter<Re
             itemImage = itemView.findViewById(R.id.itemImage)
             itemTitle = itemView.findViewById(R.id.itemTitle)
 
-            itemView.setOnClickListener{
+            itemView.setOnClickListener {
                 val position: Int = adapterPosition
-                Toast.makeText(itemView.context, "you clicked on ${countries[position]}", Toast.LENGTH_LONG)
+                Toast.makeText(
+                    itemView.context,
+                    "you clicked on ${countries[position]}",
+                    Toast.LENGTH_LONG
+                )
             }
         }
     }
+}

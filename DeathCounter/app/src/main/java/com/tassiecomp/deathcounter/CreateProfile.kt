@@ -24,11 +24,20 @@ open class CreateProfile : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_profile)
 
+        val numberFromMain = intent.getIntExtra("from", 0)
+        Log.d("TAG-CreateProfile", "$numberFromMain")
+        if (numberFromMain == 0) {
+            title_create.text = "Create Profile"
+        } else {
+            title_create.text = "Edit Profile"
+            Save_create.text = "Done"
+
+        }
         Log.d("TAG", "Create profile activity loaded")
 
 
         Save_create.setOnClickListener {
-            Log.d("TAG"," button clicked")
+            Log.d("TAG", " button clicked")
             val userName = username_create.text.toString()
             val userAge = userAge_create.text.toString()
             val userDie = dieDate_create.text.toString()
