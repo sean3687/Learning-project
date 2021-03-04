@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.activity_create_profile.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.math.BigDecimal
 import java.math.RoundingMode
-import java.sql.Time
 
 
 class MainActivity : AppCompatActivity() {
@@ -112,16 +111,20 @@ class MainActivity : AppCompatActivity() {
 
         //stopped at bring percentage from cal culate milisecond function
         my_life_left.setOnClickListener{
-            val ProgressbarPercent = calculateMilisecond(a)
+            val ProgressbarLifePercent = calculateMilisecond().lifePercent
+            val ProgressbarLifeSecond = calculateMilisecond().life
 
-            circularProgressBar.setProgressWithAnimation(ProgressbarPercent, 1000)
+
+            circularProgressBar.setProgressWithAnimation(ProgressbarLifePercent, 1000)
+
 
         }
 
 
     }
 
-    fun calculateMilisecond(): TimeData<Float,Int> {
+
+    fun calculateMilisecond(): TimeData {
         val sharedPreference = getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
         val savedUserAge = sharedPreference.getInt("userAge", 0)
         val savedDieAge = sharedPreference.getInt("userDie", 0)
@@ -132,18 +135,22 @@ class MainActivity : AppCompatActivity() {
         Log.d("Calculate", "remain:$remain")
 
         //this year end in this milisecond
-        val UntilYearEnd = (31556952000-currentTimestamp.rem(31556952000)).toInt()
-        Log.d("Calculate", "UntilYearEnd:$UntilYearEnd")
+        val RemainYear = (31556952000-currentTimestamp.rem(31556952000))
+        Log.d("Calculate", "UntilYearEnd:$RemainYear")
+
+        val myYearPercent =(100 - (BigDecimal(RemainYear.toDouble() / (31556952000)*100).setScale(2, RoundingMode.HALF_EVEN)).toInt()).toFloat()
+        Log.d("Calculate", "myYearPercent:$myYearPercent")
 
         //remianing milisecond
-        val RemainAge = UntilYearEnd +(savedDieAge - savedUserAge)*31556952000
+        val RemainAge = RemainYear +(savedDieAge - savedUserAge)*31556952000
         Log.d("Calculate", "dieAge:$RemainAge")
 
         //i m 30% done in my life
-        val myProgressPercent = (100 - (BigDecimal(RemainAge.toDouble() / (savedDieAge*31556952000)*100).setScale(2, RoundingMode.HALF_EVEN)).toInt()).toFloat()
+        val myLifePercent = (100 - (BigDecimal(RemainAge.toDouble() / (savedDieAge*31556952000)*100).setScale(2, RoundingMode.HALF_EVEN)).toInt()).toFloat()
 //            (dieAge/(savedDieAge*31556952000)*100)
-        Log.d("Calculate", "$myProgressPercent")
+        Log.d("Calculate", "$myLifePercent")
 
+        return TimeData(RemainAge,myLifePercent,RemainYear,myYearPercent)
     }
 
 
@@ -156,6 +163,8 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+//life reamingin milisecond,
+data class TimeData(val life: Long, val lifePercent: Float, val year: Long, val yearPercent: Float)
 
 
 //fun main(args:Array<String>){

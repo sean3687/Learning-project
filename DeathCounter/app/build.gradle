@@ -47,4 +47,7 @@ dependencies {
 
     //progress bar
     implementation 'com.mikhaellopez:circularprogressbar:3.0.3'
+
+    //countdown
+    implementation 'com.github.iwgang:countdownview:2.1.6'
 }
