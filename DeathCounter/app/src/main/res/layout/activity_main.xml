@@ -20,6 +20,7 @@
             android:layout_weight="1"
             android:background="@drawable/main_title_background_shape"
             android:orientation="vertical">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp">
@@ -46,6 +47,62 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    app:layout_constraintEnd_toEndOf="@+id/circularProgressBar"
+                    app:layout_constraintStart_toStartOf="@+id/circularProgressBar"
+                    app:layout_constraintTop_toTopOf="@+id/circularProgressBar">
+
+                    <TextView
+                        android:id="@+id/statement_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="My life end in"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toTopOf="@+id/countdownView_title"
+                        app:layout_constraintEnd_toEndOf="@+id/countdownView_title"
+                        app:layout_constraintStart_toStartOf="@+id/countdownView_title" />
+                    <cn.iwgang.countdownview.CountdownView
+                        android:id="@+id/countdownView_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:isHideTimeBackground="true"
+                        app:isShowDay="true"
+                        app:isShowHour="true"
+                        app:isShowMillisecond="false"
+                        app:isShowMinute="false"
+                        app:isShowSecond="false"
+                        app:isTimeTextBold="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:suffixGravity="bottom"
+                        app:suffixDay="d"
+                        app:suffixHour="h"
+                        app:suffixMillisecond="ms"
+                        app:suffixMinute="m"
+                        app:suffixSecond="s"
+                        app:suffixTextColor="#FFFFFF"
+                        app:suffixTextSize="20dp"
+                        app:timeTextColor="#FFFFFF"
+                        app:timeTextSize="30dp" />
+
+                    <TextView
+                        android:id="@+id/Percent_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="46%"
+                        android:textColor="@color/black"
+                        android:textSize="30dp"
+                        app:layout_constraintEnd_toEndOf="@+id/countdownView_title"
+                        app:layout_constraintStart_toStartOf="@+id/countdownView_title"
+                        app:layout_constraintTop_toBottomOf="@+id/countdownView_title" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout"
@@ -145,6 +202,7 @@
                         app:layout_constraintStart_toStartOf="@+id/my_week_left"
                         app:layout_constraintTop_toBottomOf="@+id/my_week_left" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

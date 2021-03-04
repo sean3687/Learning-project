@@ -114,8 +114,9 @@ class MainActivity : AppCompatActivity() {
             val ProgressbarLifePercent = calculateMilisecond().lifePercent
             val ProgressbarLifeSecond = calculateMilisecond().life
 
-
             circularProgressBar.setProgressWithAnimation(ProgressbarLifePercent, 1000)
+            countdownView_title.start(ProgressbarLifeSecond)
+            Percent_title.text = "${ProgressbarLifePercent}%"
 
 
         }
