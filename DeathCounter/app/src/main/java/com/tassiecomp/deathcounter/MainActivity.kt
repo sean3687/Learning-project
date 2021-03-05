@@ -12,8 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import kotlinx.android.synthetic.main.activity_create_profile.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
+import java.lang.Math.round
 import java.math.BigDecimal
 import java.math.RoundingMode
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -31,19 +34,19 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val intent = Intent(this@MainActivity, CreateProfile::class.java)
-        intent.putExtra("from",1)
+        intent.putExtra("from", 1)
 
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.profileIcon ->
-                startActivity(intent)
+                    startActivity(intent)
 
 
                 R.id.settingIcon -> Toast.makeText(
                     applicationContext,
                     "Clicked setting", Toast.LENGTH_SHORT
                 ).show()
-                R.id.helpIcon-> Toast.makeText(
+                R.id.helpIcon -> Toast.makeText(
                     applicationContext,
                     "Clicked help", Toast.LENGTH_SHORT
                 ).show()
@@ -67,7 +70,7 @@ class MainActivity : AppCompatActivity() {
             savedUserName === null -> {
                 Log.d("TAG", "Empty")
                 val intent = Intent(this@MainActivity, CreateProfile::class.java)
-                intent.putExtra("from",0)
+                intent.putExtra("from", 0)
                 startActivity(intent)
 
             }
@@ -109,19 +112,57 @@ class MainActivity : AppCompatActivity() {
             progressDirection = CircularProgressBar.ProgressDirection.TO_RIGHT
         }
 
+        //initial setup
+        CalculateLife()
+
         //stopped at bring percentage from cal culate milisecond function
-        my_life_left.setOnClickListener{
-            val ProgressbarLifePercent = calculateMilisecond().lifePercent
-            val ProgressbarLifeSecond = calculateMilisecond().life
+        my_life_left.setOnClickListener {
+            CalculateLife()
+        }
 
-            circularProgressBar.setProgressWithAnimation(ProgressbarLifePercent, 1000)
-            countdownView_title.start(ProgressbarLifeSecond)
-            Percent_title.text = "${ProgressbarLifePercent}%"
+        my_year_left.setOnClickListener {
+            CalculateYear()
+        }
 
-
+        my_month_left.setOnClickListener{
+            CalculateMonth()
         }
 
 
+
+    }
+
+    fun CalculateLife() {
+        val ProgressbarLifePercent = calculateMilisecond().lifePercent.toFloat()
+        val ProgressbarLifeSecond = calculateMilisecond().life
+
+        circularProgressBar.setProgressWithAnimation(ProgressbarLifePercent, 1000)
+        countdownView_title.start(ProgressbarLifeSecond)
+        Percent_title.text = "${ProgressbarLifePercent}%"
+        statement_title.text= "My Life end in"
+
+    }
+
+    fun CalculateYear() {
+        val ProgressbarYearPercent = calculateMilisecond().yearPercent.toFloat()
+        val ProgressbarYearSecond = calculateMilisecond().year.toFloat()
+
+        circularProgressBar.setProgressWithAnimation(ProgressbarYearPercent, 1000)
+        countdownView_title.start(ProgressbarYearSecond.toLong())
+        Percent_title.text = "${ProgressbarYearPercent}%"
+        statement_title.text= "Year end in"
+
+
+    }
+
+    fun CalculateMonth() {
+        val ProgressbarMonthPercent = calculateMilisecond().monthPercent.toFloat()
+        val ProgressbarMonthSecond = calculateMilisecond().month.toFloat()
+
+        circularProgressBar.setProgressWithAnimation(ProgressbarMonthPercent, 1000)
+        countdownView_title.start(ProgressbarMonthSecond.toLong())
+        Percent_title.text = "${ProgressbarMonthPercent}%"
+        statement_title.text= "This Month end in"
     }
 
 
@@ -130,28 +171,49 @@ class MainActivity : AppCompatActivity() {
         val savedUserAge = sharedPreference.getInt("userAge", 0)
         val savedDieAge = sharedPreference.getInt("userDie", 0)
         val currentTimestamp = System.currentTimeMillis()//지금시간
-        Log.d("Calculate", "currentTimestamp:$currentTimestamp")
+        val lastdayOfMonth = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH).toLong()//get last day of month
+        val thismonthMilisecond = lastdayOfMonth * 86400000// 1day is 86400000 milisecond
+
 
         val remain = currentTimestamp.rem(31556952000)
         Log.d("Calculate", "remain:$remain")
 
         //this year end in this milisecond
-        val RemainYear = (31556952000-currentTimestamp.rem(31556952000))
+        val RemainYear = (31556952000 - currentTimestamp.rem(31556952000))
         Log.d("Calculate", "UntilYearEnd:$RemainYear")
 
-        val myYearPercent =(100 - (BigDecimal(RemainYear.toDouble() / (31556952000)*100).setScale(2, RoundingMode.HALF_EVEN)).toInt()).toFloat()
+        val myYearPercent =
+            ((BigDecimal(100 -RemainYear.toDouble() / (31556952000) * 100).setScale(
+                1,
+                RoundingMode.HALF_EVEN
+            )).toFloat()).toDouble()
         Log.d("Calculate", "myYearPercent:$myYearPercent")
 
         //remianing milisecond
-        val RemainAge = RemainYear +(savedDieAge - savedUserAge)*31556952000
+        val RemainAge = RemainYear + (savedDieAge - savedUserAge) * 31556952000
         Log.d("Calculate", "dieAge:$RemainAge")
 
-        //i m 30% done in my life
-        val myLifePercent = (100 - (BigDecimal(RemainAge.toDouble() / (savedDieAge*31556952000)*100).setScale(2, RoundingMode.HALF_EVEN)).toInt()).toFloat()
+        // 30% done in my life
+        val myLifePercent =
+            ((BigDecimal(100-RemainAge.toDouble() / (savedDieAge * 31556952000) * 100).setScale(
+                1,
+                RoundingMode.HALF_EVEN
+            )).toFloat()).toDouble()
 //            (dieAge/(savedDieAge*31556952000)*100)
-        Log.d("Calculate", "$myLifePercent")
+        Log.d("Calculate", "myLifePercent:$myLifePercent")
 
-        return TimeData(RemainAge,myLifePercent,RemainYear,myYearPercent)
+        //3000second left until this month end
+        val RemainMonth = 2629746000 - currentTimestamp.rem( 2629746000 ) //time right now/ this month will left out days from beginning
+        Log.d("Calculate", "RemainMonth:$RemainMonth")
+
+        val myMonthPercent =  ((BigDecimal(100-(RemainMonth.toDouble() / thismonthMilisecond * 100)).setScale(
+            1,
+            RoundingMode.HALF_EVEN
+        )).toFloat()).toDouble()
+
+        Log.d("Calculate", "myMonthPercent:$myMonthPercent")
+
+        return TimeData(RemainAge, myLifePercent, RemainYear, myYearPercent, RemainMonth, myMonthPercent)
     }
 
 
@@ -164,8 +226,9 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+
 //life reamingin milisecond,
-data class TimeData(val life: Long, val lifePercent: Float, val year: Long, val yearPercent: Float)
+data class TimeData(val life: Long, val lifePercent: Double, val year: Long, val yearPercent: Double, val month:Long, val monthPercent:Double)
 
 
 //fun main(args:Array<String>){
@@ -179,6 +242,7 @@ data class TimeData(val life: Long, val lifePercent: Float, val year: Long, val 
 //    println("$num")
 //    println("percent: $c")
 //}
+
 
 
 

@@ -61,13 +61,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:text="My life end in"
-                        android:textColor="@color/white"
+                        android:textColor="#292929"
                         app:layout_constraintBottom_toTopOf="@+id/countdownView_title"
                         app:layout_constraintEnd_toEndOf="@+id/countdownView_title"
                         app:layout_constraintStart_toStartOf="@+id/countdownView_title" />
                     <cn.iwgang.countdownview.CountdownView
                         android:id="@+id/countdownView_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:isHideTimeBackground="true"
                         app:isShowDay="true"
@@ -81,15 +81,17 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:suffixGravity="bottom"
-                        app:suffixDay="d"
+                        app:suffixDay="D"
                         app:suffixHour="h"
                         app:suffixMillisecond="ms"
                         app:suffixMinute="m"
                         app:suffixSecond="s"
-                        app:suffixTextColor="#FFFFFF"
-                        app:suffixTextSize="20dp"
-                        app:timeTextColor="#FFFFFF"
-                        app:timeTextSize="30dp" />
+                        app:suffixTextColor="#000000"
+                        app:suffixTextSize="25dp"
+                        app:timeTextColor="#000000"
+                        app:timeTextSize="30dp"
+                        android:textAlignment="viewEnd"
+                        />
 
                     <TextView
                         android:id="@+id/Percent_title"
