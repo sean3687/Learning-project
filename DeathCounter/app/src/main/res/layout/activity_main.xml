@@ -65,33 +65,16 @@
                         app:layout_constraintBottom_toTopOf="@+id/countdownView_title"
                         app:layout_constraintEnd_toEndOf="@+id/countdownView_title"
                         app:layout_constraintStart_toStartOf="@+id/countdownView_title" />
-                    <cn.iwgang.countdownview.CountdownView
+
+                    <TextView
                         android:id="@+id/countdownView_title"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:isHideTimeBackground="true"
-                        app:isShowDay="true"
-                        app:isShowHour="true"
-                        app:isShowMillisecond="false"
-                        app:isShowMinute="false"
-                        app:isShowSecond="false"
-                        app:isTimeTextBold="true"
+                        android:text="days"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:suffixGravity="bottom"
-                        app:suffixDay="D"
-                        app:suffixHour="h"
-                        app:suffixMillisecond="ms"
-                        app:suffixMinute="m"
-                        app:suffixSecond="s"
-                        app:suffixTextColor="#000000"
-                        app:suffixTextSize="25dp"
-                        app:timeTextColor="#000000"
-                        app:timeTextSize="30dp"
-                        android:textAlignment="viewEnd"
-                        />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/Percent_title"

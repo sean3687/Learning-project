@@ -17,6 +17,7 @@ import java.lang.Math.round
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.util.*
+import kotlin.time.minutes
 
 
 class MainActivity : AppCompatActivity() {
@@ -135,11 +136,21 @@ class MainActivity : AppCompatActivity() {
     fun CalculateLife() {
         val ProgressbarLifePercent = calculateMilisecond().lifePercent.toFloat()
         val ProgressbarLifeSecond = calculateMilisecond().life
+        val yearLeft = ProgressbarLifeSecond/31556926000 //1년을 나눈 몫 //몇년 남았는지
+        val daysLeft = ((ProgressbarLifeSecond.rem(31556926000)).rem(2629746000))/86400000 //나머지에 1달을 나눈다.// 몇달남았는지//몇일 남았는지//몇일로 보이기
+        val hoursLeft =(((ProgressbarLifeSecond.rem(31556926000)).rem(2629746000)).rem(86400000))/3600000
+        when {
+            yearLeft.toInt() == 0 -> {
+                if (hoursLeft.toInt() ==0){
+                    countdownView_title.text = "1 Hour remain"
+                } else {
+                    countdownView_title.text = "$daysLeft"
+                }
+            }
 
+        }
         circularProgressBar.setProgressWithAnimation(ProgressbarLifePercent, 1000)
-        countdownView_title.start(ProgressbarLifeSecond)
-        Percent_title.text = "${ProgressbarLifePercent}%"
-        statement_title.text= "My Life end in"
+
 
     }
 
@@ -148,10 +159,9 @@ class MainActivity : AppCompatActivity() {
         val ProgressbarYearSecond = calculateMilisecond().year.toFloat()
 
         circularProgressBar.setProgressWithAnimation(ProgressbarYearPercent, 1000)
-        countdownView_title.start(ProgressbarYearSecond.toLong())
+        countdownView_title.setText("${ProgressbarYearSecond}")
         Percent_title.text = "${ProgressbarYearPercent}%"
         statement_title.text= "Year end in"
-
 
     }
 
@@ -160,14 +170,17 @@ class MainActivity : AppCompatActivity() {
         val ProgressbarMonthSecond = calculateMilisecond().month.toFloat()
 
         circularProgressBar.setProgressWithAnimation(ProgressbarMonthPercent, 1000)
-        countdownView_title.start(ProgressbarMonthSecond.toLong())
         Percent_title.text = "${ProgressbarMonthPercent}%"
         statement_title.text= "This Month end in"
     }
 
+    fun CalculateWeek(){
+
+    }
+
 
     fun calculateMilisecond(): TimeData {
-        val sharedPreference = getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
+        val sharedPreference = getSharedPreferences("Crea teProfile", Context.MODE_PRIVATE)
         val savedUserAge = sharedPreference.getInt("userAge", 0)
         val savedDieAge = sharedPreference.getInt("userDie", 0)
         val currentTimestamp = System.currentTimeMillis()//지금시간
@@ -180,7 +193,7 @@ class MainActivity : AppCompatActivity() {
 
         //this year end in this milisecond
         val RemainYear = (31556952000 - currentTimestamp.rem(31556952000))
-        Log.d("Calculate", "UntilYearEnd:$RemainYear")
+        Log.d("Calculate", "RemainYear:$RemainYear")
 
         val myYearPercent =
             ((BigDecimal(100 -RemainYear.toDouble() / (31556952000) * 100).setScale(
@@ -191,7 +204,7 @@ class MainActivity : AppCompatActivity() {
 
         //remianing milisecond
         val RemainAge = RemainYear + (savedDieAge - savedUserAge) * 31556952000
-        Log.d("Calculate", "dieAge:$RemainAge")
+        Log.d("Calculate", "RemainAge:$RemainAge")
 
         // 30% done in my life
         val myLifePercent =
@@ -231,7 +244,14 @@ class MainActivity : AppCompatActivity() {
 data class TimeData(val life: Long, val lifePercent: Double, val year: Long, val yearPercent: Double, val month:Long, val monthPercent:Double)
 
 
-//fun main(args:Array<String>){
+
+
+
+fun main(args:Array<String>){
+    val a = 1
+    val c = a.rem(2)
+    println(c)
+}
 //    val a = 20
 //    val b = 7
 //    val c = BigDecimal((a%b)/20).setScale(2, RoundingMode.HALF_EVEN)
@@ -242,7 +262,3 @@ data class TimeData(val life: Long, val lifePercent: Double, val year: Long, val
 //    println("$num")
 //    println("percent: $c")
 //}
-
-
-
-
