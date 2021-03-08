@@ -1,0 +1,2 @@
+rootProject.name = "Testing data picker"
+include ':app'

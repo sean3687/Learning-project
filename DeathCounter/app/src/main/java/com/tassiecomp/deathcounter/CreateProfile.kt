@@ -16,6 +16,7 @@ import java.io.FileOutputStream
 import java.lang.Double.parseDouble
 import java.sql.ResultSetMetaData
 import java.util.*
+import javax.xml.datatype.DatatypeConstants.MONTHS
 
 open class CreateProfile : AppCompatActivity() {
 
@@ -39,20 +40,41 @@ open class CreateProfile : AppCompatActivity() {
 
 
 //when you click edit text area of date assigning part, you datepicker dialog will show up
-        userAge_create.setOnClickListener(){
+        userAge_create.setOnClickListener() {
 
         }
 
-        dieDate_create.setOnClickListener(){
+        dieDate_create.setOnClickListener() {
 
         }
 
+        //calender setup
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+
+        val dpd = DatePickerDialog(
+            this@CreateProfile,
+            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+
+                // Display Selected date in textbox
+                userAge_create.setText("$dayOfMonth/$monthOfYear/$year)"
+
+            },
+            year,
+            month,
+            day
+        )
+        dpd.datePicker.maxDate = 10
+        dpd.show()
 
 
         Save_create.setOnClickListener {
             Log.d("TAG", " button clicked")
             val userName = username_create.text.toString()
-            val userAge  = userAge_create.text.toString()
+            val userAge = userAge_create.text.toString()
             val userDie = dieDate_create.text.toString()
 
 
@@ -82,6 +104,7 @@ open class CreateProfile : AppCompatActivity() {
 
 
     }
+
 
     //save button function
 
