@@ -1,6 +1,5 @@
 package com.tassiecomp.deathcounter
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -8,15 +7,9 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.DatePicker
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_create_profile.*
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
-import java.lang.Double.parseDouble
-import java.sql.ResultSetMetaData
+import java.text.SimpleDateFormat
 import java.util.*
-import javax.xml.datatype.DatatypeConstants.MONTHS
 
 open class CreateProfile : AppCompatActivity() {
 
@@ -40,58 +33,92 @@ open class CreateProfile : AppCompatActivity() {
 
 
 //when you click edit text area of date assigning part, you datepicker dialog will show up
-        userAge_create.setOnClickListener() {
 
-        }
-
-        dieDate_create.setOnClickListener() {
-
-        }
-
-        //calender setup
+        //Datepicker Dialog setup
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
+        calanderButton_create.setOnClickListener() {
+            val dpd = DatePickerDialog(
+                this@CreateProfile,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
+                    // Display Selected date in textbox
+                    birthDay_create.setText("$year-${monthOfYear + 1}-$dayOfMonth")
+                    c.set(Calendar.YEAR, year)
+                    c.set(Calendar.MONTH, monthOfYear)
+                    c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-        val dpd = DatePickerDialog(
-            this@CreateProfile,
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                },
+                year,
+                month,
+                day
+            )
+            dpd.show()
 
-                // Display Selected date in textbox
-                userAge_create.setText("$dayOfMonth/$monthOfYear/$year)"
+        }
 
-            },
-            year,
-            month,
-            day
-        )
-        dpd.datePicker.maxDate = 10
-        dpd.show()
 
 
         Save_create.setOnClickListener {
             Log.d("TAG", " button clicked")
             val userName = username_create.text.toString()
-            val userAge = userAge_create.text.toString()
-            val userDie = dieDate_create.text.toString()
+            val userAge = birthDay_create.text.toString()
+            val userDie = dieAge_Create.text.toString()
+            val dieAge = dieAge_Create.text.toString().toInt()
+            var sf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
+
+            //set birthDate
+            val BirthDate =
+                "${c.get(Calendar.YEAR)}-${c.get(Calendar.MONTH) + 1}-${c.get(Calendar.DAY_OF_MONTH)} 00:00:00"
+            Log.d("save", "BirthDate: $BirthDate")
+            //set DieDate
+            val dieAge_date =
+                "${c.get(Calendar.YEAR) + dieAge}-${c.get(Calendar.MONTH) + 1}-${
+                    c.get(
+                        Calendar.DAY_OF_MONTH
+                    )
+                } 00:00:00"
+            val userAge_int = ((System.currentTimeMillis()- sf.parse(BirthDate).time )/31556952000).toInt()
+            Log.d("save","userAge_int: $userAge_int")
 
             // login error message
             when {
                 userName.isEmpty() -> notification.text = "User Name is empty"
-                userAge.isEmpty() -> notification.text = "Please set your age"
-                userDie.isEmpty() -> notification.text = "Please set die age "
+                userAge.isBlank() -> notification.text = "Please set your age"
+                userDie.isBlank() -> notification.text = "Please set die age "
 
                 //gotta compare two age in milisecond
-//                userDie.toInt() < userAge.toInt() -> notification.text =
-//                    "Your Age is bigger than die age"
 
+//              "Your Age is bigger than die age"
+                userAge_int > dieAge -> notification.text = "logically incorrect value"
 
                 else -> { //execute save button
 
-                    saveButton()
+                    //Convert into milisecond
+
+                    var Birthdate_milisecond = sf.parse(BirthDate).time
+                    Log.d("save", "Birthdate_milisecond: $Birthdate_milisecond")
+
+                    //convert into milisecond
+                    var dieDate_milisecond = sf.parse(dieAge_date).time
+                    Log.d("save", "dieDate_milisecond: $dieDate_milisecond")
+
+
+                    //save to shared preference
+                    val sharedPreference =
+                        getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
+                    val editor: SharedPreferences.Editor = sharedPreference.edit()
+                    editor.putString("userName", userName)
+                    editor.putString("DieDate", "${dieDate_milisecond}")
+                    editor.putString("BirthDate", "$Birthdate_milisecond")
+                    editor.commit()
+
+
+                    //open new activity
+
                     finish()
                     val intent = Intent(this@CreateProfile, MainActivity::class.java)
                     startActivity(intent)
@@ -102,31 +129,6 @@ open class CreateProfile : AppCompatActivity() {
 
         }
 
-
-    }
-
-
-    //save button function
-
-    open fun saveButton() {
-        val userName = username_create.text.toString()
-        //gotta save below value as milisecond
-//        val userAge = userAge_create.text.toString()
-//        val userDie = 80
-
-        Log.d("TAG", "username: $userName")
-//        Log.d("TAG", "userAge: $userAge")
-//        Log.d("TAG", "userDie: $userDie")
-
-        val sharedPreference = getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = sharedPreference.edit()
-
-        editor.putString("userName", userName)
-//        editor.putInt("userAge", userAge.toInt())
-//        editor.putInt("userDie", userDie.toInt())
-        editor.apply()
-
-        Log.d("TAG", "sharedPreference: $sharedPreference")
 
     }
 

@@ -31,30 +31,51 @@
         app:layout_constraintStart_toStartOf="@+id/title_create"
         app:layout_constraintTop_toBottomOf="@+id/title_create" />
 
-    <EditText
-        android:id="@+id/userAge_create"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="user Birth Day"
-        android:textSize="15dp"
-        android:maxLength="3"
         app:layout_constraintEnd_toEndOf="@+id/username_create"
         app:layout_constraintStart_toStartOf="@+id/username_create"
-        app:layout_constraintTop_toBottomOf="@+id/username_create" />
+        app:layout_constraintTop_toBottomOf="@+id/username_create">
+
+        <EditText
+            android:id="@+id/birthDay_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="set birthdate"
+            android:focusableInTouchMode="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/calanderButton_create"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/title_button_shape"
+            android:hint="Your Birthday"
+            android:maxLength="3"
+            android:src="@drawable/calender_icon"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/birthDay_create"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/birthDay_create" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <EditText
-        android:id="@+id/dieDate_create"
+        android:id="@+id/dieAge_Create"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="MM/DD/YYYY"
-        android:inputType="text|number"
-        android:textSize="15dp"
-        android:focusableInTouchMode="false"
+        android:hint="Die Age"
+        android:inputType="number"
         android:maxLength="3"
-        app:layout_constraintEnd_toEndOf="@+id/userAge_create"
-        app:layout_constraintStart_toStartOf="@+id/userAge_create"
-        app:layout_constraintTop_toBottomOf="@+id/userAge_create" />
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout2"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
     <TextView
         android:id="@+id/notification"
@@ -63,19 +84,19 @@
         android:gravity="center"
         android:text=""
         android:textColor="#FF4C4C"
-        app:layout_constraintEnd_toEndOf="@+id/dieDate_create"
-        app:layout_constraintStart_toStartOf="@+id/dieDate_create"
-        app:layout_constraintTop_toBottomOf="@+id/dieDate_create" />
+        app:layout_constraintEnd_toEndOf="@+id/dieAge_Create"
+        app:layout_constraintStart_toStartOf="@+id/dieAge_Create"
+        app:layout_constraintTop_toBottomOf="@+id/dieAge_Create" />
 
     <Button
         android:id="@+id/Save_create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Next"
+        android:background="@drawable/title_button_shape"
         app:layout_constraintEnd_toEndOf="@+id/notification"
         app:layout_constraintStart_toStartOf="@+id/notification"
         app:layout_constraintTop_toBottomOf="@+id/notification" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         //initial setup
-        CalculateLife()
+
 
         //stopped at bring percentage from cal culate milisecond function
         my_life_left.setOnClickListener {
@@ -180,13 +180,16 @@ class MainActivity : AppCompatActivity() {
 
 
     fun calculateMilisecond(): TimeData {
-        val sharedPreference = getSharedPreferences("Crea teProfile", Context.MODE_PRIVATE)
-        val savedUserAge = sharedPreference.getInt("userAge", 0)
-        val savedDieAge = sharedPreference.getInt("userDie", 0)
-        val currentTimestamp = System.currentTimeMillis()//지금시간
+        val sharedPreference = getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
+        val savedDieDate = sharedPreference.getInt("DieDate", 0)
+        val savedBirthDate = sharedPreference.getInt("BirthDate",0)//in milliseconds
+        val currentTimestamp = System.currentTimeMillis()//지금시간//in milliseconds
         val lastdayOfMonth = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH).toLong()//get last day of month
         val thismonthMilisecond = lastdayOfMonth * 86400000// 1day is 86400000 milisecond
-
+        val userAge = currentTimestamp - savedBirthDate
+        val userDieAge = (savedDieDate - savedBirthDate).toLong()
+        Log.d("save", "userAge:$userAge")
+        Log.d("save", "userDieAge:$userDieAge")
 
         val remain = currentTimestamp.rem(31556952000)
         Log.d("Calculate", "remain:$remain")
@@ -203,16 +206,15 @@ class MainActivity : AppCompatActivity() {
         Log.d("Calculate", "myYearPercent:$myYearPercent")
 
         //remianing milisecond
-        val RemainAge = RemainYear + (savedDieAge - savedUserAge) * 31556952000
+        val RemainAge = savedDieDate - currentTimestamp
         Log.d("Calculate", "RemainAge:$RemainAge")
 
         // 30% done in my life
         val myLifePercent =
-            ((BigDecimal(100-RemainAge.toDouble() / (savedDieAge * 31556952000) * 100).setScale(
+            (BigDecimal(1 / 3 * 100).setScale(
                 1,
                 RoundingMode.HALF_EVEN
-            )).toFloat()).toDouble()
-//            (dieAge/(savedDieAge*31556952000)*100)
+            )).toDouble()
         Log.d("Calculate", "myLifePercent:$myLifePercent")
 
         //3000second left until this month end
@@ -247,18 +249,18 @@ data class TimeData(val life: Long, val lifePercent: Double, val year: Long, val
 
 
 
-fun main(args:Array<String>){
-    val a = 1
-    val c = a.rem(2)
-    println(c)
-}
-//    val a = 20
-//    val b = 7
-//    val c = BigDecimal((a%b)/20).setScale(2, RoundingMode.HALF_EVEN)
+fun main(args:Array<String>) {
+//    val a = 1
+//    val c = a.rem(2)
+//    println(c)
+
+    val a = 2000000000000000000
+    val b = 70000000000
+    val c: BigDecimal = BigDecimal(a.toDouble() / b *100).setScale(2, RoundingMode.HALF_EVEN)
 //    val d =  BigDecimal(20.toDouble() / 7).setScale(2, RoundingMode.HALF_EVEN)
 //    val num = 3.toDouble() / 6
 //    println("$d")
 //    println(a%b)
 //    println("$num")
-//    println("percent: $c")
-//}
+    println("percent: $c")
+}

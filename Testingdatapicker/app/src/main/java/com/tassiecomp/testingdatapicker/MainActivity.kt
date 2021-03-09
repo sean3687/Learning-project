@@ -13,9 +13,6 @@ import java.util.*
 import android.widget.DatePicker
 
 
-
-
-
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +20,6 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPreference = getSharedPreferences("Birthdate", Context.MODE_PRIVATE)
         //this is initial date going to show when datepicker dialog is open
-
 
 
         //calender setup
@@ -56,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         save_button.setOnClickListener() {
             DatePicker.getDate()
-            log
+            Log.d()
             val BirthDate = "$year-${month + 1}-$day 00:00:00"
             var sf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
             var date = sf.parse(BirthDate)
