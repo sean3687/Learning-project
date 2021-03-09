@@ -176,7 +176,7 @@ class MainActivity : AppCompatActivity() {
 
     fun CalculateWeek(){
 
-    }
+    }d
 
 
     fun calculateMilisecond(): TimeData {
