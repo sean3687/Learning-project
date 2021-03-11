@@ -15,8 +15,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import java.math.BigDecimal
 import java.math.RoundingMode
+import java.time.LocalDate
 import java.util.*
-import kotlin.time.milliseconds
 
 
 class MainActivity : AppCompatActivity() {
@@ -157,7 +157,7 @@ class MainActivity : AppCompatActivity() {
     fun CalculateYear() {
         val ProgressbarYearPercent = calculateMilisecond().yearPercent.toFloat()
         val ProgressbarYearSecond = calculateMilisecond().year
-        val daysLeft = (ProgressbarYearSecond/ 86400000)
+        val daysLeft = (ProgressbarYearSecond / 86400000)
         if (daysLeft.toInt() == 1) {
             countdownView_title.setText("${daysLeft}Day")
         } else {
@@ -178,7 +178,7 @@ class MainActivity : AppCompatActivity() {
     fun CalculateMonth() {
         val ProgressbarMonthPercent = calculateMilisecond().monthPercent.toFloat()
         val ProgressbarMonthSecond = calculateMilisecond().month
-        val daysLeft = ProgressbarMonthSecond/86400000
+        val daysLeft = ProgressbarMonthSecond / 86400000
 
         if (daysLeft.toInt() == 1) {
             countdownView_title.setText("${daysLeft}Day")
@@ -196,24 +196,40 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun CalculateWeek() {
+        val ProgressbarWeekPercent = calculateMilisecond().weekPercent.toFloat()
+        val ProgressbarWeekSecond = calculateMilisecond().week
 
     }
 
 
     fun calculateMilisecond(): TimeData {
+        //Units
+        val dayinMilli = 86400000
         val yearinMilli = 31556952000
-        val lastdayOfMonth = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH)
-        Log.d("Month1", "this month$lastdayOfMonth")
-        val calendar = Calendar.getInstance()
-        val monthinMilli =calendar.
         val currentTimestamp = System.currentTimeMillis()//지금시간//in milliseconds
-        Log.d("Month1", "this month$monthinMilli")
+        //value for month
+        val currentDayOfMonth = Calendar.getInstance().get(Calendar.DAY_OF_MONTH).toLong()
+        val lastdayOfMonth = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH).toLong()
+        val thismonthMillisecond = (lastdayOfMonth * dayinMilli)
+        val currentDayMillisecond = (currentDayOfMonth * dayinMilli)
+
+        //value for week
+        val now = currentTimestamp.
+        val firstday =
+        Log.d("week", "$firstday")
+        var today =
+        var weekStart: LocalDate = today.dayOfWeek().withMinimumValue()
+        var weekEnd: LocalDate = today.dayOfWeek().withMaximumValue()
+
+        //
+
+
         //shared Preference
         var sharedPreference = getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
         val userBirth_mili = sharedPreference.getLong("Birthday_Millis", 1)
         val userDie_mili = sharedPreference.getLong("Die_Millis", 1)
         //get last day of month
-        val thismonthMilisecond = lastdayOfMonth * 86400000// 1day is 86400000 milisecond
+
 
         Log.d("Calculate", "userBrith_mili = $userBirth_mili")
         Log.d("Calculate", "userDie_mili = $userDie_mili")
@@ -245,13 +261,11 @@ class MainActivity : AppCompatActivity() {
 
 
         //MONTH
-
-
-        val RemainMonth = monthinMilli - currentTimestamp.rem(monthinMilli)
+        val RemainMonth = (thismonthMillisecond - currentDayMillisecond)
         Log.d("Calculate", "RemainMonth:$RemainMonth")
 
         val myMonthPercent =
-            ((BigDecimal(100 - (RemainMonth.toDouble() / thismonthMilisecond * 100)).setScale(
+            ((BigDecimal(100 - (RemainMonth.toDouble() / thismonthMillisecond * 100)).setScale(
                 1,
                 RoundingMode.HALF_EVEN
             )).toFloat()).toDouble()
@@ -259,6 +273,8 @@ class MainActivity : AppCompatActivity() {
         //MONTH END
 
         //WEEK
+        val RemainWeek =(1000000000).toLong()
+            val myWeekPercent =(2).toDouble()
         //WEKK END
 
         return TimeData(
@@ -267,7 +283,9 @@ class MainActivity : AppCompatActivity() {
             RemainYear,
             myYearPercent,
             RemainMonth,
-            myMonthPercent
+            myMonthPercent,
+            RemainWeek,
+            myWeekPercent
         )
     }
 
@@ -289,7 +307,9 @@ data class TimeData(
     val year: Long,
     val yearPercent: Double,
     val month: Long,
-    val monthPercent: Double
+    val monthPercent: Double,
+    val week: Long,
+    val weekPercent: Double
 )
 
 
@@ -309,4 +329,5 @@ fun main(args: Array<String>) {
     println("percent: $c")
 
 }
+
 

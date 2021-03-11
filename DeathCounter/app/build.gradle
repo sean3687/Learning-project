@@ -53,4 +53,7 @@ dependencies {
 
     //data picker
     implementation 'com.afollestad:date-picker:0.6.1'
+
+    //Joda Time
+    implementation 'joda-time:joda-time:2.10.10'
 }
