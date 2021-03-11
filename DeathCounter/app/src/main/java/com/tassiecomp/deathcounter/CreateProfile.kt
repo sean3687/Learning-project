@@ -34,11 +34,22 @@ open class CreateProfile : AppCompatActivity() {
 
 //when you click edit text area of date assigning part, you datepicker dialog will show up
 
-        //Datepicker Dialog setup
-        val c = Calendar.getInstance()
-        val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
-        val day = c.get(Calendar.DAY_OF_MONTH)
+        //sharedPreference setup
+        val sharedPreference = getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPreference.edit()
+
+        //brithday Datepicker Dialog setup
+        val BirthCalander = Calendar.getInstance()
+        val Birth_year = BirthCalander.get(Calendar.YEAR)
+        val Birth_month = BirthCalander.get(Calendar.MONTH)
+        val Birth_day = BirthCalander.get(Calendar.DAY_OF_MONTH)
+
+        val DieCalander = Calendar.getInstance()
+        val Die_year = DieCalander.get(Calendar.YEAR)
+        val Die_month = DieCalander.get(Calendar.MONTH)
+        val Die_day = DieCalander.get(Calendar.DAY_OF_MONTH)
+
+
         calanderButton_create.setOnClickListener() {
             val dpd = DatePickerDialog(
                 this@CreateProfile,
@@ -46,17 +57,51 @@ open class CreateProfile : AppCompatActivity() {
 
                     // Display Selected date in textbox
                     birthDay_create.setText("$year-${monthOfYear + 1}-$dayOfMonth")
-                    c.set(Calendar.YEAR, year)
-                    c.set(Calendar.MONTH, monthOfYear)
-                    c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    val birthday: Calendar = Calendar.getInstance()
+                    birthday.set(year,monthOfYear,dayOfMonth)
 
-                },
-                year,
-                month,
-                day
+                    //shared preference
+                    var Birthday_Millis = birthday.timeInMillis
+                    editor.putLong("Birthday_Millis",Birthday_Millis)
+                    editor.apply()
+
+                }
+                ,
+                Birth_year,
+                Birth_month,
+                Birth_day
             )
             dpd.show()
+        }
 
+        calanderButton_create2.setOnClickListener() {
+            val dpd = DatePickerDialog(
+                this@CreateProfile,
+                DatePickerDialog.OnDateSetListener { view2, year, monthOfYear, dayOfMonth ->
+
+                    //set text on edit box
+                    dieAge_Create.setText("$year-${monthOfYear + 1}-$dayOfMonth")
+
+                    val dieday: Calendar = Calendar.getInstance()
+                    dieday.set(year,monthOfYear,dayOfMonth)
+                    var Dieday_Millis = dieday.timeInMillis //when you change to Int it occurs problem
+                    Log.d("save", "Die_Millis: $Dieday_Millis")
+
+                    val editor: SharedPreferences.Editor = sharedPreference.edit()
+                    editor.putLong("Die_Millis",Dieday_Millis) //정보를 넣는다.
+                    editor.commit()
+
+
+//                    MyApplication.sharedPreference.setInt("dieDay", Dieday_Millis)
+//                    val save = MyApplication.sharedPreference.getInt("dieDay", 0)
+//                    Log.d("save","sharedpreference saved: $save")
+
+                },
+                Die_year,
+                Die_month,
+                Die_day
+            )
+            dpd.show()
         }
 
 
@@ -65,57 +110,76 @@ open class CreateProfile : AppCompatActivity() {
             Log.d("TAG", " button clicked")
             val userName = username_create.text.toString()
             val userAge = birthDay_create.text.toString()
-            val userDie = dieAge_Create.text.toString()
-            val dieAge = dieAge_Create.text.toString().toInt()
-            var sf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            val userDie =
 
+            editor.putString("userName",userName)
+            editor.apply()
+
+            val Name = sharedPreference.getString("userName",null)
+            val userAge_mili = sharedPreference.getLong("Birthday_Millis",1)
+            val userDie_mili = sharedPreference.getLong("Die_Millis",1)
+
+            Log.d("save", "saved name = $Name")
+            Log.d("save", "saved userAge_mili = $userAge_mili")
+            Log.d("save", "saved userDie_mili = $userDie_mili")
 
             //set birthDate
-            val BirthDate =
-                "${c.get(Calendar.YEAR)}-${c.get(Calendar.MONTH) + 1}-${c.get(Calendar.DAY_OF_MONTH)} 00:00:00"
-            Log.d("save", "BirthDate: $BirthDate")
-            //set DieDate
-            val dieAge_date =
-                "${c.get(Calendar.YEAR) + dieAge}-${c.get(Calendar.MONTH) + 1}-${
-                    c.get(
-                        Calendar.DAY_OF_MONTH
-                    )
-                } 00:00:00"
-            val userAge_int = ((System.currentTimeMillis()- sf.parse(BirthDate).time )/31556952000).toInt()
-            Log.d("save","userAge_int: $userAge_int")
+//            val BirthDate =
+//                "${c.get(Calendar.YEAR)}-${c.get(Calendar.MONTH) + 1}-${c.get(Calendar.DAY_OF_MONTH)} 00:00:00"
+//            Log.d("save", "BirthDate: $BirthDate")
+//            //set DieDate
+//            val dieAge_date =
+//                "${c.get(Calendar.YEAR) + dieAge}-${c.get(Calendar.MONTH) + 1}-${
+//                    c.get(
+//                        Calendar.DAY_OF_MONTH
+//                    )
+//                } 00:00:00"
+//            Log.d("save", "dieAge_date: $dieAge_date")
+
+            //set userAge in Int
+//            val userAge_mili = (System.currentTimeMillis()- sf.parse(BirthDate).time ).toInt()
+//            val userAge_int = (BigDecimal(userAge_mili / 31556952000 * 100).setScale(
+//                1,
+//                RoundingMode.HALF_EVEN
+//            )).toDouble()
+
 
             // login error message
             when {
                 userName.isEmpty() -> notification.text = "User Name is empty"
-                userAge.isBlank() -> notification.text = "Please set your age"
-                userDie.isBlank() -> notification.text = "Please set die age "
+//                userAge.isBlank() -> notification.text = "Please set your age"
+//                userDie.isEmpty() -> notification.text = "Please set die age "
 
                 //gotta compare two age in milisecond
 
 //              "Your Age is bigger than die age"
-                userAge_int > dieAge -> notification.text = "logically incorrect value"
-
+//                userAge_int > dieAge -> notification.text = "logically incorrect value"
+//
                 else -> { //execute save button
-
-                    //Convert into milisecond
-
-                    var Birthdate_milisecond = sf.parse(BirthDate).time
-                    Log.d("save", "Birthdate_milisecond: $Birthdate_milisecond")
-
-                    //convert into milisecond
-                    var dieDate_milisecond = sf.parse(dieAge_date).time
-                    Log.d("save", "dieDate_milisecond: $dieDate_milisecond")
+                    Log.d("save", "logging in")
 
 
-                    //save to shared preference
-                    val sharedPreference =
-                        getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
-                    val editor: SharedPreferences.Editor = sharedPreference.edit()
-                    editor.putString("userName", userName)
-                    editor.putString("DieDate", "${dieDate_milisecond}")
-                    editor.putString("BirthDate", "$Birthdate_milisecond")
-                    editor.commit()
-
+//                    //Convert into milisecond
+//
+//                    var Birthdate_milisecond = sf.parse(BirthDate).time.toInt()
+//                    Log.d("save", "Birthdate_milisecond: $Birthdate_milisecond")
+//
+//                    //convert into milisecond
+//                    var dieDate_milisecond = sf.parse(dieAge_date).time.toInt()
+//                    Log.d("save", "dieDate_milisecond: $dieDate_milisecond")
+//
+//                    val userDieAge_mili = (dieDate_milisecond - Birthdate_milisecond).toInt()
+//                    Log.d("save","$userDieAge_mili")
+//
+//                    //save to shared preference
+//                    val sharedPreference =
+//                        getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
+//                    val editor: SharedPreferences.Editor = sharedPreference.edit()
+//
+//                    MyApplication.sharedPreference.setString("userName", userName)
+//                    MyApplication.sharedPreference.setInt("userAge", userAge_mili)
+//                    MyApplication.sharedPreference.setInt("userDieAge", userDieAge_mili)
+//
 
                     //open new activity
 
@@ -135,6 +199,13 @@ open class CreateProfile : AppCompatActivity() {
 
 }
 
+fun main(args: Array<String>) {
+    val BirthDate = "1998-11-11 00:00:00"
+    var sf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    var Birthdate_milisecond = sf.parse(BirthDate).time.toInt()
 
+    println(Birthdate_milisecond)
+
+}
 
 
