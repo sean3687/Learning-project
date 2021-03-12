@@ -5,17 +5,19 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import kotlinx.android.synthetic.main.activity_create_profile.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import java.math.BigDecimal
 import java.math.RoundingMode
-import java.time.LocalDate
 import java.util.*
 
 
@@ -54,6 +56,13 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+        //drawer menu button
+
+        main_openDrawer.setOnClickListener {
+
+            drawerlayout.openDrawer(GravityCompat.START)
+        }
+
 
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -82,7 +91,7 @@ class MainActivity : AppCompatActivity() {
             // Set Progress (setting up initial progress)
             progress = 0f
             // or with animation, show end progress with animation
-            setProgressWithAnimation(calculateMilisecond().lifePercent.toFloat(), 1000) // =1s
+            setProgressWithAnimation(45f, 1000) // =1s
 
             // Set Progress Max
             progressMax = 100f
@@ -120,6 +129,9 @@ class MainActivity : AppCompatActivity() {
         my_month_left.setOnClickListener {
             CalculateMonth()
         }
+        my_week_left.setOnClickListener {
+            CalculateWeek()
+        }
 
 
     }
@@ -137,7 +149,7 @@ class MainActivity : AppCompatActivity() {
             if (daysLeft.toInt() == 0) {
                 countdownView_title.setText("Are you there?")
             } else {
-                countdownView_title.setText("$${daysLeft}Days")
+                countdownView_title.setText("${daysLeft}Days") //여기 가문제
             }
         } else {
             if (daysLeft.toInt() == 0) {
@@ -197,7 +209,32 @@ class MainActivity : AppCompatActivity() {
 
     fun CalculateWeek() {
         val ProgressbarWeekPercent = calculateMilisecond().weekPercent.toFloat()
-        val ProgressbarWeekSecond = calculateMilisecond().week
+        val ProgressbarWeekSecond = 604800000 - calculateMilisecond().week
+
+        val daysLeft = ProgressbarWeekSecond / 86400000
+        val hoursLeft = ProgressbarWeekSecond.rem(86400000) / 3600000
+
+        Log.d("weekClicked", "$daysLeft")
+        Log.d("weekClicked", "$hoursLeft")
+
+        if (daysLeft.toInt() == 0) {
+            if (hoursLeft.toInt() <= 1)//00
+                countdownView_title.setText("In an Hour")
+            else {//01
+                countdownView_title.setText("${hoursLeft} Hours")
+            }
+        } else {
+            if (hoursLeft.toInt() <= 1)//10
+                countdownView_title.setText("${daysLeft}Day")
+            else {//11
+                countdownView_title.setText("${daysLeft}Days ${hoursLeft}Hours")
+            }
+        }
+
+        circularProgressBar.setProgressWithAnimation(ProgressbarWeekPercent, 1000)
+        statement_title.setText("This Week end in")
+        Percent_title.setText("${ProgressbarWeekPercent}%")
+
 
     }
 
@@ -205,8 +242,10 @@ class MainActivity : AppCompatActivity() {
     fun calculateMilisecond(): TimeData {
         //Units
         val dayinMilli = 86400000
+        val weekInMilli = 604800000
         val yearinMilli = 31556952000
         val currentTimestamp = System.currentTimeMillis()//지금시간//in milliseconds
+
         //value for month
         val currentDayOfMonth = Calendar.getInstance().get(Calendar.DAY_OF_MONTH).toLong()
         val lastdayOfMonth = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH).toLong()
@@ -214,14 +253,19 @@ class MainActivity : AppCompatActivity() {
         val currentDayMillisecond = (currentDayOfMonth * dayinMilli)
 
         //value for week
-        val now = currentTimestamp.
-        val firstday =
-        Log.d("week", "$firstday")
-        var today =
-        var weekStart: LocalDate = today.dayOfWeek().withMinimumValue()
-        var weekEnd: LocalDate = today.dayOfWeek().withMaximumValue()
+        val calendar = Calendar.getInstance()
+        while (calendar.get(Calendar.DAY_OF_WEEK) > calendar.getActualMinimum(Calendar.DAY_OF_WEEK)) {
+            calendar.add(Calendar.DATE, -1)
 
-        //
+        }
+        //setting 00:00:00
+        calendar[Calendar.MILLISECOND] = 0
+        calendar[Calendar.SECOND] = 0
+        calendar[Calendar.MINUTE] = 0
+        calendar[Calendar.HOUR_OF_DAY] = 24
+
+        val firstDayOfMonthTimestamp = calendar.timeInMillis
+        val timePassedWeek = currentTimestamp - firstDayOfMonthTimestamp
 
 
         //shared Preference
@@ -229,8 +273,6 @@ class MainActivity : AppCompatActivity() {
         val userBirth_mili = sharedPreference.getLong("Birthday_Millis", 1)
         val userDie_mili = sharedPreference.getLong("Die_Millis", 1)
         //get last day of month
-
-
         Log.d("Calculate", "userBrith_mili = $userBirth_mili")
         Log.d("Calculate", "userDie_mili = $userDie_mili")
 
@@ -273,8 +315,12 @@ class MainActivity : AppCompatActivity() {
         //MONTH END
 
         //WEEK
-        val RemainWeek =(1000000000).toLong()
-            val myWeekPercent =(2).toDouble()
+        val RemainWeek = timePassedWeek
+        val myWeekPercent =
+            ((BigDecimal( timePassedWeek.toDouble() / weekInMilli * 100).setScale(
+                1,
+                RoundingMode.HALF_EVEN
+            )).toFloat()).toDouble()
         //WEKK END
 
         return TimeData(
@@ -314,20 +360,9 @@ data class TimeData(
 
 
 fun main(args: Array<String>) {
-//    val a = 1
-//    val c = a.rem(2)
-//    println(c)
 
-    val a = 2000000000000000000
-    val b = 70000000000
-    val c = BigDecimal(a.toDouble() / b * 100).setScale(2, RoundingMode.HALF_EVEN)
-//    val d =  BigDecimal(20.toDouble() / 7).setScale(2, RoundingMode.HALF_EVEN)
-//    val num = 3.toDouble() / 6
-//    println("$d")
-//    println(a%b)
-//    println("$num")
-    println("percent: $c")
 
 }
+
 
 
