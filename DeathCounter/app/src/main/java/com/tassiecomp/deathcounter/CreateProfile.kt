@@ -100,8 +100,10 @@ open class CreateProfile : AppCompatActivity() {
                 Die_year,
                 Die_month,
                 Die_day
+
             )
             dpd.show()
+            dpd.getDatePicker().setMinDate(System.currentTimeMillis()+86400000)
         }
 
 
@@ -110,7 +112,9 @@ open class CreateProfile : AppCompatActivity() {
             Log.d("TAG", " button clicked")
             val userName = username_create.text.toString()
             val userAge = birthDay_create.text.toString()
-            val userDie =
+            val userDie = birthDay_create.text.toString()
+
+            Log.d("save", "userAge edit text:$userAge ")
 
             editor.putString("userName",userName)
             editor.apply()
@@ -119,45 +123,30 @@ open class CreateProfile : AppCompatActivity() {
             val userAge_mili = sharedPreference.getLong("Birthday_Millis",1)
             val userDie_mili = sharedPreference.getLong("Die_Millis",1)
 
+
             Log.d("save", "saved name = $Name")
             Log.d("save", "saved userAge_mili = $userAge_mili")
             Log.d("save", "saved userDie_mili = $userDie_mili")
-
-            //set birthDate
-//            val BirthDate =
-//                "${c.get(Calendar.YEAR)}-${c.get(Calendar.MONTH) + 1}-${c.get(Calendar.DAY_OF_MONTH)} 00:00:00"
-//            Log.d("save", "BirthDate: $BirthDate")
-//            //set DieDate
-//            val dieAge_date =
-//                "${c.get(Calendar.YEAR) + dieAge}-${c.get(Calendar.MONTH) + 1}-${
-//                    c.get(
-//                        Calendar.DAY_OF_MONTH
-//                    )
-//                } 00:00:00"
-//            Log.d("save", "dieAge_date: $dieAge_date")
-
-            //set userAge in Int
-//            val userAge_mili = (System.currentTimeMillis()- sf.parse(BirthDate).time ).toInt()
-//            val userAge_int = (BigDecimal(userAge_mili / 31556952000 * 100).setScale(
-//                1,
-//                RoundingMode.HALF_EVEN
-//            )).toDouble()
 
 
             // login error message
             when {
                 userName.isEmpty() -> notification.text = "User Name is empty"
-//                userAge.isBlank() -> notification.text = "Please set your age"
-//                userDie.isEmpty() -> notification.text = "Please set die age "
+                userAge.isEmpty() -> notification.text = "Please set Birthday"
+                userDie.isEmpty() -> notification.text = "Please set die day "
 
                 //gotta compare two age in milisecond
 
 //              "Your Age is bigger than die age"
-//                userAge_int > dieAge -> notification.text = "logically incorrect value"
+                userAge_mili > userDie_mili -> notification.text = "logically incorrect value"
+
 //
                 else -> { //execute save button
                     Log.d("save", "logging in")
-
+                    val editor: SharedPreferences.Editor = sharedPreference.edit()
+                    editor.putLong("userAge_mili",userAge_mili)
+                    editor.putLong("userDie_mili",userDie_mili)//정보를 넣는다.
+                    editor.commit()
 
 //                    //Convert into milisecond
 //

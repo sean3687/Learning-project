@@ -71,7 +71,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
-                        android:text="My life end in"
+                        android:text="Click Below Buttons to start!"
                         android:textColor="#292929"
                         app:layout_constraintBottom_toTopOf="@+id/countdownView_title"
                         app:layout_constraintEnd_toEndOf="@+id/countdownView_title"
@@ -81,7 +81,7 @@
                         android:id="@+id/countdownView_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="80Years 365Days"
+                        android:text=""
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="46%"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="30dp"
                         app:layout_constraintEnd_toEndOf="@+id/countdownView_title"
@@ -213,6 +213,17 @@
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="365dp">
+
+
+            <com.akexorcist.roundcornerprogressbar.indeterminate.IndeterminateRoundCornerProgressBar
+                android:id="@+id/dayLeft"
+                android:layout_width="260dp"
+                android:layout_height="10dp"
+                app:rcAnimationSpeedScale="1"
+                app:rcBackgroundColor="#0A000000"
+                app:rcProgressColor="#EF5350" />
+
+
 
         </LinearLayout>
     </LinearLayout>

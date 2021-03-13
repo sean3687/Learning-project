@@ -5,17 +5,16 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import kotlinx.android.synthetic.main.activity_create_profile.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.nav_header.*
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.util.*
@@ -31,14 +30,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
+
         toggle = ActionBarDrawerToggle(this, drawerlayout, R.string.open, R.string.close)
         drawerlayout.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         val intent = Intent(this@MainActivity, CreateProfile::class.java)
         intent.putExtra("from", 1)
 
         var sharedPreference = getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
+        val userBirth_age = (sharedPreference.getLong("userAge_mili", 1))/31556926000
+        val userDie_age = sharedPreference.getLong("userDie_mili", 1)/31556926000
+
         //checking if registered
         val savedUserName = sharedPreference.getString("userName", null)
         when {
@@ -52,6 +56,9 @@ class MainActivity : AppCompatActivity() {
             else -> {
                 Log.d("TAG", "there is value")
                 Log.d("TAG", "saved value: $savedUserName")
+                //drawer settings
+                userName_title.setText("$savedUserName")
+                userStates_title.setText("$userBirth_age $userDie_age")
 
 
             }
@@ -62,6 +69,8 @@ class MainActivity : AppCompatActivity() {
 
             drawerlayout.openDrawer(GravityCompat.START)
         }
+
+
 
 
         navView.setNavigationItemSelectedListener {
@@ -142,7 +151,7 @@ class MainActivity : AppCompatActivity() {
         val yearLeft = ProgressbarLifeSecond / 31556926000
         Log.d("Progress", "$yearLeft")
         val daysLeft =
-            ((ProgressbarLifeSecond.rem(31556926000)).rem(2629746000)) / 86400000
+            (ProgressbarLifeSecond.rem(31556926000))/86400000
         Log.d("Progress", "$daysLeft")
 //
         if (yearLeft.toInt() == 0) {
@@ -270,8 +279,8 @@ class MainActivity : AppCompatActivity() {
 
         //shared Preference
         var sharedPreference = getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
-        val userBirth_mili = sharedPreference.getLong("Birthday_Millis", 1)
-        val userDie_mili = sharedPreference.getLong("Die_Millis", 1)
+        val userBirth_mili = sharedPreference.getLong("userAge_mili", 1)
+        val userDie_mili = sharedPreference.getLong("userDie_mili", 1)
         //get last day of month
         Log.d("Calculate", "userBrith_mili = $userBirth_mili")
         Log.d("Calculate", "userDie_mili = $userDie_mili")
