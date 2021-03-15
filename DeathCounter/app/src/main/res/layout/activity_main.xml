@@ -29,10 +29,10 @@
                     android:id="@+id/main_openDrawer"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/title_menubutton_shape"
                     android:src="@drawable/menu_icon"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,7 +54,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/title_menubutton_shape"
-                    android:src="@drawable/calender_icon"
+                    android:src="@drawable/calender_icon_main"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -63,9 +63,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
-
+                android:layout_height="match_parent">
 
 
                 <com.mikhaellopez.circularprogressbar.CircularProgressBar
@@ -97,9 +95,11 @@
                         android:id="@+id/statement_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:text="Click Below Buttons to start!"
-                        android:textColor="#292929"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/roboto_light"
+                        android:text=""
+                        android:textColor="#393939"
+                        android:textSize="20dp"
                         app:layout_constraintBottom_toTopOf="@+id/countdownView_title"
                         app:layout_constraintEnd_toEndOf="@+id/countdownView_title"
                         app:layout_constraintStart_toStartOf="@+id/countdownView_title" />
@@ -108,7 +108,10 @@
                         android:id="@+id/countdownView_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=""
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Click Button Below"
+                        android:textColor="#353535"
+                        android:textSize="15dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -119,6 +122,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:fontFamily="@font/roboto_bold"
                         android:text=""
                         android:textColor="@color/black"
                         android:textSize="30dp"
@@ -142,6 +146,9 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:background="@drawable/title_button_shape"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Life"
+                        android:textColor="#4A4A4A"
                         app:layout_constraintBottom_toTopOf="@+id/textView6"
                         app:layout_constraintEnd_toStartOf="@+id/my_year_left"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -153,8 +160,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:fontFamily="@font/roboto_bold"
                         android:text="Life Left"
-                        android:textColor="@color/white"
+                        android:textColor="#D2FFFFFF"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/my_life_left"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -166,6 +174,9 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:background="@drawable/title_button_shape"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="365"
+                        android:textColor="#4A4A4A"
                         app:layout_constraintBottom_toBottomOf="@+id/my_life_left"
                         app:layout_constraintEnd_toStartOf="@+id/my_month_left"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -176,8 +187,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:fontFamily="@font/roboto_bold"
                         android:text="Year Left"
-                        android:textColor="@color/white"
+                        android:textColor="#D2FFFFFF"
                         app:layout_constraintEnd_toEndOf="@+id/my_year_left"
                         app:layout_constraintStart_toStartOf="@+id/my_year_left"
                         app:layout_constraintTop_toBottomOf="@+id/my_year_left" />
@@ -187,6 +199,9 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:background="@drawable/title_button_shape"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="FEB"
+                        android:textColor="#4A4A4A"
                         app:layout_constraintBottom_toBottomOf="@+id/my_year_left"
                         app:layout_constraintEnd_toStartOf="@+id/my_week_left"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -198,8 +213,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:fontFamily="@font/roboto_bold"
                         android:text="Month Left"
-                        android:textColor="@color/white"
+                        android:textColor="#D2FFFFFF"
                         app:layout_constraintEnd_toEndOf="@+id/my_month_left"
                         app:layout_constraintStart_toStartOf="@+id/my_month_left"
                         app:layout_constraintTop_toBottomOf="@+id/my_month_left" />
@@ -209,6 +225,9 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:background="@drawable/title_button_shape"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="7"
+                        android:textColor="#222222"
                         app:layout_constraintBottom_toBottomOf="@+id/my_month_left"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -219,8 +238,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:fontFamily="@font/roboto_bold"
                         android:text="Week Left"
-                        android:textColor="@color/white"
+                        android:textColor="#D2FFFFFF"
                         app:layout_constraintEnd_toEndOf="@+id/my_week_left"
                         app:layout_constraintStart_toStartOf="@+id/my_week_left"
                         app:layout_constraintTop_toBottomOf="@+id/my_week_left" />

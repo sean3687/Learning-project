@@ -179,7 +179,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-        statement_title.setText("My life end in")
+        statement_title.setText("Remaining Life")
         Percent_title.setText("${ProgressbarLifePercent}%")
         circularProgressBar.setProgressWithAnimation(ProgressbarLifePercent, 1000)
 
