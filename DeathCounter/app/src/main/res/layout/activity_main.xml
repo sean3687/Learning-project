@@ -36,11 +36,36 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/title_animation"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/main_Calendar"
+                    app:layout_constraintStart_toEndOf="@+id/main_openDrawer"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:lottie_autoPlay="true"
+                    app:lottie_fileName="heartbeat.json" />
+
+                <ImageButton
+                    android:id="@+id/main_Calendar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/title_menubutton_shape"
+                    android:src="@drawable/calender_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                >
+
 
 
                 <com.mikhaellopez.circularprogressbar.CircularProgressBar
@@ -60,11 +85,13 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout4"
                     android:layout_width="250dp"
                     android:layout_height="250dp"
                     app:layout_constraintEnd_toEndOf="@+id/circularProgressBar"
                     app:layout_constraintStart_toStartOf="@+id/circularProgressBar"
                     app:layout_constraintTop_toTopOf="@+id/circularProgressBar">
+
 
                     <TextView
                         android:id="@+id/statement_title"
@@ -213,17 +240,6 @@
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="365dp">
-
-
-            <com.akexorcist.roundcornerprogressbar.indeterminate.IndeterminateRoundCornerProgressBar
-                android:id="@+id/dayLeft"
-                android:layout_width="260dp"
-                android:layout_height="10dp"
-                app:rcAnimationSpeedScale="1"
-                app:rcBackgroundColor="#0A000000"
-                app:rcProgressColor="#EF5350" />
-
-
 
         </LinearLayout>
     </LinearLayout>

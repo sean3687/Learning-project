@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-
+        //navigation
         toggle = ActionBarDrawerToggle(this, drawerlayout, R.string.open, R.string.close)
         drawerlayout.addDrawerListener(toggle)
         toggle.syncState()
@@ -40,8 +40,12 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("from", 1)
 
         var sharedPreference = getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
-        val userBirth_age = (sharedPreference.getLong("userAge_mili", 1))/31556926000
-        val userDie_age = sharedPreference.getLong("userDie_mili", 1)/31556926000
+        val userBirth_age = (sharedPreference.getLong("userAge_mili", 1))
+        val userDie_age = sharedPreference.getLong("userDie_mili", 1)
+        val bornYear = 1900+Date(userBirth_age).year
+        val dieYear = 1900+Date(userDie_age).year
+        Log.d("date", "born year = $bornYear")
+
 
         //checking if registered
         val savedUserName = sharedPreference.getString("userName", null)
@@ -57,8 +61,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d("TAG", "there is value")
                 Log.d("TAG", "saved value: $savedUserName")
                 //drawer settings
-                userName_title.setText("$savedUserName")
-                userStates_title.setText("$userBirth_age $userDie_age")
+//                userName_title.setText("$savedUserName")
 
 
             }
@@ -68,6 +71,9 @@ class MainActivity : AppCompatActivity() {
         main_openDrawer.setOnClickListener {
 
             drawerlayout.openDrawer(GravityCompat.START)
+            userName_title.setText("${savedUserName}")
+            userStates_title.setText("$bornYear - $dieYear")
+
         }
 
 
@@ -129,17 +135,22 @@ class MainActivity : AppCompatActivity() {
         //stopped at bring percentage from cal culate milisecond function
         my_life_left.setOnClickListener {
             CalculateLife()
+            title_animation.playAnimation()
+
         }
 
         my_year_left.setOnClickListener {
             CalculateYear()
+            title_animation.playAnimation()
         }
 
         my_month_left.setOnClickListener {
             CalculateMonth()
+            title_animation.playAnimation()
         }
         my_week_left.setOnClickListener {
             CalculateWeek()
+            title_animation.playAnimation()
         }
 
 
@@ -151,7 +162,7 @@ class MainActivity : AppCompatActivity() {
         val yearLeft = ProgressbarLifeSecond / 31556926000
         Log.d("Progress", "$yearLeft")
         val daysLeft =
-            (ProgressbarLifeSecond.rem(31556926000))/86400000
+            (ProgressbarLifeSecond.rem(31556926000)) / 86400000
         Log.d("Progress", "$daysLeft")
 //
         if (yearLeft.toInt() == 0) {
@@ -263,15 +274,32 @@ class MainActivity : AppCompatActivity() {
 
         //value for week
         val calendar = Calendar.getInstance()
-        while (calendar.get(Calendar.DAY_OF_WEEK) > calendar.getActualMinimum(Calendar.DAY_OF_WEEK)) {
-            calendar.add(Calendar.DATE, -1)
+
+
+        if (Calendar.DAY_OF_WEEK == 7) {
+            calendar.add(Calendar.DATE, -2)
+            while (calendar.get(Calendar.DAY_OF_WEEK) > calendar.get(Calendar.MONDAY)) {
+                calendar.add(Calendar.DATE, -1)
+                Log.d("week", "repeated1")
+            }
+        }else {
+            while (calendar.get(Calendar.DAY_OF_WEEK) > calendar.get(Calendar.MONDAY)) {
+                calendar.add(Calendar.DATE, -1)
+                Log.d("week", "repeated2")
+            }
 
         }
+        val one = calendar.get(Calendar.DAY_OF_WEEK)
+        val two = calendar.get(Calendar.MONDAY)
+        val calendarDay = calendar.get(Calendar.DATE)
+        Log.d("one", "Calendar:: $one")
+        Log.d("week", "Calendar:: $two")
+        Log.d("week", "Calendar:: $calendarDay")
         //setting 00:00:00
         calendar[Calendar.MILLISECOND] = 0
         calendar[Calendar.SECOND] = 0
         calendar[Calendar.MINUTE] = 0
-        calendar[Calendar.HOUR_OF_DAY] = 24
+        calendar[Calendar.HOUR_OF_DAY] = 0
 
         val firstDayOfMonthTimestamp = calendar.timeInMillis
         val timePassedWeek = currentTimestamp - firstDayOfMonthTimestamp
@@ -326,10 +354,11 @@ class MainActivity : AppCompatActivity() {
         //WEEK
         val RemainWeek = timePassedWeek
         val myWeekPercent =
-            ((BigDecimal( timePassedWeek.toDouble() / weekInMilli * 100).setScale(
+            ((BigDecimal(timePassedWeek.toDouble() / weekInMilli * 100).setScale(
                 1,
                 RoundingMode.HALF_EVEN
             )).toFloat()).toDouble()
+        Log.d("week", "remainWeek: $RemainWeek, myWeekPercent: $myWeekPercent")
         //WEKK END
 
         return TimeData(

@@ -58,15 +58,14 @@ open class CreateProfile : AppCompatActivity() {
                     // Display Selected date in textbox
                     birthDay_create.setText("$year-${monthOfYear + 1}-$dayOfMonth")
                     val birthday: Calendar = Calendar.getInstance()
-                    birthday.set(year,monthOfYear,dayOfMonth)
+                    birthday.set(year, monthOfYear, dayOfMonth)
 
                     //shared preference
                     var Birthday_Millis = birthday.timeInMillis
-                    editor.putLong("Birthday_Millis",Birthday_Millis)
+                    editor.putLong("Birthday_Millis", Birthday_Millis)
                     editor.apply()
 
-                }
-                ,
+                },
                 Birth_year,
                 Birth_month,
                 Birth_day
@@ -83,12 +82,13 @@ open class CreateProfile : AppCompatActivity() {
                     dieAge_Create.setText("$year-${monthOfYear + 1}-$dayOfMonth")
 
                     val dieday: Calendar = Calendar.getInstance()
-                    dieday.set(year,monthOfYear,dayOfMonth)
-                    var Dieday_Millis = dieday.timeInMillis //when you change to Int it occurs problem
+                    dieday.set(year, monthOfYear, dayOfMonth)
+                    var Dieday_Millis =
+                        dieday.timeInMillis //when you change to Int it occurs problem
                     Log.d("save", "Die_Millis: $Dieday_Millis")
 
                     val editor: SharedPreferences.Editor = sharedPreference.edit()
-                    editor.putLong("Die_Millis",Dieday_Millis) //정보를 넣는다.
+                    editor.putLong("Die_Millis", Dieday_Millis) //정보를 넣는다.
                     editor.commit()
 
 
@@ -103,7 +103,7 @@ open class CreateProfile : AppCompatActivity() {
 
             )
             dpd.show()
-            dpd.getDatePicker().setMinDate(System.currentTimeMillis()+86400000)
+            dpd.getDatePicker().setMinDate(System.currentTimeMillis() + 86400000)
         }
 
 
@@ -116,12 +116,12 @@ open class CreateProfile : AppCompatActivity() {
 
             Log.d("save", "userAge edit text:$userAge ")
 
-            editor.putString("userName",userName)
+            editor.putString("userName", userName)
             editor.apply()
 
-            val Name = sharedPreference.getString("userName",null)
-            val userAge_mili = sharedPreference.getLong("Birthday_Millis",1)
-            val userDie_mili = sharedPreference.getLong("Die_Millis",1)
+            val Name = sharedPreference.getString("userName", null)
+            val userAge_mili = sharedPreference.getLong("Birthday_Millis", 1)
+            val userDie_mili = sharedPreference.getLong("Die_Millis", 1)
 
 
             Log.d("save", "saved name = $Name")
@@ -144,31 +144,9 @@ open class CreateProfile : AppCompatActivity() {
                 else -> { //execute save button
                     Log.d("save", "logging in")
                     val editor: SharedPreferences.Editor = sharedPreference.edit()
-                    editor.putLong("userAge_mili",userAge_mili)
-                    editor.putLong("userDie_mili",userDie_mili)//정보를 넣는다.
+                    editor.putLong("userAge_mili", userAge_mili)
+                    editor.putLong("userDie_mili", userDie_mili)//정보를 넣는다.
                     editor.commit()
-
-//                    //Convert into milisecond
-//
-//                    var Birthdate_milisecond = sf.parse(BirthDate).time.toInt()
-//                    Log.d("save", "Birthdate_milisecond: $Birthdate_milisecond")
-//
-//                    //convert into milisecond
-//                    var dieDate_milisecond = sf.parse(dieAge_date).time.toInt()
-//                    Log.d("save", "dieDate_milisecond: $dieDate_milisecond")
-//
-//                    val userDieAge_mili = (dieDate_milisecond - Birthdate_milisecond).toInt()
-//                    Log.d("save","$userDieAge_mili")
-//
-//                    //save to shared preference
-//                    val sharedPreference =
-//                        getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
-//                    val editor: SharedPreferences.Editor = sharedPreference.edit()
-//
-//                    MyApplication.sharedPreference.setString("userName", userName)
-//                    MyApplication.sharedPreference.setInt("userAge", userAge_mili)
-//                    MyApplication.sharedPreference.setInt("userDieAge", userDieAge_mili)
-//
 
                     //open new activity
 

@@ -50,4 +50,7 @@ dependencies {
 
     //Progress bar
     implementation 'com.akexorcist:round-corner-progress-bar:2.1.1'
+
+    //lottie animation
+    implementation 'com.airbnb.android:lottie:3.6.1'
 }
