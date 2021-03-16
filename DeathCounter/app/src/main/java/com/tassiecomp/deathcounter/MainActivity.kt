@@ -277,13 +277,13 @@ class MainActivity : AppCompatActivity() {
 
 
         if (Calendar.DAY_OF_WEEK == 7) {
-            calendar.add(Calendar.DATE, -2)
-            while (calendar.get(Calendar.DAY_OF_WEEK) > calendar.get(Calendar.MONDAY)) {
+            calendar.add(Calendar.DATE, -1)
+            while (calendar.get(Calendar.DAY_OF_WEEK) > calendar.getFirstDayOfWeek()) {
                 calendar.add(Calendar.DATE, -1)
                 Log.d("week", "repeated1")
             }
         }else {
-            while (calendar.get(Calendar.DAY_OF_WEEK) > calendar.get(Calendar.MONDAY)) {
+            while (calendar.get(Calendar.DAY_OF_WEEK) > calendar.getFirstDayOfWeek()) {
                 calendar.add(Calendar.DATE, -1)
                 Log.d("week", "repeated2")
             }
