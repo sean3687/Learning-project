@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:title="Stopwatch"
+        android:icon="@drawable/stopwatch_icon"
+        />
+    <item
+        android:id="@+id/activity"
+        android:title="Timer"
+        android:icon="@drawable/timer_icon"
+        />
+
+</menu>

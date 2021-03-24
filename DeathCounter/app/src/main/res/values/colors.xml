@@ -9,4 +9,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gradient_pink">#dba2ee</color>
     <color name="gradient_blue">#38CDFF</color>
+
+<!--    gradient sub progressbar-->
+    <array name="sample_progress_gradient">
+        <item>#009688</item>
+        <item>#80CBC4</item>
+    </array>
 </resources>

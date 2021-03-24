@@ -58,6 +58,15 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <ImageButton
+                    android:id="@+id/main_stopwatch"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/title_menubutton_shape"
+                    android:src="@drawable/timer_icon_main"
+                    app:layout_constraintBottom_toBottomOf="@+id/main_Calendar"
+                    app:layout_constraintEnd_toStartOf="@+id/main_Calendar"
+                    app:layout_constraintTop_toTopOf="@+id/main_Calendar" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -232,7 +241,8 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/my_month_left"
-                        app:layout_constraintTop_toTopOf="@+id/my_month_left" />
+                        app:layout_constraintTop_toTopOf="@+id/my_month_left"
+                        app:layout_constraintVertical_bias="1.0" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -251,7 +261,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/sub_title"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -261,7 +271,30 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="365dp">
 
-        </LinearLayout>
+
+            <TextView
+                android:id="@+id/progress_remain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="start"
+                android:textSize="20dp"
+                tools:layout_editor_absoluteX="116dp"
+                tools:layout_editor_absoluteY="42dp" />
+
+            <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                android:id="@+id/progress_remain_bar"
+                android:layout_width="150dp"
+                android:layout_height="20dp"
+                app:rcAnimationEnable="true"
+                app:rcAnimationSpeedScale="1"
+                app:rcBackgroundColor="#0A000000"
+                app:rcBackgroundPadding="2dp"
+                app:rcMax="100"
+                app:rcProgressColors="@array/sample_progress_gradient"
+                app:rcRadius="30dp"
+                tools:layout_editor_absoluteX="173dp"
+                tools:layout_editor_absoluteY="42dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView

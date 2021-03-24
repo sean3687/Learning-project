@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
@@ -18,6 +19,7 @@ import kotlinx.android.synthetic.main.nav_header.*
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.util.*
+import kotlin.math.roundToInt
 
 
 class MainActivity : AppCompatActivity() {
@@ -36,14 +38,16 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val intent = Intent(this@MainActivity, CreateProfile::class.java)
-        intent.putExtra("from", 1)
+        val intentProfile = Intent(this@MainActivity, CreateProfile::class.java)
+        intentProfile.putExtra("from", 1)
+        val intentTimer = Intent(this@MainActivity, timer_Stopwatch::class.java)
+
 
         var sharedPreference = getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
         val userBirth_age = (sharedPreference.getLong("userAge_mili", 1))
         val userDie_age = sharedPreference.getLong("userDie_mili", 1)
-        val bornYear = 1900+Date(userBirth_age).year
-        val dieYear = 1900+Date(userDie_age).year
+        val bornYear = 1900 + Date(userBirth_age).year
+        val dieYear = 1900 + Date(userDie_age).year
         Log.d("date", "born year = $bornYear")
 
 
@@ -62,6 +66,13 @@ class MainActivity : AppCompatActivity() {
                 Log.d("TAG", "saved value: $savedUserName")
                 //drawer settings
 //                userName_title.setText("$savedUserName")
+                val currentTimeMillis = System.currentTimeMillis()
+                val remain_hour = currentTimeMillis.rem(3600000)
+                //countdown_sub_title: hour
+                CountdownTimer(remain_hour,3600000)
+                //countdown_sub_title: 30min
+
+
 
 
             }
@@ -75,6 +86,10 @@ class MainActivity : AppCompatActivity() {
             userStates_title.setText("$bornYear - $dieYear")
 
         }
+        //stopwatch activity
+        main_stopwatch.setOnClickListener{
+            startActivity(intentTimer)
+        }
 
 
 
@@ -82,7 +97,7 @@ class MainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.profileIcon ->
-                    startActivity(intent)
+                    startActivity(intentProfile)
 
 
                 R.id.settingIcon -> Toast.makeText(
@@ -151,6 +166,7 @@ class MainActivity : AppCompatActivity() {
         my_week_left.setOnClickListener {
             CalculateWeek()
             title_animation.playAnimation()
+            CountdownTimer(300000,3000000)
         }
 
 
@@ -234,8 +250,8 @@ class MainActivity : AppCompatActivity() {
         val daysLeft = ProgressbarWeekSecond / 86400000
         val hoursLeft = ProgressbarWeekSecond.rem(86400000) / 3600000
 
-        Log.d("weekClicked", "$daysLeft")
-        Log.d("weekClicked", "$hoursLeft")
+        Log.d("weekClicked", "daysLeft: $daysLeft")
+        Log.d("weekClicked", "hoursLeft: $hoursLeft")
 
         if (daysLeft.toInt() == 0) {
             if (hoursLeft.toInt() <= 1)//00
@@ -278,12 +294,12 @@ class MainActivity : AppCompatActivity() {
 
         if (Calendar.DAY_OF_WEEK == 7) {
             calendar.add(Calendar.DATE, -1)
-            while (calendar.get(Calendar.DAY_OF_WEEK) > calendar.getFirstDayOfWeek()) {
+            while (calendar.get(Calendar.DAY_OF_WEEK) >= calendar.get(Calendar.MONDAY)) {
                 calendar.add(Calendar.DATE, -1)
                 Log.d("week", "repeated1")
             }
-        }else {
-            while (calendar.get(Calendar.DAY_OF_WEEK) > calendar.getFirstDayOfWeek()) {
+        } else {
+            while (calendar.get(Calendar.DAY_OF_WEEK) >= calendar.get(Calendar.MONDAY)) {
                 calendar.add(Calendar.DATE, -1)
                 Log.d("week", "repeated2")
             }
@@ -299,10 +315,12 @@ class MainActivity : AppCompatActivity() {
         calendar[Calendar.MILLISECOND] = 0
         calendar[Calendar.SECOND] = 0
         calendar[Calendar.MINUTE] = 0
-        calendar[Calendar.HOUR_OF_DAY] = 0
+        calendar[Calendar.HOUR_OF_DAY] = 24
 
         val firstDayOfMonthTimestamp = calendar.timeInMillis
         val timePassedWeek = currentTimestamp - firstDayOfMonthTimestamp
+        Log.d("weekClicked", "firstDayOfMonthTimestamp: $firstDayOfMonthTimestamp")
+        Log.d("weekClicked", "timePassedWeek: $timePassedWeek")
 
 
         //shared Preference
@@ -382,7 +400,30 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    //COUNTDOWN SUB-VIEW
+    fun CountdownTimer(input_millisecond: Long, input_max_millisecond: Long) {
+
+        object : CountDownTimer(input_millisecond, 100) {
+            override fun onTick(millisUntilFinished: Long) {
+                progress_remain.text = "${(millisUntilFinished.toFloat() / 1000.0f).roundToInt()}"
+                val progress_remain_percent =((BigDecimal(millisUntilFinished.toDouble() / input_max_millisecond * 1000).setScale(
+                    1,
+                    RoundingMode.HALF_EVEN
+                )).toFloat())
+                Log.d("TAGG", "$progress_remain_percent")
+                progress_remain_bar.setProgress(progress_remain_percent)
+            }
+
+            override fun onFinish() {
+                Log.d("second", "done!")
+            }
+        }.start()
+    }
+    //COUNTDOWN SUB-VIEW END
+
+
 }
+
 
 //life reamingin milisecond,
 data class TimeData(
@@ -396,11 +437,6 @@ data class TimeData(
     val weekPercent: Double
 )
 
-
-fun main(args: Array<String>) {
-
-
-}
 
 
 
