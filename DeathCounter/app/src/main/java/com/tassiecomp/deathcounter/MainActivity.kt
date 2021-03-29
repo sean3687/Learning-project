@@ -26,6 +26,11 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var toggle: ActionBarDrawerToggle
 
+    override fun onPause() {
+        super.onPause()
+        overridePendingTransition(0, 0)
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,9 +43,14 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        //Intent 화면
         val intentProfile = Intent(this@MainActivity, CreateProfile::class.java)
         intentProfile.putExtra("from", 1)
+        intentProfile.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION)
         val intentTimer = Intent(this@MainActivity, timer_Stopwatch::class.java)
+        intentTimer.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION)
+
+
 
 
         var sharedPreference = getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
@@ -59,6 +69,9 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this@MainActivity, CreateProfile::class.java)
                 intent.putExtra("from", 0)
                 startActivity(intent)
+
+
+
 
             }
             else -> {
@@ -98,6 +111,8 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.profileIcon ->
                     startActivity(intentProfile)
+
+
 
 
                 R.id.settingIcon -> Toast.makeText(

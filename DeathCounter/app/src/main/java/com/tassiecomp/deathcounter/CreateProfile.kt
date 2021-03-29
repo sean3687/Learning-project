@@ -13,6 +13,10 @@ import java.util.*
 
 open class CreateProfile : AppCompatActivity() {
 
+    override fun onPause() {
+        super.onPause()
+        overridePendingTransition(0, 0)
+    }
 
     //setting up internal data storage
 
