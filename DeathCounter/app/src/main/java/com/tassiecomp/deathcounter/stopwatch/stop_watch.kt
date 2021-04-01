@@ -106,10 +106,11 @@ class stop_watch : Fragment() {
                 sec = (tUpdate / 1000).toInt()
                 min = sec / 60
                 milliSec = (tUpdate / 1000).toInt()
-                chronometer.setText(String.format("02d",min)+":" +String.format(""))
+                chronometer.setText(String.format("02d",min)+":" +String.format("02d",sec))
                 handler.postDelayed(this, 60)
                 Log.d("stopwatch","min:$min, millisec:$milliSec")
             }
+            fun
         }
 
 
