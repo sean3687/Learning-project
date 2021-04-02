@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
                 val currentTimeMillis = System.currentTimeMillis()
                 val remain_hour = currentTimeMillis.rem(3600000)
                 //countdown_sub_title: hour
-                CountdownTimer(remain_hour,3600000)
+
                 //countdown_sub_title: 30min
 
 
@@ -181,7 +181,7 @@ class MainActivity : AppCompatActivity() {
         my_week_left.setOnClickListener {
             CalculateWeek()
             title_animation.playAnimation()
-            CountdownTimer(300000,3000000)
+
         }
 
 
@@ -413,29 +413,6 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-
-    //COUNTDOWN SUB-VIEW
-    fun CountdownTimer(input_millisecond: Long, input_max_millisecond: Long) {
-
-        object : CountDownTimer(input_millisecond, 100) {
-            override fun onTick(millisUntilFinished: Long) {
-                progress_remain.text = "${(millisUntilFinished.toFloat() / 1000.0f).roundToInt()}"
-                val progress_remain_percent =((BigDecimal(millisUntilFinished.toDouble() / input_max_millisecond * 1000).setScale(
-                    1,
-                    RoundingMode.HALF_EVEN
-                )).toFloat())
-                Log.d("TAGG", "$progress_remain_percent")
-                progress_remain_bar.setProgress(progress_remain_percent)
-            }
-
-            override fun onFinish() {
-                Log.d("second", "done!")
-            }
-        }.start()
-    }
-    //COUNTDOWN SUB-VIEW END
-
 
 }
 

@@ -1,11 +1,21 @@
 package com.tassiecomp.deathcounter.stopwatch
 
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
 import com.tassiecomp.deathcounter.R
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_timer.*
+import java.math.BigDecimal
+import java.math.RoundingMode
+import kotlin.math.roundToInt
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -57,4 +67,66 @@ class timer : Fragment() {
                 }
             }
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        countdown_start.setOnClickListener {
+
+
+            var input_HH = HH_edit.text.toString().toLong()
+            var input_MM = MM_edit.text.toString().toLong()
+            var input_SS = SS_edit.text.toString().toLong()
+            var runtimerMilli = (input_HH * 3600000 + input_MM * 60000 + input_SS * 1000)
+
+            if (runtimerMilli == (0).toLong()) {
+                Log.d("stopwatch", "value not found")
+            } else {
+                CountdownTimer(runtimerMilli, runtimerMilli * 100)
+                countdown_settimer.visibility = GONE
+                countdown_pause.visibility = VISIBLE
+                countdown_reset.visibility = VISIBLE
+                chronometer_timer.visibility = VISIBLE
+            }
+
+        }
+
+
+
+
+        countdown_pause.setOnClickListener {
+
+        }
+
+        countdown_reset.setOnClickListener {
+            countdown_settimer.visibility = VISIBLE
+        }
+
+    }
+
+    //COUNTDOWN SUB-VIEW
+    fun CountdownTimer(input_millisecond: Long, input_max_millisecond: Long) {
+
+        object : CountDownTimer(input_millisecond, 100) {
+            override fun onTick(millisUntilFinished: Long) {
+                val milli = (millisUntilFinished.toFloat() / 100.0f).roundToInt()
+                val sec = (milli.toFloat() / 10.0f).roundToInt()
+                val min = (sec.toFloat() / 60.0f).roundToInt()
+                val hour = (min.toFloat() / 60.0f).roundToInt()
+
+                val progress_remain_percent =
+                    ((BigDecimal(millisUntilFinished.toDouble() / input_max_millisecond * 1000).setScale(
+                        1,
+                        RoundingMode.HALF_EVEN
+                    )).toFloat())
+                Log.d("TAGG", "$progress_remain_percent")
+                chronometer_timer.setText("${hour}:${min}:${sec}:${milli}")
+
+            }
+
+            override fun onFinish() {
+                Log.d("second", "done!")
+            }
+        }.start()
+    }
+//COUNTDOWN SUB-VIEW END
 }

@@ -38,6 +38,7 @@ class timer_Stopwatch : AppCompatActivity() {
         viewpager.setOnTouchListener(View.OnTouchListener{ v,event -> true})
         viewpager.adapter = viewPageAdapter(supportFragmentManager).apply{
 
+
         }
 
 

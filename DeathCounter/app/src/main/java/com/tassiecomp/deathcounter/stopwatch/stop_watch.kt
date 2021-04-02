@@ -48,7 +48,7 @@ class stop_watch : Fragment() {
 
 
     ): View? {
-        val inf:View = inflater.inflate(R.layout.fragment_stop_watch, container, false)
+        val inf: View = inflater.inflate(R.layout.fragment_stop_watch, container, false)
         // Inflate the layout for this fragment
 
 
@@ -63,21 +63,30 @@ class stop_watch : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        var pauseAt: Long = 0
         chronometer_start.setOnClickListener {
-            chronometer_lap.visibility = VISIBLE
+            // lap still on work
+            chronometer_lap.visibility = GONE
             chronometer_reset.visibility = VISIBLE
             chronometer_pause.visibility = VISIBLE
-            chronometer_start.visibility= GONE
+            chronometer_start.visibility = GONE
             Log.d("fragment", "start clicked")
+
+            chronometer.base = SystemClock.elapsedRealtime() - pauseAt
             chronometer.start()
         }
 
-        chronometer_pause.setOnClickListener{
+        chronometer_pause.setOnClickListener {
             var pause_status = chronometer_pause.text
             if (pause_status == "Pause") {
                 chronometer_pause.text = "Resume"
+                pauseAt = SystemClock.elapsedRealtime() - chronometer.base
+                chronometer.stop()
+
             } else {
                 chronometer_pause.text = "Pause"
+                chronometer.base = SystemClock.elapsedRealtime() - pauseAt
+                chronometer.start()
             }
         }
 
@@ -87,31 +96,10 @@ class stop_watch : Fragment() {
             chronometer_reset.visibility = GONE
             chronometer_pause.visibility = GONE
             chronometer_start.visibility = VISIBLE
+            chronometer.base = SystemClock.elapsedRealtime()
+            chronometer.stop()
         }
 
-
-        var handler = Handler()
-        var tMilliSec:Long = 0
-        var tStart:Long = 0
-        var tBuff:Long = 0
-        var tUpdate = 0L
-        var sec:Int = 0
-        var min:Int = 0
-        var milliSec:Int = 0
-
-        object:Runnable {
-            override fun run() {
-                tMilliSec = SystemClock.uptimeMillis() - tStart
-                tUpdate = tBuff + tMilliSec
-                sec = (tUpdate / 1000).toInt()
-                min = sec / 60
-                milliSec = (tUpdate / 1000).toInt()
-                chronometer.setText(String.format("02d",min)+":" +String.format("02d",sec))
-                handler.postDelayed(this, 60)
-                Log.d("stopwatch","min:$min, millisec:$milliSec")
-            }
-            fun
-        }
 
 
 
