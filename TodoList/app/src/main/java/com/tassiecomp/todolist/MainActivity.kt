@@ -1,5 +1,6 @@
 package com.tassiecomp.todolist
 
+import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,12 +26,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         data.add(Todo("숙제", false))
-        data.add(Todo("청소", false))
+        data.add(Todo("청소", true))
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = TodoAdapter(data,
-        onClickDeleteIcon = {
-            deleteTodo(it)
-        })
+            onClickDeleteIcon = {
+                deleteTodo(it)
+            })
 
         binding.addButton.setOnClickListener {
             addTodo()
@@ -75,6 +76,20 @@ class TodoAdapter(
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         val todo = myDataset[position]
         holder.binding.todoText.text = myDataset[position].text
+
+        if (todo.isDone) {
+//            holder.binding.todoText.paintFlags = holder.binding.todoText.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            //위와 같은 코드지만 더 간편하게 쓸수있다.
+            holder.binding.todoText.apply {
+                paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            }
+        } else {
+            holder.binding.todoText.apply {
+                paintFlags = 0
+            }
+        }
+
+
         holder.binding.deleteImageView.setOnClickListener {
             onClickDeleteIcon.invoke(todo)
         }
