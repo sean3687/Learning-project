@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tassiecomp.todolist.databinding.ActivityMainBinding
 import com.tassiecomp.todolist.databinding.ItemTodoBinding
@@ -12,6 +13,8 @@ import com.tassiecomp.todolist.databinding.ItemTodoBinding
 class MainActivity : AppCompatActivity() {
     //you brought activity main
     private lateinit var binding: ActivityMainBinding
+    
+    private var data = arrayListOf<Todo>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,17 +22,35 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        data.add(Todo("숙제"))
+        data.add(Todo("청소"))
+
+        //recycler view with binding
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = TodoAdapter(data)
+
+        binding.addButton.setOnClickListener{
+            addTodo()
+        }
+    }
+
+    //add function
+    private fun addTodo(){
+        val todo = Todo(binding.editText.text.toString(),false)
+        data.add(todo)
+        binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 }
 
 // Making class for data that you are going to get
-data class Todo(val text: String, var isDone: Boolean)
+data class Todo(val text: String, var isDone: Boolean = false)
 
 
 class TodoAdapter(private val myDataset: List<Todo>) :
     RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
-    class TodoViewHolder(val binding: ItemTodoBinding) : RecyclerView.ViewHolder(view) {
+    class TodoViewHolder(val binding: ItemTodoBinding) : RecyclerView.ViewHolder(binding.root) {
 
     }
 
@@ -37,12 +58,11 @@ class TodoAdapter(private val myDataset: List<Todo>) :
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_todo, parent, false)
 
-        return TodoViewHolder(view)
+        return TodoViewHolder(ItemTodoBinding.bind(view))
     }
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
-        val textView = holder.view.findViewById<TextView>(R.id.todo_text)
-        textView.text = myDataset[position].text
+        holder.binding.todoText.text = myDataset[position].text
     }
 
     override fun getItemCount() = myDataset.size
