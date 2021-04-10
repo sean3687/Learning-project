@@ -13,7 +13,7 @@ import com.tassiecomp.todolist.databinding.ItemTodoBinding
 class MainActivity : AppCompatActivity() {
     //you brought activity main
     private lateinit var binding: ActivityMainBinding
-    
+
     private var data = arrayListOf<Todo>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,14 +30,14 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = TodoAdapter(data)
 
-        binding.addButton.setOnClickListener{
+        binding.addButton.setOnClickListener {
             addTodo()
         }
     }
 
     //add function
-    private fun addTodo(){
-        val todo = Todo(binding.editText.text.toString(),false)
+    private fun addTodo() {
+        val todo = Todo(binding.editText.text.toString(), false)
         data.add(todo)
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
@@ -54,6 +54,7 @@ class TodoAdapter(private val myDataset: List<Todo>) :
 
     }
 
+    //1.Create holder when there is no existing View holder, so it initially create unused view hodler
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoAdapter.TodoViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_todo, parent, false)
@@ -61,10 +62,12 @@ class TodoAdapter(private val myDataset: List<Todo>) :
         return TodoViewHolder(ItemTodoBinding.bind(view))
     }
 
+    //2. Connecting data with view
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         holder.binding.todoText.text = myDataset[position].text
     }
 
+    //3. Number of view you are going to make
     override fun getItemCount() = myDataset.size
 
 }
