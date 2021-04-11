@@ -17,7 +17,7 @@ import retrofit2.create
 import java.lang.Exception
 
 
-const val BASE_URL = "https://cat-fact.herokuapp.com"
+const val BASE_URL = "https://cat-fact.herokuapp.com/"
 
 class MainActivity : AppCompatActivity() {
 
