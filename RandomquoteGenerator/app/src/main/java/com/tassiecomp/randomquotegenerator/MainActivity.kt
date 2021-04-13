@@ -15,6 +15,7 @@ import retrofit2.awaitResponse
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import java.lang.Exception
+import kotlin.collections.listOf as listOf1
 
 
 const val BASE_URL = "https://cat-fact.herokuapp.com/"

@@ -1,4 +1,4 @@
-package com.tassiecomp.marsforecast
+package com.tassiecomp.airPolution
 
 import org.junit.Test
 
