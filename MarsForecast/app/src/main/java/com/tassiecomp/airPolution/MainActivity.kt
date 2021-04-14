@@ -21,15 +21,14 @@ class MainActivity : AppCompatActivity() {
         Log.d(Constants.TAG, "MainActivity - onCreate() called")
 
         //라디오 그룹 가져오기
-        search_term_radio_group.setOnClickListener { _, checkedId ->
+        search_term_radio_group.setOnCheckedChangeListener { _, checkedId ->
 
             //switch
             when (checkedId) {
                 R.id.photo_search_radio_btn -> {
                     Log.d(TAG, "메세지 검색 확인")
                     search_term_text_layout.hint = "사진검색"
-                    search_term_text_layout.startIconDrawable =
-                        resource.getDrawable(R.drawable.ic_photo_library_black_24dp, resources)
+                    search_term_text_layout.startIconDrawable = resources.getDrawable(R.drawable.ic_photo_library_black_24dp, resources)
                 }
             }
         }
