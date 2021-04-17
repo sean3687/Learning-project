@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity() {
                 when(responseState) {
                     RESPONSE_STATE.OKAY ->{
                         Log.d("TAG", "API 호출성공: $responseBody")
+
                     }
                     RESPONSE_STATE.FAIL ->{
                         Log.d("TAG", "API 호출성공: $responseBody")
