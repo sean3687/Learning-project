@@ -1,6 +1,10 @@
 package com.tassiecomp.airPolution.retrofit
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.widget.Toast
+import com.tassiecomp.airPolution.App
 import com.tassiecomp.airPolution.utils.API
 import com.tassiecomp.airPolution.utils.isJsonArray
 import com.tassiecomp.airPolution.utils.isJsonObject
@@ -74,11 +78,31 @@ object RetrofitClient {
                     .url(addedUrl)
                     .method(originalRequest.method,originalRequest.body)
                     .build()
-                return chain.proceed(finalRequest)
+//                return chain.proceed(finalRequest)
+
+                val response = chain.proceed(finalRequest)
+
+                //chain.proceed로 에러코드를 가져온다.
+                if (response.code != 200) {
+                    //handler를 써주는 이유는 Toast는 UIthread에있어야하는데App.instance로 인해main thread에 있게되었다. 그래서
+                    //handler로 main looper에서 코드를 돌리게하고 UIThread에서 돌아가게된다.
+                            //그럼왜 처음부터 하면안됨?
+                                //그 이유는 toast메세지는 일단 Appcompatity 안에서 작동을해야하는데 여기에this로 부른다면, 어떻게될까?
+                                //App compatity가 아니기때문에 잘못된코드다 그래서 context를 App.instance로 가져와서, 쓴다. 그러면 handler덕분에 UIThread에서 돌리게 될수있음 동시에
+                                //Toast메세지까지 띄울수있게된다.
+                    Handler(Looper.getMainLooper()).post{
+                        Toast.makeText(App.instance,"${response.code} 에러입니다.", Toast.LENGTH_SHORT).show()
+                    }
+
+
+                }
+
+                return response
             }
         })
         //위에서 설정한 기본parameter intercepter를 okhttp클라이언트에 추가한다.
-        client.addInterceptor(baseParameterInterceptor)
+
+//        client.addInterceptor(baseParameterInterceptor)
 
         //커넥션 타임아웃
         client.connectTimeout(10, TimeUnit.SECONDS)
