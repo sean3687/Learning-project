@@ -1,5 +1,6 @@
 package com.tassiecomp.airPolution
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
@@ -71,21 +72,35 @@ class MainActivity : AppCompatActivity() {
             Log.d("TAG", "MainActivity - 검색버튼이 클릭되었다. / currentSearchType : $currentSearchType")
 
             //검색 api 호출
-            RetrofitManager.instance.searchPhotos(searchTerm = search_term_edit_text.toString(), completion = {
-                responseState, responseBody ->
+            RetrofitManager.instance.searchPhotos(searchTerm = search_term_edit_text.text.toString(), completion = {
+                responseState, responseDataArrayList ->
+
+                val userSearchInput = search_term_edit_text.text.toString()
 
                 when(responseState) {
                     RESPONSE_STATE.OKAY ->{
-                        Log.d("TAG", "API 호출성공: $responseBody")
+                        Log.d("TAG", "API 호출성공: ${responseDataArrayList?.size}")
+
+                        val intent = Intent(this, PhotoCollectionActivity::class.java)
+
+                        val bundle = Bundle()
+
+                        bundle.putSerializable("photo_array_ist", responseDataArrayList)
+
+                        intent.putExtra("array_bundle", bundle)
+
+                        intent.putExtra("search_term", userSearchInput)
+
+                        startActivity(intent)
 
                     }
                     RESPONSE_STATE.FAIL ->{
-                        Log.d("TAG", "API 호출성공: $responseBody")
+                        Log.d("TAG", "API 호출실패: $responseDataArrayList")
                         Toast.makeText(this,"api호출 에러입니다", Toast.LENGTH_SHORT).show()
 
                     }
                 }
-            })
+             })
 
             this.handleSearchButtonUi()
         }

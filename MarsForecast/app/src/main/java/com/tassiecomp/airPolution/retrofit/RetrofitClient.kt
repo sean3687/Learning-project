@@ -59,7 +59,7 @@ object RetrofitClient {
         loggingIntercepter.setLevel(HttpLoggingInterceptor.Level.BODY)
 
         //위에서 설정한 로깅 인터셉터를 okhttp클라이언트에 추가한다.
-        client.addInterceptor(loggingIntercepter)
+//        client.addInterceptor(loggingIntercepter)
 
         //기본 parameter intercepter 생성
 
@@ -78,8 +78,8 @@ object RetrofitClient {
                     .url(addedUrl)
                     .method(originalRequest.method,originalRequest.body)
                     .build()
-//                return chain.proceed(finalRequest)
 
+                //error code 확인하는곳
                 val response = chain.proceed(finalRequest)
 
                 //chain.proceed로 에러코드를 가져온다.
@@ -96,13 +96,14 @@ object RetrofitClient {
 
 
                 }
-
                 return response
+
+
             }
         })
         //위에서 설정한 기본parameter intercepter를 okhttp클라이언트에 추가한다.
 
-//        client.addInterceptor(baseParameterInterceptor)
+        client.addInterceptor(baseParameterInterceptor)
 
         //커넥션 타임아웃
         client.connectTimeout(10, TimeUnit.SECONDS)
