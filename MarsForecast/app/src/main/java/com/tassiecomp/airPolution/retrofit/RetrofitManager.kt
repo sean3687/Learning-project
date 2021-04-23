@@ -52,11 +52,12 @@ class RetrofitManager {
                             var parsedPhotoDataArray = ArrayList<Photo>()
                             val body = it.asJsonObject
                             val results = body.getAsJsonArray("results")
-                            val total = body.get("totoal").asInt //search된 갯수가 나온다.
+                            val total = body.get("total").asInt //search된 갯수가 나온다.
 
                             Log.d("TAG", "RetrofitManager - onResponse() called / total:$total")
 
                             results.forEach{ resultItem ->
+                                //가장큰 resultItemObject를 resultItem을 Jsonobject로 먼저 가져온다
                                 val resultItemObject = resultItem.asJsonObject
 
                                 val user = resultItemObject.get("user").asJsonObject

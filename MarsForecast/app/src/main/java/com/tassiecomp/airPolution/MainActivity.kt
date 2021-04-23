@@ -81,11 +81,13 @@ class MainActivity : AppCompatActivity() {
                     RESPONSE_STATE.OKAY ->{
                         Log.d("TAG", "API 호출성공: ${responseDataArrayList?.size}")
 
+                        //photocollection activity를 열어준다.
                         val intent = Intent(this, PhotoCollectionActivity::class.java)
 
+                        //bundle 에다가
                         val bundle = Bundle()
 
-                        bundle.putSerializable("photo_array_ist", responseDataArrayList)
+                        bundle.putSerializable("photo_array_list", responseDataArrayList)
 
                         intent.putExtra("array_bundle", bundle)
 
