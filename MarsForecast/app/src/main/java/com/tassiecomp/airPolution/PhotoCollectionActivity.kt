@@ -32,6 +32,10 @@ class PhotoCollectionActivity: AppCompatActivity() {
 
         Log.d("TAG","PhotoCollectionActivity - onCreate() called / searchTerm: $searchTerm, photoList.count() : ${photoList.count()}")
 
+        //photo collection activity의 타이틀을 search term으로 바꾸기
+        top_App_Bar.title = searchTerm
+
+
         this.photoGridRecyclerViewAdapter = PhotoGridRecyclerViewAdapter()
 
         this.photoGridRecyclerViewAdapter.submitList(photoList)

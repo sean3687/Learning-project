@@ -3,16 +3,13 @@ package com.tassiecomp.airPolution
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.tassiecomp.airPolution.retrofit.RetrofitManager
 
-import com.tassiecomp.airPolution.utils.Constants
-import com.tassiecomp.airPolution.utils.RESPONSE_STATE
+import com.tassiecomp.airPolution.utils.RESPONSE_STATUS
 import com.tassiecomp.airPolution.utils.SEARCH_TYPE
 import com.tassiecomp.airPolution.utils.onMyTextChanged
 import kotlinx.android.synthetic.main.activity_main.*
@@ -78,7 +75,7 @@ class MainActivity : AppCompatActivity() {
                 val userSearchInput = search_term_edit_text.text.toString()
 
                 when(responseState) {
-                    RESPONSE_STATE.OKAY ->{
+                    RESPONSE_STATUS.OKAY ->{
                         Log.d("TAG", "API 호출성공: ${responseDataArrayList?.size}")
 
                         //photocollection activity를 열어준다.
@@ -96,15 +93,23 @@ class MainActivity : AppCompatActivity() {
                         startActivity(intent)
 
                     }
-                    RESPONSE_STATE.FAIL ->{
+                    RESPONSE_STATUS.FAIL ->{
                         Log.d("TAG", "API 호출실패: $responseDataArrayList")
                         Toast.makeText(this,"api호출 에러입니다", Toast.LENGTH_SHORT).show()
 
                     }
+
+                    RESPONSE_STATUS.NO_CONTENT->{
+                        Toast.makeText(this,"검색결과가 없습니다", Toast.LENGTH_SHORT).show()
+                    }
                 }
+                btn_progress.visibility = View.INVISIBLE
+                btn_search.text = "검색"
+                search_term_edit_text.setText("")
+
              })
 
-            this.handleSearchButtonUi()
+
         }
 
     } // oncreate
