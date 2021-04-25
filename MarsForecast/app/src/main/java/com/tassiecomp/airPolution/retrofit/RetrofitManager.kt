@@ -10,7 +10,7 @@ import retrofit2.Response
 import java.text.SimpleDateFormat
 
 
-class       RetrofitManager {
+class RetrofitManager {
 
     //싱글톤이 적용되도록 retrofit manager을 companion object에만든다.
     companion object {

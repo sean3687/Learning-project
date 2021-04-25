@@ -1,6 +1,10 @@
 package com.tassiecomp.myweatherapi.api
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.widget.Toast
+import com.tassiecomp.myweatherapi.App
 import com.tassiecomp.myweatherapi.utils.API
 import com.tassiecomp.myweatherapi.utils.API.BASE_URL
 import com.tassiecomp.myweatherapi.utils.isJsonArray
@@ -51,13 +55,24 @@ object RetrofitClient {
 
                 val originalRequest = chain.request()
 
-                val addUrl = originalRequest.url.newBuilder().addQueryParameter("client_id", API.CLIENT_ID).build()
+                val addUrl = originalRequest.url.newBuilder().addQueryParameter("appid", API.CLIENT_ID).build()
 
                 val finalRequest = originalRequest.newBuilder()
                     .url(addUrl)
                     .method(originalRequest.method, originalRequest.body)
                     .build()
-                return chain.proceed(finalRequest)
+
+
+                val response = chain.proceed(finalRequest)
+
+                if(response.code != 200) {
+
+                    Handler(Looper.getMainLooper()).post{
+                        Toast.makeText(App.instance,"${response.code} 에러입니다.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                return response
             }
 
 

@@ -12,7 +12,7 @@ class PhotoCollectionActivity: AppCompatActivity() {
 
     //데이터
     private var photoList = ArrayList<Photo>()
-    //어답터
+    //리사이클러 어답터
     private lateinit var photoGridRecyclerViewAdapter: PhotoGridRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,10 +36,12 @@ class PhotoCollectionActivity: AppCompatActivity() {
         top_App_Bar.title = searchTerm
 
 
+        //리사이클러 인스턴스 생성
         this.photoGridRecyclerViewAdapter = PhotoGridRecyclerViewAdapter()
 
         this.photoGridRecyclerViewAdapter.submitList(photoList)
 
+        //photo recycler view에 layoutmanager에서 layout manager type을 연결해준다.
         my_photo_recycler_view.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
 
         my_photo_recycler_view.adapter = this.photoGridRecyclerViewAdapter

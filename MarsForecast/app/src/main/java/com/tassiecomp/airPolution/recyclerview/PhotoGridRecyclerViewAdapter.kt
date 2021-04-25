@@ -24,6 +24,7 @@ class PhotoGridRecyclerViewAdapter : RecyclerView.Adapter<PhotoItemViewHolder>()
     }
 
 
+
     //보여줄 목록의 갯수
     override fun getItemCount(): Int {
         return this.photoList.size

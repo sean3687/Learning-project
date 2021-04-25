@@ -23,11 +23,10 @@
         android:id="@+id/load_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:text="load"
-        app:layout_constraintEnd_toEndOf="@+id/search_term"
-        app:layout_constraintStart_toStartOf="@+id/search_term"
-        app:layout_constraintTop_toBottomOf="@+id/search_term" />
+        app:layout_constraintEnd_toEndOf="@+id/editText_term"
+        app:layout_constraintStart_toStartOf="@+id/editText_term"
+        app:layout_constraintTop_toBottomOf="@+id/editText_term" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

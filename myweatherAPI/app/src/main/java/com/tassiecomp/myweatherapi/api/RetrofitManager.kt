@@ -12,26 +12,37 @@ class RetrofitManager {
     companion object {
         val instance = RetrofitManager()
     }
+
     private val iRetrofit: IRetrofit? =
         RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
 
     fun getData(searchTerm: String?, completion: (RESPONSE_STATE, String) -> Unit) {
         val term = searchTerm.let {
             it
-        }?: ""
+        } ?: ""
 
-        val call = iRetrofit?.getData(searchTerm = term).let {
+        val call = iRetrofit?.getCityData(searchTerm = term).let {
             it
-        }?: return
+        } ?: return
 
-        call.enqueue(object :retrofit2.Callback<JsonElement> {
+        call.enqueue(object : retrofit2.Callback<JsonElement> {
             override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
-                Log.d("TAG","RetrofitManager - onResponse() called() / response: ${response.body()}")
-                completion(RESPONSE_STATE.OKAY, response.body().toString())
+                Log.d(
+                    "TAG",
+                    "RetrofitManager - onResponse() called() / response: ${response.body()}"
+                )
+
+                when (response.code()) {
+                    200 -> {
+                        completion(RESPONSE_STATE.OKAY, response.body().toString())
+                    }
+                }
+
             }
 
+
             override fun onFailure(call: Call<JsonElement>, t: Throwable) {
-                Log.d("TAG","RetrofitManager - onFailure() called() / t: $t")
+                Log.d("TAG", "RetrofitManager - onFailure() called() / t: $t")
                 //이제 호출된 결과값이 들어온다.
                 completion(RESPONSE_STATE.FAIL, t.toString())
             }

@@ -7,5 +7,5 @@ import retrofit2.http.Query
 
 interface IRetrofit {
     @GET("/data/2.5/weather?")
-    fun getData(@Query("q") searchTerm:String): Call<JsonElement>
+    fun getCityData(@Query("q") searchTerm:String): Call<JsonElement>
 }
