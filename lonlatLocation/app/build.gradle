@@ -1,15 +1,14 @@
-apply plugin: 'com.android.application'
-
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
 
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.tassiecomp.myweatherapi"
+        applicationId "com.tassiecomp.lonlatlocation"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
@@ -43,16 +42,4 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
-
-    //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
-    implementation 'com.squareup.retrofit2:converter-gson:2.0.0'
-    //gson converter
-    implementation 'com.google.code.gson:gson:2.8.6'
-    //logging interceptor
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
-
-    //google location
-    implementation 'com.google.android.gms:play-services-location:15.0.1'
 }
