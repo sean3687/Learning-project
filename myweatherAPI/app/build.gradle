@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -53,6 +55,9 @@ dependencies {
     //logging interceptor
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
 
-    //google location
-    implementation 'com.google.android.gms:play-services-location:15.0.1'
+    //location services
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
+
+
+
 }

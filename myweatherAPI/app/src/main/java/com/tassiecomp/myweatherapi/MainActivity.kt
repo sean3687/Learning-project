@@ -1,29 +1,35 @@
 package com.tassiecomp.myweatherapi
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
-import android.location.Location
+import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.tassiecomp.myweatherapi.api.RetrofitManager
 import com.tassiecomp.myweatherapi.utils.RESPONSE_STATE
+import com.tassiecomp.myweatherapi.utils.getDouble
+import com.tassiecomp.myweatherapi.utils.putDouble
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         load_button.setOnClickListener {
             Log.d("TAG", "MainActivity - 검색버튼이 클릭되었다.")
@@ -51,56 +57,102 @@ class MainActivity : AppCompatActivity() {
                 })
 
 
-
         }
 
-        get_current_weather.setOnClickListener{
-            val lat = obtieneLocalizacion()
-            Log.d("LocationData","dddddddddddddddddddddddddddddddddfunction value ${lat}")
+        get_current_weather.setOnClickListener {
+
+            checkPermission()
+            var sharedPreference = getSharedPreferences("gridLocation", Context.MODE_PRIVATE)
+            val lat = sharedPreference.getDouble("lat", 0.0000)
+            val lon = sharedPreference.getDouble("lon", 0.0000)
+            Log.d("Location", "shared LAT&LON :$lat, $lon")
+
 
             RetrofitManager.instance.getData_byGrid(
-                latitude = 37.384545,
-                longitude = 127.123819,
-                completion = { responseState, responseBody ->
+                latitude = lat,
+                longitude = lon
+            ) { responseState, responseBody ->
 
 
-                    when (responseState) {
-                        RESPONSE_STATE.OKAY -> {
-                            Log.d("TAG", "API 호출성공: $responseBody")
+                when (responseState) {
+                    RESPONSE_STATE.OKAY -> {
+                        Log.d("TAG", "API 호출성공: $responseBody")
 
-                            val intent = Intent(this, weatherDetail::class.java)
+                        val intent = Intent(this, weatherDetail::class.java)
 
-                            val bundle = Bundle()
+                        val bundle = Bundle()
 
 
-                        }
-                        RESPONSE_STATE.FAIL -> {
-                            Log.d("TAG", "API 호출 에러 : $responseBody")
-                        }
                     }
-                })
+                    RESPONSE_STATE.FAIL -> {
+                        Log.d("TAG", "API 호출 에러 : $responseBody")
+                    }
+                }
+            }
+        }
 
+    }
+
+    private fun checkPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                1
+            )
+        } else {
+            getLocations()
+        }
+
+    }
+    @SuppressLint("MissingPermission")
+    private fun getLocations() {
+
+        fusedLocationProviderClient.lastLocation.addOnSuccessListener {
+            if(it == null){
+                Toast.makeText(this, "Error: can't load user location", Toast.LENGTH_SHORT).show()
+            }else it.apply {
+                val latitude = it.latitude
+                val longitude = it.longitude
+//                textView.text = "latitude:$latitude longitude: $longitude"
+                Log.d("Location", "RAW LAT&LON :$latitude, $longitude")
+
+                //sharedpreference
+                var sharedPreference = getSharedPreferences("gridLocation", Context.MODE_PRIVATE)
+                val editor: SharedPreferences.Editor = sharedPreference.edit()
+                editor.putDouble("lat", latitude)
+                editor.putDouble("lon", longitude)
+                editor.commit()
+
+            }
         }
 
 
     }
 
-    @SuppressLint("MissingPermission")
-    private fun obtieneLocalizacion() {
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location: Location? ->
-                if (location != null){
-                    location.latitude
-                    location.longitude
-                    Log.d("LocationData","ddddddddddddddddsuccess")
-                }else{
-                    Toast.makeText(this,"Error: Location Permission needed", Toast.LENGTH_SHORT).show()
-                    Log.d("LocationData","dddddddddddddddd failed")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if(requestCode ==1) {
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(this,"Permission Granted", Toast.LENGTH_SHORT).show()
+                    getLocations()
                 }
-
+                else{
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
+                }
             }
-
+        }
     }
 
 
 }
+
+

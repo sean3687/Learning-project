@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
 
         //checking if registered
-        val savedUserName = sharedPreference.getString("userName", null)
+            val savedUserName = sharedPreference.getString("userName", null)
         when {
             savedUserName === null -> {
                 Log.d("TAG", "Empty")

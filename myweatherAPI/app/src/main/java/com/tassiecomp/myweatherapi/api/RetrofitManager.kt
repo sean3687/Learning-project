@@ -1,7 +1,10 @@
 package com.tassiecomp.myweatherapi.api
 
 import android.util.Log
+import androidx.core.content.ContextCompat
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.gson.JsonElement
+import com.tassiecomp.myweatherapi.App
 import com.tassiecomp.myweatherapi.utils.API
 import com.tassiecomp.myweatherapi.utils.RESPONSE_STATE
 import retrofit2.Call
@@ -11,7 +14,9 @@ class RetrofitManager {
 
     companion object {
         val instance = RetrofitManager()
+
     }
+
 
     private val iRetrofit: IRetrofit? =
         RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
@@ -51,14 +56,18 @@ class RetrofitManager {
         })
     }
 
-    fun getData_byGrid(latitude: Double?, longitude: Double?, completion: (RESPONSE_STATE, String) -> Unit) {
+    fun getData_byGrid(
+        latitude: Double?,
+        longitude: Double?,
+        completion: (RESPONSE_STATE, String) -> Unit
+    ) {
         val lat = latitude.let {
             it
         } ?: ""
 
-        val lon= longitude.let{
+        val lon = longitude.let {
             it
-        } ?:""
+        } ?: ""
 
         val call = iRetrofit?.getGridData(latitude = lat as Double, longitude = lon as Double).let {
             it
@@ -89,4 +98,8 @@ class RetrofitManager {
 
         })
     }
+
+
+
+
 }

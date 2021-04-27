@@ -1,8 +1,10 @@
 package com.tassiecomp.myweatherapi.utils
 
+import android.content.SharedPreferences
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+
 
 //문자열이 제이슨  형태인지, 재이슨 배열 형태인지
 fun String?.isJsonObject():Boolean {
@@ -42,3 +44,9 @@ fun EditText.onMyTextChanged(completion:(Editable?) -> Unit){
 
     })
 }
+
+fun SharedPreferences.Editor.putDouble(key: String, double: Double) =
+    putLong(key, java.lang.Double.doubleToRawLongBits(double))
+
+fun SharedPreferences.getDouble(key: String, default: Double) =
+    java.lang.Double.longBitsToDouble(getLong(key, java.lang.Double.doubleToRawLongBits(default)))
