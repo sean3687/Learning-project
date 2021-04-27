@@ -89,7 +89,13 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+            //open new activity
+//            val weatherDetail_intent = Intent(this@MainActivity, weatherDetail::class.java)
+//            startActivity(weatherDetail_intent)
         }
+
+
+
 
     }
 
@@ -126,7 +132,7 @@ class MainActivity : AppCompatActivity() {
                 val editor: SharedPreferences.Editor = sharedPreference.edit()
                 editor.putDouble("lat", latitude)
                 editor.putDouble("lon", longitude)
-                editor.commit()
+                editor.apply()
 
             }
         }

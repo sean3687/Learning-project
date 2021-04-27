@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener{
             checkPermission()
+
         }
 
     }

@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.gson.JsonElement
 import com.tassiecomp.myweatherapi.App
+import com.tassiecomp.myweatherapi.Model.Weather
 import com.tassiecomp.myweatherapi.utils.API
 import com.tassiecomp.myweatherapi.utils.RESPONSE_STATE
 import retrofit2.Call
@@ -39,6 +40,23 @@ class RetrofitManager {
 
                 when (response.code()) {
                     200 -> {
+                        //response.body값이 있다면
+
+                        response.body()?.let{
+                            val parsedWeatherArray = ArrayList<Weather>()
+
+                            val body = it.asJsonObject
+
+                            val name = body.get("name") //cityname
+
+                            val main_temp = body.getAsJsonArray("main")
+
+                            val main_weather = body.getAsJsonArray("weather").asJsonObject
+
+                            val main_weather_description = main_weather.get("description")
+
+                            Log.d("dddddddddd", "$main_weather_description")
+                        }
                         completion(RESPONSE_STATE.OKAY, response.body().toString())
                     }
                 }
