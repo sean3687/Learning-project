@@ -41,28 +41,30 @@ class RetrofitManager {
                 when (response.code()) {
                     200 -> {
                         //response.body값이 있다면
-
-                        response.body()?.let{
+                        response.body()?.let {
                             val parsedWeatherArray = ArrayList<Weather>()
 
                             val body = it.asJsonObject
 
-                            val name = body.get("name") //cityname
+                            val weather = body.getAsJsonArray("weather")
+                            val main = body.getAsJsonObject("main")
 
-                            val main_temp = body.getAsJsonArray("main")
 
-                            val main_weather = body.getAsJsonArray("weather").asJsonObject
+                            Log.d(
+                                "mainData",
+                                "weather:$weather /n main: $main"
+                            )
+                            completion(RESPONSE_STATE.OKAY, response.body().toString())
 
-                            val main_weather_description = main_weather.get("description")
 
-                            Log.d("dddddddddd", "$main_weather_description")
                         }
-                        completion(RESPONSE_STATE.OKAY, response.body().toString())
+
+
                     }
+
                 }
 
             }
-
 
             override fun onFailure(call: Call<JsonElement>, t: Throwable) {
                 Log.d("TAG", "RetrofitManager - onFailure() called() / t: $t")
@@ -70,9 +72,11 @@ class RetrofitManager {
                 completion(RESPONSE_STATE.FAIL, t.toString())
             }
 
-
         })
+
+
     }
+
 
     fun getData_byGrid(
         latitude: Double?,
@@ -100,10 +104,34 @@ class RetrofitManager {
 
                 when (response.code()) {
                     200 -> {
-                        completion(RESPONSE_STATE.OKAY, response.body().toString())
-                    }
-                }
+                        //response.body값이 있다면
+                        response.body()?.let {
+                            val parsedWeatherArray = ArrayList<Weather>()
 
+                            val body = it.asJsonObject
+
+                            val weather = body.getAsJsonObject("weather")
+                            val main = body.getAsJsonObject("main")
+
+                            val weather_description = weather.get("description")
+
+//                            val main_temp = main.asJsonObject.get("temp").asString
+
+
+
+
+
+                            Log.d(
+                                "mainData",
+                                "main_temp: /n weather_description: $weather_description"
+                            )
+                            completion(RESPONSE_STATE.OKAY, response.body().toString())
+
+
+                        }
+                    }
+
+                }
             }
 
 
@@ -116,8 +144,6 @@ class RetrofitManager {
 
         })
     }
-
-
 
 
 }

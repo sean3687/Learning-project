@@ -44,9 +44,6 @@ class MainActivity : AppCompatActivity() {
                         RESPONSE_STATE.OKAY -> {
                             Log.d("TAG", "API 호출성공: $responseBody")
 
-                            val intent = Intent(this, weatherDetail::class.java)
-
-                            val bundle = Bundle()
 
 
                         }
@@ -78,9 +75,6 @@ class MainActivity : AppCompatActivity() {
                     RESPONSE_STATE.OKAY -> {
                         Log.d("TAG", "API 호출성공: $responseBody")
 
-                        val intent = Intent(this, weatherDetail::class.java)
-
-                        val bundle = Bundle()
 
 
                     }

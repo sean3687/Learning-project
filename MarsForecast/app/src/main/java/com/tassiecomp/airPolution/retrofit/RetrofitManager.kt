@@ -70,6 +70,7 @@ class RetrofitManager {
 
                                     val likesCount = resultItemObject.get("likes").asInt
 
+                                    Log.d("mainData", "$likesCount")
                                     val thumbnailLink =
                                         resultItemObject.get("urls").asJsonObject.get("thumb").asString
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".weatherDetail">
+    >
 
     <TextView
         android:id="@+id/city_name"
@@ -54,10 +54,14 @@
         android:id="@+id/max_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
         android:text="33°"
         android:textSize="20dp"
-        tools:layout_editor_absoluteX="236dp"
-        tools:layout_editor_absoluteY="383dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/min_temp"
+        app:layout_constraintStart_toEndOf="@+id/min_temp"
+        app:layout_constraintTop_toTopOf="@+id/min_temp"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/description"
