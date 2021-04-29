@@ -10,6 +10,7 @@ import com.tassiecomp.myweatherapi.utils.API
 import com.tassiecomp.myweatherapi.utils.RESPONSE_STATE
 import retrofit2.Call
 import retrofit2.Response
+import kotlin.collections.List as List
 
 class RetrofitManager {
 
@@ -81,7 +82,7 @@ class RetrofitManager {
     fun getData_byGrid(
         latitude: Double?,
         longitude: Double?,
-        completion: (RESPONSE_STATE, String) -> Unit
+        completion: (RESPONSE_STATE, ArrayList<Weather>?) -> Unit
     ) {
         val lat = latitude.let {
             it
@@ -107,43 +108,74 @@ class RetrofitManager {
                         //response.body값이 있다면
                         response.body()?.let {
                             val parsedWeatherArray = ArrayList<Weather>()
-
                             val body = it.asJsonObject
 
-                            val weather = body.getAsJsonObject("weather")
+                            //JSONArray
+                            val weather = body.getAsJsonArray("weather")
                             val main = body.getAsJsonObject("main")
+                            val wind = body.getAsJsonObject("wind")
 
-                            val weather_description = weather.get("description")
+                            //JSONArray - Items
 
-//                            val main_temp = main.asJsonObject.get("temp").asString
-
-
-
-
-
-                            Log.d(
-                                "mainData",
-                                "main_temp: /n weather_description: $weather_description"
-                            )
-                            completion(RESPONSE_STATE.OKAY, response.body().toString())
+                            val main_temp = main.get("temp").asDouble
+                            val main_feelslike = main.get("feels_like").asFloat
+                            val main_mintemp = main.get("temp_min").asDouble
+                            val main_maxtemp = main.get("temp_max").asDouble
+                            val main_humidity = main.get("humidity").asInt
+                            val wind_speed = wind.get("speed").asDouble
+                            val wind_deg = wind.get("deg").asInt
 
 
+                            weather.forEach { weatherItem ->
+                                val weatherItemObject = weatherItem.asJsonObject
+
+                                val weather_Description =
+                                    weatherItemObject.get("description").asString
+                                val weather_Icon =
+                                    weatherItemObject.get("icon").asString
+
+
+                                //adding First item on list
+                                val weatherItem = Weather(
+                                    main_temp = main_temp,
+                                    main_feelslike = main_feelslike,
+                                    main_mintemp = main_mintemp,
+                                    main_maxtemp = main_maxtemp,
+                                    main_humidity = main_humidity,
+                                    wind_speed = wind_speed,
+                                    wind_deg = wind_deg,
+                                    weather_description = weather_Description,
+                                    weather_icon = weather_Icon
+                                )
+
+                                parsedWeatherArray.add(weatherItem)
+
+
+                                Log.d(
+                                    "mainData",
+                                    "weatherDescription:$parsedWeatherArray /n weather_description: $main"
+                                )
+
+                            }
+                            completion(RESPONSE_STATE.OKAY, parsedWeatherArray)
                         }
-                    }
 
+
+                    }
                 }
+
             }
 
 
             override fun onFailure(call: Call<JsonElement>, t: Throwable) {
                 Log.d("TAG", "RetrofitManager - onFailure() called() / t: $t")
                 //이제 호출된 결과값이 들어온다.
-                completion(RESPONSE_STATE.FAIL, t.toString())
+                completion(RESPONSE_STATE.FAIL, null)
             }
-
-
         })
+
+
     }
-
-
 }
+
+

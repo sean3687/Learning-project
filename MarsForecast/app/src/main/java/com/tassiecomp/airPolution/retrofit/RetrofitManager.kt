@@ -1,5 +1,7 @@
 package com.tassiecomp.airPolution.retrofit
 
+import com.tassiecomp.airPolution.retrofit.IRetrofit
+import com.tassiecomp.airPolution.retrofit.RetrofitClient
 import android.util.Log
 import com.google.gson.JsonElement
 import com.tassiecomp.airPolution.model.Photo

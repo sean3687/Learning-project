@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.tassiecomp.myweatherapi.Model.Weather
 import com.tassiecomp.myweatherapi.api.RetrofitManager
 import com.tassiecomp.myweatherapi.utils.RESPONSE_STATE
 import com.tassiecomp.myweatherapi.utils.getDouble
@@ -45,7 +46,6 @@ class MainActivity : AppCompatActivity() {
                             Log.d("TAG", "API 호출성공: $responseBody")
 
 
-
                         }
                         RESPONSE_STATE.FAIL -> {
                             Log.d("TAG", "API 호출 에러 : $responseBody")
@@ -67,30 +67,34 @@ class MainActivity : AppCompatActivity() {
 
             RetrofitManager.instance.getData_byGrid(
                 latitude = lat,
-                longitude = lon
-            ) { responseState, responseBody ->
+                longitude = lon,
+                completion = { responseState, responseDataArrayList->
 
 
                 when (responseState) {
                     RESPONSE_STATE.OKAY -> {
-                        Log.d("TAG", "API 호출성공: $responseBody")
+                        Log.d("TAG", "API 호출성공: $responseDataArrayList")
 
+                        val intent = Intent(this, weatherDetail::class.java)
 
+                        val bundle = Bundle()
 
+                        bundle.putSerializable("weather_array_list", responseDataArrayList)
+
+                        intent.putExtra("array_bundle", bundle)
+
+                        startActivity(intent)
                     }
                     RESPONSE_STATE.FAIL -> {
-                        Log.d("TAG", "API 호출 에러 : $responseBody")
+                        Log.d("TAG", "API 호출 에러 : $responseDataArrayList")
                     }
                 }
-            }
+            })
             //open new activity
 //            val weatherDetail_intent = Intent(this@MainActivity, weatherDetail::class.java)
 //            startActivity(weatherDetail_intent)
+
         }
-
-
-
-
     }
 
     private fun checkPermission() {
@@ -109,20 +113,22 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
     @SuppressLint("MissingPermission")
     private fun getLocations() {
 
         fusedLocationProviderClient.lastLocation.addOnSuccessListener {
-            if(it == null){
-                Toast.makeText(this, "Error: can't load user location", Toast.LENGTH_SHORT).show()
-            }else it.apply {
+            if (it == null) {
+                Toast.makeText(this, "Error: can't load user location", Toast.LENGTH_SHORT)
+                    .show()
+            } else it.apply {
                 val latitude = it.latitude
                 val longitude = it.longitude
-//                textView.text = "latitude:$latitude longitude: $longitude"
                 Log.d("Location", "RAW LAT&LON :$latitude, $longitude")
 
                 //sharedpreference
-                var sharedPreference = getSharedPreferences("gridLocation", Context.MODE_PRIVATE)
+                var sharedPreference =
+                    getSharedPreferences("gridLocation", Context.MODE_PRIVATE)
                 val editor: SharedPreferences.Editor = sharedPreference.edit()
                 editor.putDouble("lat", latitude)
                 editor.putDouble("lon", longitude)
@@ -139,13 +145,16 @@ class MainActivity : AppCompatActivity() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if(requestCode ==1) {
-            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED){
-                    Toast.makeText(this,"Permission Granted", Toast.LENGTH_SHORT).show()
+        if (requestCode == 1) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
                     getLocations()
-                }
-                else{
+                } else {
                     Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
                 }
             }
