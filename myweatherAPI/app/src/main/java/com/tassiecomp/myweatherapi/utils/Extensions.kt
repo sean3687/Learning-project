@@ -50,3 +50,18 @@ fun SharedPreferences.Editor.putDouble(key: String, double: Double) =
 
 fun SharedPreferences.getDouble(key: String, default: Double) =
     java.lang.Double.longBitsToDouble(getLong(key, java.lang.Double.doubleToRawLongBits(default)))
+
+
+fun String?.capitalize_first_word(input:String): String {
+    val str = input
+
+    val words = str.split(" ")
+
+    var newStr = ""
+
+    words.forEach {
+        newStr += it.capitalize() + " "
+    }
+
+    return (newStr.trimEnd())
+}

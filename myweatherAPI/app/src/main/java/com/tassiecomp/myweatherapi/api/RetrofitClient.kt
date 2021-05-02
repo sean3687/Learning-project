@@ -51,6 +51,7 @@ object RetrofitClient {
 
         val baseParameterInterceptor: Interceptor = (object: Interceptor {
             override fun intercept(chain: Interceptor.Chain): Response {
+
                 Log.d("TAG", "RetrofitClient - intercept() called")
 
                 val originalRequest = chain.request()
@@ -61,6 +62,7 @@ object RetrofitClient {
                     .url(addUrl)
                     .method(originalRequest.method, originalRequest.body)
                     .build()
+
 
 
                 val response = chain.proceed(finalRequest)

@@ -14,8 +14,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.tassiecomp.myweatherapi.App.Companion.instance
+import com.tassiecomp.myweatherapi.Model.Grid
 import com.tassiecomp.myweatherapi.Model.Weather
 import com.tassiecomp.myweatherapi.api.RetrofitManager
+import com.tassiecomp.myweatherapi.utils.API.unit
 import com.tassiecomp.myweatherapi.utils.RESPONSE_STATE
 import com.tassiecomp.myweatherapi.utils.getDouble
 import com.tassiecomp.myweatherapi.utils.putDouble
@@ -31,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-
+        checkPermission()
         load_button.setOnClickListener {
             Log.d("TAG", "MainActivity - 검색버튼이 클릭되었다.")
 
@@ -58,38 +61,40 @@ class MainActivity : AppCompatActivity() {
 
         get_current_weather.setOnClickListener {
 
-            checkPermission()
+
             var sharedPreference = getSharedPreferences("gridLocation", Context.MODE_PRIVATE)
             val lat = sharedPreference.getDouble("lat", 0.0000)
             val lon = sharedPreference.getDouble("lon", 0.0000)
+            val unit = "metric"
             Log.d("Location", "shared LAT&LON :$lat, $lon")
 
 
             RetrofitManager.instance.getData_byGrid(
                 latitude = lat,
                 longitude = lon,
-                completion = { responseState, responseDataArrayList->
+                units = unit,
+                completion = { responseState, responseDataArrayList ->
 
 
-                when (responseState) {
-                    RESPONSE_STATE.OKAY -> {
-                        Log.d("TAG", "API 호출성공: $responseDataArrayList")
+                    when (responseState) {
+                        RESPONSE_STATE.OKAY -> {
+                            Log.d("TAG", "API 호출성공: $responseDataArrayList")
 
-                        val intent = Intent(this, weatherDetail::class.java)
+                            val intent = Intent(this, weatherDetail::class.java)
 
-                        val bundle = Bundle()
+                            val bundle = Bundle()
 
-                        bundle.putSerializable("weather_array_list", responseDataArrayList)
+                            bundle.putSerializable("weather_array_list", responseDataArrayList)
 
-                        intent.putExtra("array_bundle", bundle)
+                            intent.putExtra("array_bundle", bundle)
 
-                        startActivity(intent)
+                            startActivity(intent)
+                        }
+                        RESPONSE_STATE.FAIL -> {
+                            Log.d("TAG", "API 호출 에러 : $responseDataArrayList")
+                        }
                     }
-                    RESPONSE_STATE.FAIL -> {
-                        Log.d("TAG", "API 호출 에러 : $responseDataArrayList")
-                    }
-                }
-            })
+                })
             //open new activity
 //            val weatherDetail_intent = Intent(this@MainActivity, weatherDetail::class.java)
 //            startActivity(weatherDetail_intent)
@@ -109,15 +114,17 @@ class MainActivity : AppCompatActivity() {
                 1
             )
         } else {
-            getLocations()
+            MainActivity.
         }
 
     }
 
     @SuppressLint("MissingPermission")
-    private fun getLocations() {
+    private fun getLocations(completion: (RESPONSE_STATE, ArrayList<Grid>?)->Unit
+    ) {
 
         fusedLocationProviderClient.lastLocation.addOnSuccessListener {
+            val parsedGridArray = ArrayList<Grid>()
             if (it == null) {
                 Toast.makeText(this, "Error: can't load user location", Toast.LENGTH_SHORT)
                     .show()
@@ -126,15 +133,26 @@ class MainActivity : AppCompatActivity() {
                 val longitude = it.longitude
                 Log.d("Location", "RAW LAT&LON :$latitude, $longitude")
 
+                val gridItem = Grid(
+                    latitude = latitude,
+                    longitude = longitude
+                )
+
+                parsedGridArray.add(gridItem)
+
+
                 //sharedpreference
-                var sharedPreference =
-                    getSharedPreferences("gridLocation", Context.MODE_PRIVATE)
-                val editor: SharedPreferences.Editor = sharedPreference.edit()
-                editor.putDouble("lat", latitude)
-                editor.putDouble("lon", longitude)
-                editor.apply()
+//                var sharedPreference =
+//                    getSharedPreferences("gridLocation", Context.MODE_PRIVATE)
+//                val editor: SharedPreferences.Editor = sharedPreference.edit()
+//                editor.putDouble("lat", latitude)
+//                editor.putDouble("lon", longitude)
+//                editor.apply()
+
 
             }
+            completion(RESPONSE_STATE.OKAY, parsedGridArray)
+
         }
 
 

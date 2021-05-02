@@ -44,3 +44,4 @@ fun EditText.onMyTextChanged(completion:(Editable?) -> Unit){
 
    })
 }
+

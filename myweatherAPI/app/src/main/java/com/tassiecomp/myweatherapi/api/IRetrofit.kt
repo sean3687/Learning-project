@@ -12,7 +12,8 @@ interface IRetrofit {
     @GET("/data/2.5/weather?")
     fun getGridData(
         @Query("lat") latitude: Double,
-        @Query("lon") longitude: Double
+        @Query("lon") longitude: Double,
+        @Query("units") unit:String
     ): Call<JsonElement>
 
 

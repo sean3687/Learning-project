@@ -3,15 +3,16 @@ package com.tassiecomp.myweatherapi.Model
 import java.io.Serializable
 
 data class Weather(
-    var main_temp: Double?,
-    var main_feelslike: Float?,
-    var main_mintemp: Double?,
-    var main_maxtemp: Double?,
+    var main_temp: Int?,
+    var main_feelslike: Int?,
+    var main_mintemp: Int?,
+    var main_maxtemp: Int?,
     var main_humidity: Int?,
     var wind_speed: Double?,
     var wind_deg:Int?,
     var weather_description:String?,
-    var weather_icon:String?
+    var weather_icon:String?,
+    var name_city:String?
     ): Serializable{
 
     }

@@ -7,6 +7,7 @@ import com.google.gson.JsonElement
 import com.tassiecomp.myweatherapi.App
 import com.tassiecomp.myweatherapi.Model.Weather
 import com.tassiecomp.myweatherapi.utils.API
+import com.tassiecomp.myweatherapi.utils.API.unit
 import com.tassiecomp.myweatherapi.utils.RESPONSE_STATE
 import retrofit2.Call
 import retrofit2.Response
@@ -82,6 +83,7 @@ class RetrofitManager {
     fun getData_byGrid(
         latitude: Double?,
         longitude: Double?,
+        units: String?,
         completion: (RESPONSE_STATE, ArrayList<Weather>?) -> Unit
     ) {
         val lat = latitude.let {
@@ -91,8 +93,15 @@ class RetrofitManager {
         val lon = longitude.let {
             it
         } ?: ""
+        val unit = units.let {
+            it
+        } ?: ""
 
-        val call = iRetrofit?.getGridData(latitude = lat as Double, longitude = lon as Double).let {
+        val call = iRetrofit?.getGridData(
+            latitude = lat as Double,
+            longitude = lon as Double,
+            unit = unit as String,
+        ).let {
             it
         } ?: return
 
@@ -115,15 +124,17 @@ class RetrofitManager {
                             val main = body.getAsJsonObject("main")
                             val wind = body.getAsJsonObject("wind")
 
+
                             //JSONArray - Items
 
-                            val main_temp = main.get("temp").asDouble
-                            val main_feelslike = main.get("feels_like").asFloat
-                            val main_mintemp = main.get("temp_min").asDouble
-                            val main_maxtemp = main.get("temp_max").asDouble
+                            val main_temp = main.get("temp").asInt
+                            val main_feelslike = main.get("feels_like").asInt
+                            val main_mintemp = main.get("temp_min").asInt
+                            val main_maxtemp = main.get("temp_max").asInt
                             val main_humidity = main.get("humidity").asInt
                             val wind_speed = wind.get("speed").asDouble
                             val wind_deg = wind.get("deg").asInt
+                            val city_name = body.get("name").asString
 
 
                             weather.forEach { weatherItem ->
@@ -145,7 +156,8 @@ class RetrofitManager {
                                     wind_speed = wind_speed,
                                     wind_deg = wind_deg,
                                     weather_description = weather_Description,
-                                    weather_icon = weather_Icon
+                                    weather_icon = weather_Icon,
+                                    name_city = city_name
                                 )
 
                                 parsedWeatherArray.add(weatherItem)
