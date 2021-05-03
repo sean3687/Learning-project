@@ -10,39 +10,44 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.motion.widget.Debug.getLocation
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.tassiecomp.myweatherapi.App.Companion.instance
 import com.tassiecomp.myweatherapi.Model.Grid
 import com.tassiecomp.myweatherapi.Model.Weather
 import com.tassiecomp.myweatherapi.api.RetrofitManager
+import com.tassiecomp.myweatherapi.utils.*
 import com.tassiecomp.myweatherapi.utils.API.unit
-import com.tassiecomp.myweatherapi.utils.RESPONSE_STATE
-import com.tassiecomp.myweatherapi.utils.getDouble
-import com.tassiecomp.myweatherapi.utils.putDouble
+import com.tassiecomp.myweatherapi.utils.LocationManager.Companion.fusedLocationProviderClient
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_weather_detail.*
 
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
+    private var weatherList = ArrayList<Weather>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_weather_detail)
 
+        //Location Manager
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         checkPermission()
-        load_button.setOnClickListener {
+
+        //loadButton
+        search_button.setOnClickListener {
             Log.d("TAG", "MainActivity - 검색버튼이 클릭되었다.")
 
             RetrofitManager.instance.getData_byCity(
-                searchTerm = editText_term.text.toString(),
+                searchTerm = search_editText.text.toString(),
                 completion = { responseState, responseBody ->
 
-                    val userSearchInput = editText_term.text.toString()
+                    val userSearchInput = search_editText.text.toString()
 
                     when (responseState) {
                         RESPONSE_STATE.OKAY -> {
@@ -59,45 +64,8 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        get_current_weather.setOnClickListener {
-
-
-            var sharedPreference = getSharedPreferences("gridLocation", Context.MODE_PRIVATE)
-            val lat = sharedPreference.getDouble("lat", 0.0000)
-            val lon = sharedPreference.getDouble("lon", 0.0000)
-            val unit = "metric"
-            Log.d("Location", "shared LAT&LON :$lat, $lon")
-
-
-            RetrofitManager.instance.getData_byGrid(
-                latitude = lat,
-                longitude = lon,
-                units = unit,
-                completion = { responseState, responseDataArrayList ->
-
-
-                    when (responseState) {
-                        RESPONSE_STATE.OKAY -> {
-                            Log.d("TAG", "API 호출성공: $responseDataArrayList")
-
-                            val intent = Intent(this, weatherDetail::class.java)
-
-                            val bundle = Bundle()
-
-                            bundle.putSerializable("weather_array_list", responseDataArrayList)
-
-                            intent.putExtra("array_bundle", bundle)
-
-                            startActivity(intent)
-                        }
-                        RESPONSE_STATE.FAIL -> {
-                            Log.d("TAG", "API 호출 에러 : $responseDataArrayList")
-                        }
-                    }
-                })
-            //open new activity
-//            val weatherDetail_intent = Intent(this@MainActivity, weatherDetail::class.java)
-//            startActivity(weatherDetail_intent)
+        hamburger_menu.setOnClickListener {
+            checkPermission()
 
         }
     }
@@ -114,49 +82,84 @@ class MainActivity : AppCompatActivity() {
                 1
             )
         } else {
-            MainActivity.
+            LocationManager.instance.getLocations(
+                completion = { responseState, responseGrid ->
+                    unit
+                    val lat = responseGrid!![0].latitude
+                    val lon = responseGrid!![0].longitude
+                    //LocationManager
+                    when (responseState) {
+                        //when LocationManager succeed
+                        RESPONSE_STATE.OKAY -> {
+                            RetrofitManager.instance.getData_byGrid(
+                                latitude = lat,
+                                longitude = lon,
+                                units = unit,
+                                completion = { responseState, responseDataArrayList ->
+                                    //retrofitManager
+                                    when (responseState) {
+                                        RESPONSE_STATE.OKAY -> {
+                                            //when RetrofitManager succeed
+                                            Log.d("TAG", "API Successful: $responseDataArrayList")
+
+                                            weatherList = responseDataArrayList!!
+
+                                            //assign value for setText
+                                            val mainTemp = weatherList[0].main_temp
+                                            val mainFeelTemp = weatherList[0].main_feelslike
+                                            val mainMinTemp = weatherList[0].main_mintemp
+                                            val mainMaxTemp = weatherList[0].main_maxtemp
+                                            val mainHumidity = weatherList[0].main_humidity
+                                            val windSpeed = weatherList[0].wind_speed
+                                            val windDeg = weatherList[0].wind_deg
+                                            val weatherDescription =
+                                                weatherList[0].weather_description
+                                            val weatherIcon = weatherList[0].weather_icon
+                                            val nameCity = weatherList[0].name_city
+
+                                            //setText
+                                            city_name.text = nameCity
+                                            main_temp.text = "${mainTemp.toString()}°"
+                                            minmax_temp.text = "$mainMinTemp°/$mainMaxTemp°"
+
+
+                                            Log.d(
+                                                "weatherDetaildd",
+                                                "nameCity: $mainTemp ,mainmintemp: $mainMinTemp weatherIcon:${
+                                                    weatherDescription?.let {weatherDescription.capitalize_first_word(it)}}"
+                                            )
+
+                                            //setImage(ICON)
+
+                                            val iconURL: String =
+                                                "http://openweathermap.org/img/wn/$weatherIcon@2x.png"
+
+                                            Glide.with(App.instance)
+                                                .load("$iconURL")// image url
+                                                .placeholder(R.drawable.ic_launcher_background) // any placeholder to load at start
+                                                .error(R.drawable.ic_launcher_foreground)  // any image in case of error
+                                                .into(weather_icon);  // imageview object
+
+                                        }
+                                        RESPONSE_STATE.FAIL -> {
+                                            Log.d("TAG", "API Load Error : $responseDataArrayList")
+                                        }
+                                    }
+                                })
+                        }
+                        RESPONSE_STATE.FAIL -> {
+                            Toast.makeText(this, "Location load Failed", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                }
+
+
+            )
         }
 
     }
 
-    @SuppressLint("MissingPermission")
-    private fun getLocations(completion: (RESPONSE_STATE, ArrayList<Grid>?)->Unit
-    ) {
-
-        fusedLocationProviderClient.lastLocation.addOnSuccessListener {
-            val parsedGridArray = ArrayList<Grid>()
-            if (it == null) {
-                Toast.makeText(this, "Error: can't load user location", Toast.LENGTH_SHORT)
-                    .show()
-            } else it.apply {
-                val latitude = it.latitude
-                val longitude = it.longitude
-                Log.d("Location", "RAW LAT&LON :$latitude, $longitude")
-
-                val gridItem = Grid(
-                    latitude = latitude,
-                    longitude = longitude
-                )
-
-                parsedGridArray.add(gridItem)
-
-
-                //sharedpreference
-//                var sharedPreference =
-//                    getSharedPreferences("gridLocation", Context.MODE_PRIVATE)
-//                val editor: SharedPreferences.Editor = sharedPreference.edit()
-//                editor.putDouble("lat", latitude)
-//                editor.putDouble("lon", longitude)
-//                editor.apply()
-
-
-            }
-            completion(RESPONSE_STATE.OKAY, parsedGridArray)
-
-        }
-
-
-    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -171,7 +174,7 @@ class MainActivity : AppCompatActivity() {
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
                     Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
-                    getLocations()
+
                 } else {
                     Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
                 }

@@ -24,7 +24,5 @@ enum class RESPONSE_STATE {
     FAIL
 }
 
-open class LocationManager{
 
-}
 
