@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                             val mainHumidity = weatherList[0].main_humidity
                             val windSpeed = weatherList[0].wind_speed
                             val windDeg = weatherList[0].wind_deg
-                            val weatherDescription =weatherList[0].weather_description
+                            val weatherDescription = weatherList[0].weather_description
                             val weatherIcon = weatherList[0].weather_icon
                             val nameCity = weatherList[0].name_city
 
@@ -62,7 +62,12 @@ class MainActivity : AppCompatActivity() {
                             city_name.text = nameCity
                             main_temp.text = "${mainTemp.toString()}°"
                             minmax_temp.text = "$mainMinTemp°/$mainMaxTemp°"
-                            description.text = weatherDescription?.let {weatherDescription.capitalize_first_word(it)}
+                            description.text = weatherDescription?.let {
+                                weatherDescription.capitalize_first_word(it)
+                            }
+                            sub_humidity_value.text = "$mainHumidity%"
+                            sub_wind_value.text = "${windSpeed}m/s"
+                            sub_feels_value.text = "$mainFeelTemp°"
 
                             //setImage(ICON)
                             Log.d("weatherIcon", "weather Icon:$weatherIcon")
@@ -124,7 +129,10 @@ class MainActivity : AppCompatActivity() {
                                     when (responseState) {
                                         RESPONSE_STATE.OKAY -> {
                                             //when RetrofitManager succeed
-                                            Log.d("TAG", "API Successful: $responseDataArrayList_Grid")
+                                            Log.d(
+                                                "TAG",
+                                                "API Successful: $responseDataArrayList_Grid"
+                                            )
 
                                             weatherList = responseDataArrayList_Grid!!
 
@@ -136,7 +144,8 @@ class MainActivity : AppCompatActivity() {
                                             val mainHumidity = weatherList[0].main_humidity
                                             val windSpeed = weatherList[0].wind_speed
                                             val windDeg = weatherList[0].wind_deg
-                                            val weatherDescription =weatherList[0].weather_description
+                                            val weatherDescription =
+                                                weatherList[0].weather_description
                                             val weatherIcon = weatherList[0].weather_icon
                                             val nameCity = weatherList[0].name_city
 
@@ -144,7 +153,12 @@ class MainActivity : AppCompatActivity() {
                                             city_name.text = nameCity
                                             main_temp.text = "${mainTemp.toString()}°"
                                             minmax_temp.text = "$mainMinTemp°/$mainMaxTemp°"
-                                            description.text = weatherDescription?.let {weatherDescription.capitalize_first_word(it)}
+                                            description.text = weatherDescription?.let {
+                                                weatherDescription.capitalize_first_word(it)
+                                            }
+                                            sub_humidity_value.text = "$mainHumidity%"
+                                            sub_wind_value.text = "${windSpeed}m/s"
+                                            sub_feels_value.text = "$mainFeelTemp°"
 
 
                                             //setImage(ICON)
@@ -155,13 +169,16 @@ class MainActivity : AppCompatActivity() {
                                             Log.d("weatherIcon", "weather Icon:$weatherIcon")
                                             Glide.with(this)
                                                 .load(iconURL)
-                                                .placeholder(R.drawable.ic_launcher_background) // any placeholder to load at start
-                                                .error(R.drawable.ic_launcher_foreground)  // any image in case of error
+                                                .placeholder(R.drawable.ic_baseline_cloud_queue_24) // any placeholder to load at start
+                                                .error(R.drawable.ic_baseline_cloud_queue_24)  // any image in case of error
                                                 .into(weather_icon);  // imageview object
 
                                         }
                                         RESPONSE_STATE.FAIL -> {
-                                            Log.d("TAG", "API Load Error : $responseDataArrayList_Grid")
+                                            Log.d(
+                                                "TAG",
+                                                "API Load Error : $responseDataArrayList_Grid"
+                                            )
                                         }
                                     }
                                 })

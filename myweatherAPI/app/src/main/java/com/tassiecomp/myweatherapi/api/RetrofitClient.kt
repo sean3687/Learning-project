@@ -70,7 +70,7 @@ object RetrofitClient {
                 if(response.code != 200) {
 
                     Handler(Looper.getMainLooper()).post{
-                        Toast.makeText(App.instance,"${response.code} 에러입니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(App.instance,"${response.code} Error.", Toast.LENGTH_SHORT).show()
                     }
                 }
 
