@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.layout_photo_item.view.*
 class PhotoItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     //뷰들을 가져온다.
+        //여기애들은 xml애들이다.
     private val photoImageView = itemView.photo_image
     private val photoCreatedAtText = itemView.created_at_text
     private val photoLikesCountText = itemView.likes_count_text
