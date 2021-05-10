@@ -325,7 +325,7 @@
             app:layout_constraintTop_toBottomOf="@+id/subweather">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview"
+                android:id="@+id/daily_recyclerview"
                 android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -346,15 +346,14 @@
             app:layout_constraintStart_toStartOf="@+id/location"
             app:layout_constraintTop_toBottomOf="@+id/location" />
 
-        <ImageButton
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/refresh_weather_button"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:background="@color/white"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/lastupdate"
             app:layout_constraintStart_toEndOf="@+id/lastupdate"
-            app:layout_constraintTop_toBottomOf="@+id/location"
-            android:src="@drawable/ic_baseline_cached_24"/>
+            app:lottie_fileName="reload.json"
+            app:layout_constraintTop_toBottomOf="@+id/location" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

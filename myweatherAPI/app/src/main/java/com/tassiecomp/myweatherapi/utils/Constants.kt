@@ -12,8 +12,11 @@ import java.util.*
 
 object API {
     const val CLIENT_ID: String = "627abdda3cbfc5171bf675cd1530a6d2"
+    const val CLIENT_ID_DAILY: String = ""
     const val BASE_URL: String = "https://api.openweathermap.org"
     const val unit: String = "metric"
+    const val exclude: String = "hourly,minutely"
+
 
 
 

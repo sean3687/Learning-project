@@ -29,4 +29,12 @@ interface IRetrofit {
 //        @Query("device_id") device_id: String?
 //    ): Call<Result?>?
 
+    @GET("data/2.5/onecall?")
+    fun getDailyData(
+        @Query("lat") latitude: Double,
+        @Query("lon") longitude: Double,
+        @Query("units") unit:String,
+        @Query("exclude") exclude:String
+    ): Call<JsonElement>
+
 }

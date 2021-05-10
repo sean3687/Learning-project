@@ -1,36 +1,56 @@
 package com.tassiecomp.myweatherapi
 
 import android.Manifest
+import android.animation.Animator
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.tassiecomp.myweatherapi.App
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.LocationServices
+import com.tassiecomp.myweatherapi.Model.DailyWeather
 import com.tassiecomp.myweatherapi.Model.Weather
+import com.tassiecomp.myweatherapi.RecyclerView.DailyRecyclerViewAdapter
 import com.tassiecomp.myweatherapi.api.RetrofitManager
 import com.tassiecomp.myweatherapi.utils.*
+import com.tassiecomp.myweatherapi.utils.API.exclude
 import com.tassiecomp.myweatherapi.utils.API.unit
 import com.tassiecomp.myweatherapi.utils.LocationManager.Companion.fusedLocationProviderClient
 import kotlinx.android.synthetic.main.activity_weather_detail.*
 import okhttp3.internal.addHeaderLenient
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+import java.util.Date as Date
 
 
 class MainActivity : AppCompatActivity() {
 
 
     private var weatherList = ArrayList<Weather>()
+    private var dailyWeatherList = ArrayList<DailyWeather>()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather_detail)
 
+
         //Location Manager
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         checkPermission()
+
+        hamburger_menu.setOnClickListener {
+        }
+
 
         //loadButton
         search_button.setOnClickListener {
@@ -95,8 +115,40 @@ class MainActivity : AppCompatActivity() {
 
         refresh_weather_button.setOnClickListener {
             checkPermission()
-
+            refresh_weather_button.speed = 2f
+            refresh_weather_button.scale = 2f
+            refresh_weather_button.playAnimation()
         }
+
+        refresh_weather_button.addAnimatorListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator?) {
+                Log.d("animation", "pass")
+            }
+
+            override fun onAnimationEnd(animation: Animator?) {
+                val currentTime = getCurrentTime()
+                Log.d("animation", "$currentTime")
+                lastupdate.text = "Last update ${currentTime}"
+            }
+
+            override fun onAnimationCancel(animation: Animator?) {
+                Log.d("animation", "pass")
+            }
+
+            override fun onAnimationRepeat(animation: Animator?) {
+                Log.d("animation", "pass")
+            }
+
+        })
+
+        //recycler instance
+        App.dailyRecyclerViewAdapter = DailyRecyclerViewAdapter()
+        App.dailyRecyclerViewAdapter.submitList(dailyWeatherList)
+
+        //photo recycler view에 layoutmanager에서 layout manager type을 연결해준다.
+        daily_recyclerview.layoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
+
+        daily_recyclerview.adapter = App.dailyRecyclerViewAdapter
     }
 
     private fun checkPermission() {
@@ -173,12 +225,42 @@ class MainActivity : AppCompatActivity() {
                                                 .error(R.drawable.ic_baseline_cloud_queue_24)  // any image in case of error
                                                 .into(weather_icon);  // imageview object
 
+                                            //RetrofitManager Daily
+                                            RetrofitManager.instance.getData_byDaily(
+                                                latitude = lat,
+                                                longitude = lon,
+                                                units = unit,
+                                                exclude = exclude,
+                                                completion = { responseState, responseDataArrayList_Daily ->
+                                                    when (responseState) {
+                                                        RESPONSE_STATE.OKAY -> {
+                                                            Log.d(
+                                                                "TAG",
+                                                                "API Successful_Daily: $responseDataArrayList_Daily"
+                                                            )
+
+                                                            dailyWeatherList = responseDataArrayList_Daily!!
+
+                                                        }
+                                                        RESPONSE_STATE.FAIL -> {
+                                                            Log.d(
+                                                                "TAG",
+                                                                "API Load Error_Daily : $responseDataArrayList_Grid"
+                                                            )
+                                                            Toast.makeText(this, "Daily Load Failed", Toast.LENGTH_SHORT).show()
+                                                        }
+                                                    }
+                                                }
+                                            )
+
                                         }
                                         RESPONSE_STATE.FAIL -> {
                                             Log.d(
                                                 "TAG",
                                                 "API Load Error : $responseDataArrayList_Grid"
+
                                             )
+                                            Toast.makeText(this, "current load Failed", Toast.LENGTH_SHORT).show()
                                         }
                                     }
                                 })
@@ -216,6 +298,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    fun getCurrentTime(): String {
+        val sdf = SimpleDateFormat("MM/dd a hh:mm")
+        val currentDate = sdf.format(Date())
+        return currentDate
+
+
     }
 
 
