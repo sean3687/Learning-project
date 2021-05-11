@@ -15,13 +15,18 @@ class DailyItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val dateday = itemView.date_day // photo image는 layout_photo_item파일에서 id들이다.
     private val pop = itemView.popvalue
     private val icon = itemView.dailyicon
+    private val minmax_temp = itemView.minmax_dailytemp
 
     fun bindWithView(dailyItem: DailyWeather) {
         Log.d("TAG","PhotoItemViewHolder - bindwithView() called")
 
         dateday.text = dailyItem.date
 
-        pop.text = dailyItem.pop.toString()
+        pop.text = "${dailyItem.pop.toString()}%"
+
+        minmax_temp.text = "${dailyItem.tempMax?.toInt()}°/${dailyItem.tempMin?.toInt()}°"
+
+
 
 
         val iconID = dailyItem.icon.toString()

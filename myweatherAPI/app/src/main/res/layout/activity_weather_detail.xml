@@ -154,12 +154,10 @@
                 android:id="@+id/cardView_feelslike"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="20dp"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/cardView_humidity"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -210,12 +208,11 @@
                 android:id="@+id/cardView_humidity"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_margin="10dp"
+
                 app:cardCornerRadius="10dp"
                 app:cardElevation="10dp"
                 app:layout_constraintBottom_toBottomOf="@+id/cardView_feelslike"
                 app:layout_constraintEnd_toStartOf="@+id/cardView_Wind"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/cardView_feelslike"
                 app:layout_constraintTop_toTopOf="@+id/cardView_feelslike">
 
@@ -264,13 +261,11 @@
                 android:id="@+id/cardView_Wind"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_margin="10dp"
+                android:layout_marginRight="20dp"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="10dp"
                 app:layout_constraintBottom_toBottomOf="@+id/cardView_humidity"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/cardView_humidity"
                 app:layout_constraintTop_toTopOf="@+id/cardView_humidity">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -338,7 +333,8 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="800dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/subweather"

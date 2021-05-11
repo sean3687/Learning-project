@@ -1,10 +1,7 @@
 package com.tassiecomp.myweatherapi.api
 
 import android.util.Log
-import androidx.core.content.ContextCompat
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.gson.JsonElement
-import com.tassiecomp.myweatherapi.App
 import com.tassiecomp.myweatherapi.Model.DailyWeather
 import com.tassiecomp.myweatherapi.Model.Weather
 import com.tassiecomp.myweatherapi.utils.API
@@ -13,7 +10,6 @@ import com.tassiecomp.myweatherapi.utils.RESPONSE_STATE
 import retrofit2.Call
 import retrofit2.Response
 import java.text.SimpleDateFormat
-import kotlin.collections.List as List
 
 class RetrofitManager {
 
@@ -278,13 +274,13 @@ class RetrofitManager {
                                 val listItemObject = listItem.asJsonObject //array안에 {}하나 가져온것
 
                                 val date = listItemObject.get("dt").asLong
-                                val day = getday(date)
+                                val day = getday(date*1000)
 
                                 val tempObject = listItemObject.getAsJsonObject("temp")
                                 val tempMin = tempObject.get("min").asDouble
                                 val tempMax = tempObject.get("max").asDouble
                                 val pop =
-                                    listItemObject.get("pop").asFloat //probability of precipitation
+                                    (listItemObject.get("pop").asFloat*100).toInt() //probability of precipitation
 
                                 val weatherArray =
                                     listItemObject.getAsJsonArray("weather")
@@ -325,9 +321,9 @@ class RetrofitManager {
         })
     }
 
-    fun getday(milisecond:Long):String{
+    fun getday(millisecond:Long):String{
         val sdf = SimpleDateFormat("E")
-        val day = sdf.format(milisecond)
+        var day = sdf.format(millisecond)
         return day
     }
 }

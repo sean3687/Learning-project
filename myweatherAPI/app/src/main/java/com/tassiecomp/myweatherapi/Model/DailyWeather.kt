@@ -6,7 +6,7 @@ data class DailyWeather(
     var date: String?,
     var tempMin: Double?,
     var tempMax: Double?,
-    var pop: Float?,
+    var pop: Int?,
     var icon: String
 ): Serializable {
 
