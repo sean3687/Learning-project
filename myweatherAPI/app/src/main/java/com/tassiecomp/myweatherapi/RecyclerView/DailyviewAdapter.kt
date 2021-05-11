@@ -1,5 +1,6 @@
 package com.tassiecomp.myweatherapi.RecyclerView
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,7 @@ class DailyRecyclerViewAdapter : RecyclerView.Adapter<DailyItemViewHolder>() {
     //보여줄 목록의 갯수
     override fun getItemCount(): Int {
         return this.dailyWeatherList.size
+        Log.d("Numbernumber","${dailyWeatherList.size}")
     }
 
     //뷰가 묶였을때 데이터를 뷰홀더에 넘겨준다.

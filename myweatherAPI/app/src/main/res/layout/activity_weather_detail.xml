@@ -117,9 +117,9 @@
 
             <TextView
                 android:id="@+id/description"
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="scattered clouds"
                 android:textColor="@color/black"
                 android:textSize="15dp"
@@ -317,25 +317,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/subweather">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/daily_recyclerview"
-                android:padding="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <TextView
             android:id="@+id/lastupdate"
             android:layout_width="wrap_content"
@@ -352,10 +333,28 @@
             android:layout_height="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/lastupdate"
             app:layout_constraintStart_toEndOf="@+id/lastupdate"
-            app:lottie_fileName="reload.json"
-            app:layout_constraintTop_toBottomOf="@+id/location" />
+            app:layout_constraintTop_toBottomOf="@+id/location"
+            app:lottie_fileName="reload.json" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="800dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/subweather"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="0dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/daily_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                />
+        </androidx.cardview.widget.CardView>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </ScrollView>

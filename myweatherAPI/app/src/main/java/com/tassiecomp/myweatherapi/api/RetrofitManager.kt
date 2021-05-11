@@ -12,6 +12,7 @@ import com.tassiecomp.myweatherapi.utils.API.unit
 import com.tassiecomp.myweatherapi.utils.RESPONSE_STATE
 import retrofit2.Call
 import retrofit2.Response
+import java.text.SimpleDateFormat
 import kotlin.collections.List as List
 
 class RetrofitManager {
@@ -268,37 +269,38 @@ class RetrofitManager {
                     200 -> {
                         response.body()?.let {
                             var body = it.asJsonObject
-                            val parsedDailyWeatherArray = ArrayList<DailyWeather>()
+                            var parsedDailyWeatherArray = ArrayList<DailyWeather>()
 
                             val list = body.getAsJsonArray("daily")
                             list.forEach { listItem ->
 
 
-                                val listItemObject = listItem.asJsonObject
+                                val listItemObject = listItem.asJsonObject //array안에 {}하나 가져온것
+
                                 val date = listItemObject.get("dt").asLong
+                                val day = getday(date)
+
                                 val tempObject = listItemObject.getAsJsonObject("temp")
                                 val tempMin = tempObject.get("min").asDouble
                                 val tempMax = tempObject.get("max").asDouble
                                 val pop =
-                                    listItemObject.get("pop").asInt //probability of precipitation
+                                    listItemObject.get("pop").asFloat //probability of precipitation
 
-                                val weatherObject = listItemObject.getAsJsonArray("weather")
-                                weatherObject.forEach { weatherItem ->
+                                val weatherArray =
+                                    listItemObject.getAsJsonArray("weather")
+                                    weatherArray.forEach{weatherList->
+                                        val weatherObject = weatherList.asJsonObject
+                                        val icon = weatherObject.get("icon").asString
+                                        val dailyweather = DailyWeather(
+                                            date = day,
+                                            tempMin = tempMin,
+                                            tempMax = tempMax,
+                                            pop = pop,
+                                            icon = icon,
+                                        )
+                                        parsedDailyWeatherArray.add(dailyweather)
 
-                                    val weatherObject = weatherItem.asJsonObject
-                                    val icon = weatherObject.get("icon").asString
-
-                                    val dailyweather = DailyWeather(
-                                        date = date,
-                                        tempMin = tempMin,
-                                        tempMax = tempMax,
-                                        pop = pop,
-                                        icon = icon,
-                                    )
-
-                                    parsedDailyWeatherArray.add(dailyweather)
-
-                                }
+                                    }
 
 
                             }
@@ -321,6 +323,12 @@ class RetrofitManager {
             }
 
         })
+    }
+
+    fun getday(milisecond:Long):String{
+        val sdf = SimpleDateFormat("E")
+        val day = sdf.format(milisecond)
+        return day
     }
 }
 

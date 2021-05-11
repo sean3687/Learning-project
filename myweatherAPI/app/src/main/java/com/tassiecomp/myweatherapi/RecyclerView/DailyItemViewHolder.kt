@@ -19,12 +19,12 @@ class DailyItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     fun bindWithView(dailyItem: DailyWeather) {
         Log.d("TAG","PhotoItemViewHolder - bindwithView() called")
 
-        dateday.text = "${dailyItem.date}"
+        dateday.text = dailyItem.date
 
-        pop.text = "${dailyItem.pop}"
+        pop.text = dailyItem.pop.toString()
 
 
-        val iconID = "${dailyItem.icon}"
+        val iconID = dailyItem.icon.toString()
         val iconurl = "https://openweathermap.org/img/wn/$iconID@2x.png"
         //이미지를 설정한다.
         Glide.with(App.instance) //전역으로 context를 넣어준다.

@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity() {
     private var dailyWeatherList = ArrayList<DailyWeather>()
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather_detail)
@@ -141,38 +140,32 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-        //recycler instance
-        App.dailyRecyclerViewAdapter = DailyRecyclerViewAdapter()
-        App.dailyRecyclerViewAdapter.submitList(dailyWeatherList)
 
-        //photo recycler view에 layoutmanager에서 layout manager type을 연결해준다.
-        daily_recyclerview.layoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
-
-        daily_recyclerview.adapter = App.dailyRecyclerViewAdapter
     }
 
-    private fun checkPermission() {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-                1
-            )
-        } else {
-            LocationManager.instance.getLocations(
-                completion = { responseState, responseGrid ->
-                    unit
+    private fun checkPermission() = if (ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED
+    ) {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+            1
+        )
+    } else {
+        LocationManager.instance.getLocations(
+            completion = { responseState, responseGrid ->
                     val lat = responseGrid!![0].latitude
-                    val lon = responseGrid!![0].longitude
+                    val lon = responseGrid[0].longitude
+
                     //LocationManager
                     when (responseState) {
+
                         //when LocationManager succeed
                         RESPONSE_STATE.OKAY -> {
                             RetrofitManager.instance.getData_byGrid(
+
                                 latitude = lat,
                                 longitude = lon,
                                 units = unit,
@@ -236,10 +229,19 @@ class MainActivity : AppCompatActivity() {
                                                         RESPONSE_STATE.OKAY -> {
                                                             Log.d(
                                                                 "TAG",
-                                                                "API Successful_Daily: $responseDataArrayList_Daily"
+                                                                "API Successful_Daily: ${responseDataArrayList_Daily}"
                                                             )
 
-                                                            dailyWeatherList = responseDataArrayList_Daily!!
+                                                            dailyWeatherList =
+                                                                responseDataArrayList_Daily!!
+                                                            //recycler instance
+                                                            App.dailyRecyclerViewAdapter = DailyRecyclerViewAdapter()
+                                                            App.dailyRecyclerViewAdapter.submitList(dailyWeatherList)
+
+                                                            //photo recycler view에 layoutmanager에서 layout manager type을 연결해준다.
+                                                            daily_recyclerview.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+
+                                                            daily_recyclerview.adapter = App.dailyRecyclerViewAdapter
 
                                                         }
                                                         RESPONSE_STATE.FAIL -> {
@@ -247,7 +249,11 @@ class MainActivity : AppCompatActivity() {
                                                                 "TAG",
                                                                 "API Load Error_Daily : $responseDataArrayList_Grid"
                                                             )
-                                                            Toast.makeText(this, "Daily Load Failed", Toast.LENGTH_SHORT).show()
+                                                            Toast.makeText(
+                                                                this,
+                                                                "Daily Load Failed",
+                                                                Toast.LENGTH_SHORT
+                                                            ).show()
                                                         }
                                                     }
                                                 }
@@ -260,21 +266,22 @@ class MainActivity : AppCompatActivity() {
                                                 "API Load Error : $responseDataArrayList_Grid"
 
                                             )
-                                            Toast.makeText(this, "current load Failed", Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(
+                                                this,
+                                                "current load Failed",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
                                         }
                                     }
                                 })
                         }
                         RESPONSE_STATE.FAIL -> {
-                            Toast.makeText(this, "Location load Failed", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Location load Failed", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
 
-                }
-
-
-            )
-        }
+            })
 
     }
 

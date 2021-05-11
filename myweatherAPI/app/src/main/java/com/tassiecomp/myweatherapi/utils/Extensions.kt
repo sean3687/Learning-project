@@ -79,7 +79,7 @@ open class LocationManager{
         lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     }
     @SuppressLint("MissingPermission")
-    fun getLocations(completion: (RESPONSE_STATE, ArrayList<Grid>?)->Unit
+    fun getLocations(completion: (RESPONSE_STATE, ArrayList<Grid>)->Unit
     ) {
 
         fusedLocationProviderClient.lastLocation.addOnSuccessListener {
@@ -87,7 +87,7 @@ open class LocationManager{
             if (it == null) {
                 Toast.makeText(App.instance, "Error: can't load user location", Toast.LENGTH_SHORT)
                     .show()
-                completion(RESPONSE_STATE.FAIL, null)
+                completion(RESPONSE_STATE.FAIL, parsedGridArray)
             } else it.apply {
                 val latitude = it.latitude
                 val longitude = it.longitude
