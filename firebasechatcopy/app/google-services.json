@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "906656502429",
+    "project_id": "kotlinfirebasechat-183e4",
+    "storage_bucket": "kotlinfirebasechat-183e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906656502429:android:ecd6a3967a8dd0b7cc7a74",
+        "android_client_info": {
+          "package_name": "com.tassiecomp.firebasechatcopy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "906656502429-put2f2d9nncs4640i68ai2a8285vjo2q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDo5_GycqfmcrheY8IidAxqlyDQpZ9lzzE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "906656502429-put2f2d9nncs4640i68ai2a8285vjo2q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
