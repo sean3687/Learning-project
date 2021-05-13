@@ -2,15 +2,16 @@ package com.tassiecomp.myweatherapi
 
 import android.Manifest
 import android.animation.Animator
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
-import com.tassiecomp.myweatherapi.App
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -24,11 +25,9 @@ import com.tassiecomp.myweatherapi.utils.API.exclude
 import com.tassiecomp.myweatherapi.utils.API.unit
 import com.tassiecomp.myweatherapi.utils.LocationManager.Companion.fusedLocationProviderClient
 import kotlinx.android.synthetic.main.activity_weather_detail.*
-import okhttp3.internal.addHeaderLenient
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import java.util.Date as Date
 
 
 class MainActivity : AppCompatActivity() {
@@ -48,6 +47,15 @@ class MainActivity : AppCompatActivity() {
         checkPermission()
 
         hamburger_menu.setOnClickListener {
+            Toast.makeText(this, "See you on Next Update!", Toast.LENGTH_SHORT).show()
+        }
+
+        morebutton.setOnClickListener{
+            val uri: Uri =
+                Uri.parse("https://openweathermap.org/") // missing 'http://' will cause crashed
+
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
         }
 
 
@@ -99,7 +107,7 @@ class MainActivity : AppCompatActivity() {
                                 .placeholder(R.drawable.ic_baseline_cloud_queue_24) // any placeholder to load at start
                                 .error(R.drawable.ic_baseline_error_outline_24)  // any image in case of error
                                 .into(weather_icon);  // imageview object
-
+                            daily_recyclerview.visibility = View.GONE
 
                         }
                         RESPONSE_STATE.FAIL -> {
@@ -234,13 +242,14 @@ class MainActivity : AppCompatActivity() {
 
                                                             dailyWeatherList =
                                                                 responseDataArrayList_Daily!!
+                                                            daily_recyclerview.visibility = View.VISIBLE
                                                             //recycler instance
                                                             App.dailyRecyclerViewAdapter = DailyRecyclerViewAdapter()
                                                             App.dailyRecyclerViewAdapter.submitList(dailyWeatherList)
 
                                                             //photo recycler view에 layoutmanager에서 layout manager type을 연결해준다.
                                                             daily_recyclerview.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-
+                                                            daily_recyclerview.setNestedScrollingEnabled(false)
                                                             daily_recyclerview.adapter = App.dailyRecyclerViewAdapter
 
                                                         }

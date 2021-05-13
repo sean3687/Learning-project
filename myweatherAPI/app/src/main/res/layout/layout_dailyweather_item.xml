@@ -17,47 +17,47 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.utils.widget.ImageFilterView
-        android:id="@+id/imageFilterView"
+    <ImageView
+        android:id="@+id/popIcon"
         android:layout_width="10dp"
         android:layout_height="10dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginLeft="108dp"
         android:src="@drawable/pop"
         app:layout_constraintBottom_toBottomOf="@+id/date_day"
         app:layout_constraintStart_toEndOf="@+id/date_day"
-        app:layout_constraintTop_toTopOf="@+id/date_day"
-        app:layout_constraintVertical_bias="0.4" />
+        app:layout_constraintTop_toTopOf="@+id/date_day" />
 
     <ImageView
         android:id="@+id/dailyicon"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
         android:src="@drawable/ic_baseline_cached_24"
-        app:layout_constraintBottom_toBottomOf="@+id/popvalue"
-        app:layout_constraintStart_toEndOf="@+id/popvalue"
-        app:layout_constraintTop_toTopOf="@+id/popvalue"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintBottom_toBottomOf="@+id/minmax_dailytemp"
+        app:layout_constraintEnd_toStartOf="@+id/minmax_dailytemp"
+        app:layout_constraintTop_toTopOf="@+id/minmax_dailytemp" />
 
     <TextView
         android:id="@+id/popvalue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="52%"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/date_day"
-        app:layout_constraintStart_toEndOf="@+id/imageFilterView"
-        app:layout_constraintTop_toTopOf="@+id/date_day"
-        app:layout_constraintVertical_bias="0.0" />
+        android:textSize="13dp"
+        app:layout_constraintBottom_toBottomOf="@+id/popIcon"
+        app:layout_constraintStart_toEndOf="@+id/popIcon"
+        app:layout_constraintTop_toTopOf="@+id/popIcon" />
 
     <TextView
         android:id="@+id/minmax_dailytemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="22°/32°"
-
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/dailyicon"
-        app:layout_constraintStart_toEndOf="@+id/dailyicon"
-        app:layout_constraintTop_toTopOf="@+id/dailyicon" />
+        android:textSize="13dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
