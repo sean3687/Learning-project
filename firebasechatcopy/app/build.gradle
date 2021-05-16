@@ -10,6 +10,10 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+    androidExtensions {
+        experimental = true
+    }
+
     defaultConfig {
         applicationId "com.tassiecomp.firebasechatcopy"
         minSdkVersion 23
@@ -59,10 +63,9 @@ dependencies {
     //circle imageview
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    //groupie
-    implementation "com.github.lisawray.groupie:groupie:2.1.0"
-    implementation "com.github.lisawray.groupie:groupie-databinding:2.1.0"
-
     //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //Groupie Adapter
+    implementation 'com.github.lisawray.groupie:groupie:2.9.0'
 }
