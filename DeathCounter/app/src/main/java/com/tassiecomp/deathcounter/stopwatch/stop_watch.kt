@@ -62,8 +62,12 @@ class stop_watch : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         var pauseAt: Long = 0
+        var chronometerbase = chronometer.base
+        chronometerbase = 0
+
+
+
         chronometer_start.setOnClickListener {
             // lap still on work
             chronometer_lap.visibility = GONE
@@ -72,7 +76,8 @@ class stop_watch : Fragment() {
             chronometer_start.visibility = GONE
             Log.d("fragment", "start clicked")
 
-            chronometer.base = SystemClock.elapsedRealtime() - pauseAt
+            chronometer.base =
+                SystemClock.elapsedRealtime() - pauseAt
             chronometer.start()
         }
 
@@ -96,12 +101,12 @@ class stop_watch : Fragment() {
             chronometer_reset.visibility = GONE
             chronometer_pause.visibility = GONE
             chronometer_start.visibility = VISIBLE
-            chronometer.base = SystemClock.elapsedRealtime()
+            chronometerbase = 0
+            pauseAt = 0
+            chronometer.text ="00:00"
+            chronometer_pause.text = "Pause"
             chronometer.stop()
         }
-
-
-
 
 
     }

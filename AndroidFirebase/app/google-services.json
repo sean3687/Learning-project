@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "797690142712",
+    "project_id": "messangerapp-303a9",
+    "storage_bucket": "messangerapp-303a9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:797690142712:android:14483912dde51bfd22000d",
+        "android_client_info": {
+          "package_name": "com.tassiecomp.androidfirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "797690142712-k2tcpk8lir38h6pv28p67gmm9h1anbj7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXxEaAK844SgO9_DnUsTLVmd4ErXOliN0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "797690142712-k2tcpk8lir38h6pv28p67gmm9h1anbj7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

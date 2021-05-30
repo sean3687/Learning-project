@@ -41,13 +41,14 @@
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/main_Calendar"
-                    app:layout_constraintStart_toEndOf="@+id/main_openDrawer"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:lottie_autoPlay="true"
                     app:lottie_fileName="heartbeat.json" />
 
                 <ImageButton
+
                     android:id="@+id/main_Calendar"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -59,6 +60,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
+
                     android:id="@+id/main_stopwatch"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -209,7 +211,7 @@
                         android:layout_height="50dp"
                         android:background="@drawable/title_button_shape"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="FEB"
+                        android:text="MON"
                         android:textColor="#4A4A4A"
                         app:layout_constraintBottom_toBottomOf="@+id/my_year_left"
                         app:layout_constraintEnd_toStartOf="@+id/my_week_left"
@@ -272,28 +274,8 @@
             tools:layout_editor_absoluteY="365dp">
 
 
-            <TextView
-                android:id="@+id/progress_remain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="start"
-                android:textSize="20dp"
-                tools:layout_editor_absoluteX="116dp"
-                tools:layout_editor_absoluteY="42dp" />
 
-            <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
-                android:id="@+id/progress_remain_bar"
-                android:layout_width="150dp"
-                android:layout_height="20dp"
-                app:rcAnimationEnable="true"
-                app:rcAnimationSpeedScale="1"
-                app:rcBackgroundColor="#0A000000"
-                app:rcBackgroundPadding="2dp"
-                app:rcMax="100"
-                app:rcProgressColors="@array/sample_progress_gradient"
-                app:rcRadius="30dp"
-                tools:layout_editor_absoluteX="173dp"
-                tools:layout_editor_absoluteY="42dp" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 

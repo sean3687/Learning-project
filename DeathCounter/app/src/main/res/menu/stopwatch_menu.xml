@@ -13,11 +13,5 @@
         android:icon="@drawable/timer_icon"
         app:cnb_iconColor="#38CDFF"
         />
-    <item
-        android:id="@+id/Looptimer"
-        android:title="LoopTimer"
-        android:icon="@drawable/loop_icon"
-        app:cnb_iconColor="#dba2ee"
-        />
 
 </menu>

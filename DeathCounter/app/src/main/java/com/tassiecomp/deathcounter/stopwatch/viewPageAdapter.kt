@@ -18,16 +18,13 @@ class viewPageAdapter (supportFragmentManager: FragmentManager):FragmentPagerAda
         return when (position) {
 
             0-> stop_watch()
-            1-> timer()
-            else-> {
-                loopTimer()
-            }
+            else-> timer()
         }
     }
 
 
     override fun getCount(): Int {
-        return 3
+        return 2
     }
 
 }

@@ -31,10 +31,9 @@ class timer_Stopwatch : AppCompatActivity() {
             when (id) {
                 R.id.stopwatch -> viewpager.currentItem = 0
                 R.id.timer -> viewpager.currentItem = 1
-                R.id.Looptimer -> viewpager.currentItem = 2
             }
         }
-
+        chipNavigationBar.setItemSelected(R.id.stopwatch,isSelected = true)
         viewpager.setOnTouchListener(View.OnTouchListener{ v,event -> true})
         viewpager.adapter = viewPageAdapter(supportFragmentManager).apply{
 

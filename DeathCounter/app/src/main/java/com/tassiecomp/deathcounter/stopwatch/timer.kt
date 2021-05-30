@@ -10,6 +10,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
+import com.tassiecomp.deathcounter.App
 import com.tassiecomp.deathcounter.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_timer.*
@@ -71,22 +72,17 @@ class timer : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         countdown_start.setOnClickListener {
+            //if is null set 0
+            var input_HH = HH_edit?.text.toString().toLong()
+            var input_MM = MM_edit?.text.toString().toLong()
+            var input_SS = SS_edit?.text.toString().toLong()
+            var runtimerMilli = (input_HH + input_MM + input_SS )
 
-
-            var input_HH = HH_edit.text.toString().toLong()
-            var input_MM = MM_edit.text.toString().toLong()
-            var input_SS = SS_edit.text.toString().toLong()
-            var runtimerMilli = (input_HH * 3600000 + input_MM * 60000 + input_SS * 1000)
-
-            if (runtimerMilli == (0).toLong()) {
-                Log.d("stopwatch", "value not found")
-            } else {
-                CountdownTimer(runtimerMilli, runtimerMilli * 100)
-                countdown_settimer.visibility = GONE
-                countdown_pause.visibility = VISIBLE
-                countdown_reset.visibility = VISIBLE
-                chronometer_timer.visibility = VISIBLE
-            }
+            CountdownTimer(runtimerMilli, runtimerMilli * 100)
+            countdown_settimer.visibility = GONE
+            countdown_pause.visibility = VISIBLE
+            countdown_reset.visibility = VISIBLE
+            chronometer_timer.visibility = VISIBLE
 
         }
 

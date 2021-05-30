@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.android.synthetic.main.activity_create_profile.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -43,38 +44,82 @@ open class CreateProfile : AppCompatActivity() {
         val editor: SharedPreferences.Editor = sharedPreference.edit()
 
         //brithday Datepicker Dialog setup
-        val BirthCalander = Calendar.getInstance()
-        val Birth_year = BirthCalander.get(Calendar.YEAR)
-        val Birth_month = BirthCalander.get(Calendar.MONTH)
-        val Birth_day = BirthCalander.get(Calendar.DAY_OF_MONTH)
 
         val DieCalander = Calendar.getInstance()
         val Die_year = DieCalander.get(Calendar.YEAR)
         val Die_month = DieCalander.get(Calendar.MONTH)
         val Die_day = DieCalander.get(Calendar.DAY_OF_MONTH)
 
+//        buttonPickDate.setOnClickListener {
+//
+//            // Create the date picker builder and set the title
+//            val builder = MaterialDatePicker.Builder.datePicker()
+//                .also {
+//                    title = "Pick Date"
+//                }
+//
+//
+//            // create the date picker
+//            val datePicker = builder.build()
+//
+//            // set listener when date is selected
+//            datePicker.addOnPositiveButtonClickListener {
+//
+//                // Create calendar object and set the date to be that returned from selection
+//                val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+//                calendar.time = Date(it)
+//                textView.text = "${calendar.get(Calendar.DAY_OF_MONTH)}- " +
+//                        "${calendar.get(Calendar.MONTH) + 1}-${calendar.get(Calendar.YEAR)}"
+//
+//            }
+//
+//            datePicker.show(supportFragmentManager, "MyTAG")
+//
+//        }
+
 
         calanderButton_create.setOnClickListener() {
-            val dpd = DatePickerDialog(
-                this@CreateProfile,
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            val builder = MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select date")
+                .setInputMode(MaterialDatePicker.INPUT_MODE_TEXT)
+                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
 
-                    // Display Selected date in textbox
-                    birthDay_create.setText("$year-${monthOfYear + 1}-$dayOfMonth")
-                    val birthday: Calendar = Calendar.getInstance()
-                    birthday.set(year, monthOfYear, dayOfMonth)
+            val datePicker = builder.build()
 
+            datePicker.addOnPositiveButtonClickListener {
                     //shared preference
-                    var Birthday_Millis = birthday.timeInMillis
-                    editor.putLong("Birthday_Millis", Birthday_Millis)
+                    val calendar = Calendar.getInstance()
+                    calendar.time = Date(it)
+                    val calendarMilli = calendar.timeInMillis
+                    birthDay_create.text = "${calendar.get(Calendar.MONTH) + 1}/${calendar.get(Calendar.DAY_OF_MONTH)}/${calendar.get(Calendar.YEAR)}"
+                    editor.putLong("Birthday_Millis", calendarMilli)
                     editor.apply()
+                Log.d("Birthday_Millis", "$calendarMilli")
+            }
+            datePicker.show(supportFragmentManager,datePicker.toString())
 
-                },
-                Birth_year,
-                Birth_month,
-                Birth_day
-            )
-            dpd.show()
+
+//            val dpd = DatePickerDialog(
+//                this@CreateProfile,
+//                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+//
+//                    // Display Selected date in textbox
+//                    birthDay_create.setText("$year-${monthOfYear + 1}-$dayOfMonth")
+//                    val birthday: Calendar = Calendar.getInstance()
+//                    birthday.set(year, monthOfYear, dayOfMonth)
+//
+//                    //shared preference
+//                    var Birthday_Millis = birthday.timeInMillis
+//                    editor.putLong("Birthday_Millis", Birthday_Millis)
+//                    editor.apply()
+//                    Log.d("Birthday_Millis","$Birthday_Millis")
+//
+//                },
+//                Birth_year,
+//                Birth_month,
+//                Birth_day
+//            )
+//            dpd.show()
         }
 
         calanderButton_create2.setOnClickListener() {
@@ -114,7 +159,7 @@ open class CreateProfile : AppCompatActivity() {
 
         Save_create.setOnClickListener {
             Log.d("TAG", " button clicked")
-            val userName = username_create.text.toString()
+            val userName = username_create_material.text.toString()
             val userAge = birthDay_create.text.toString()
             val userDie = birthDay_create.text.toString()
 
