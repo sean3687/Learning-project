@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">#DDDDDD</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <!-- Status bar color. -->
@@ -28,10 +28,10 @@
 <!--        android:endColor="@color/gradient_blue"-->
 <!--        android:centerColor="#baa9f3"-->
 <!--        android:startColor="@color/gradient_pink"-->
-        <item name="colorPrimary">#006485</item>
+        <item name="colorPrimary">#FF736378</item>
         <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="materialCalendarStyle">@style/Widget.MaterialComponents.MaterialCalendar</item>
-        <item name="materialCalendarTheme">@style/ThemeOverlay.MaterialComponents.MaterialCalendar</item>
+<!--        <item name="materialCalendarStyle">@style/Widget.MaterialComponents.MaterialCalendar</item>-->
+<!--        <item name="materialCalendarTheme">@style/ThemeOverlay.MaterialComponents.MaterialCalendar</item>-->
 
     </style>
 

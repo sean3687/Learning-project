@@ -1,16 +1,19 @@
 package com.tassiecomp.deathcounter
 
-import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointBackward
+import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.android.synthetic.main.activity_create_profile.*
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 open class CreateProfile : AppCompatActivity() {
 
@@ -79,10 +82,14 @@ open class CreateProfile : AppCompatActivity() {
 
 
         calanderButton_create.setOnClickListener() {
+            val calendarConstraintBuilder = CalendarConstraints.Builder()
+            calendarConstraintBuilder.setValidator(DateValidatorPointBackward.now())
+
             val builder = MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Select date")
+                .setTitleText("Set BirthDay")
                 .setInputMode(MaterialDatePicker.INPUT_MODE_TEXT)
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                .setCalendarConstraints(calendarConstraintBuilder.build());
 
             val datePicker = builder.build()
 
@@ -91,77 +98,84 @@ open class CreateProfile : AppCompatActivity() {
                     val calendar = Calendar.getInstance()
                     calendar.time = Date(it)
                     val calendarMilli = calendar.timeInMillis
-                    birthDay_create.text = "${calendar.get(Calendar.MONTH) + 1}/${calendar.get(Calendar.DAY_OF_MONTH)}/${calendar.get(Calendar.YEAR)}"
+                    calanderButton_create.text = "${calendar.get(Calendar.MONTH) + 1}/${calendar.get(Calendar.DAY_OF_MONTH)}/${calendar.get(Calendar.YEAR)}"
                     editor.putLong("Birthday_Millis", calendarMilli)
                     editor.apply()
                 Log.d("Birthday_Millis", "$calendarMilli")
             }
             datePicker.show(supportFragmentManager,datePicker.toString())
 
-
-//            val dpd = DatePickerDialog(
-//                this@CreateProfile,
-//                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-//
-//                    // Display Selected date in textbox
-//                    birthDay_create.setText("$year-${monthOfYear + 1}-$dayOfMonth")
-//                    val birthday: Calendar = Calendar.getInstance()
-//                    birthday.set(year, monthOfYear, dayOfMonth)
-//
-//                    //shared preference
-//                    var Birthday_Millis = birthday.timeInMillis
-//                    editor.putLong("Birthday_Millis", Birthday_Millis)
-//                    editor.apply()
-//                    Log.d("Birthday_Millis","$Birthday_Millis")
-//
-//                },
-//                Birth_year,
-//                Birth_month,
-//                Birth_day
-//            )
-//            dpd.show()
         }
 
         calanderButton_create2.setOnClickListener() {
-            val dpd = DatePickerDialog(
-                this@CreateProfile,
-                DatePickerDialog.OnDateSetListener { view2, year, monthOfYear, dayOfMonth ->
 
-                    //set text on edit box
-                    dieAge_Create.setText("$year-${monthOfYear + 1}-$dayOfMonth")
+            val calendarConstraintBuilder = CalendarConstraints.Builder()
+            calendarConstraintBuilder.setValidator(DateValidatorPointForward.now())
 
-                    val dieday: Calendar = Calendar.getInstance()
-                    dieday.set(year, monthOfYear, dayOfMonth)
-                    var Dieday_Millis =
-                        dieday.timeInMillis //when you change to Int it occurs problem
-                    Log.d("save", "Die_Millis: $Dieday_Millis")
-
-                    val editor: SharedPreferences.Editor = sharedPreference.edit()
-                    editor.putLong("Die_Millis", Dieday_Millis) //정보를 넣는다.
-                    editor.commit()
+            val builder = MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Set Dieday")
+                .setInputMode(MaterialDatePicker.INPUT_MODE_TEXT)
+                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                .setCalendarConstraints(calendarConstraintBuilder.build());
 
 
-//                    MyApplication.sharedPreference.setInt("dieDay", Dieday_Millis)
-//                    val save = MyApplication.sharedPreference.getInt("dieDay", 0)
-//                    Log.d("save","sharedpreference saved: $save")
 
-                },
-                Die_year,
-                Die_month,
-                Die_day
+            val datePicker = builder.build()
 
-            )
-            dpd.show()
-            dpd.getDatePicker().setMinDate(System.currentTimeMillis() + 86400000)
+            datePicker.addOnPositiveButtonClickListener {
+                //shared preference
+                val calendar = Calendar.getInstance()
+                calendar.time = Date(it)
+                val calendarMilli = calendar.timeInMillis
+                calanderButton_create2.text = "${calendar.get(Calendar.MONTH) + 1}/${calendar.get(Calendar.DAY_OF_MONTH)}/${calendar.get(Calendar.YEAR)}"
+                editor.putLong("Die_Millis", calendarMilli)
+                editor.apply()
+                Log.d("Die_Millis", "$calendarMilli")
+            }
+            datePicker.show(supportFragmentManager,datePicker.toString())
+
+
+
+
+//            val dpd = DatePickerDialog(
+//                this@CreateProfile,
+//                DatePickerDialog.OnDateSetListener { view2, year, monthOfYear, dayOfMonth ->
+//
+//                    //set text on edit box
+//                    calanderButton_create.setText("$year-${monthOfYear + 1}-$dayOfMonth")
+//
+//                    val dieday: Calendar = Calendar.getInstance()
+//                    dieday.set(year, monthOfYear, dayOfMonth)
+//                    var Dieday_Millis =
+//                        dieday.timeInMillis //when you change to Int it occurs problem
+//                    Log.d("save", "Die_Millis: $Dieday_Millis")
+//
+//                    val editor: SharedPreferences.Editor = sharedPreference.edit()
+//                    editor.putLong("Die_Millis", Dieday_Millis) //정보를 넣는다.
+//                    editor.commit()
+//
+//
+////                    MyApplication.sharedPreference.setInt("dieDay", Dieday_Millis)
+////                    val save = MyApplication.sharedPreference.getInt("dieDay", 0)
+////                    Log.d("save","sharedpreference saved: $save")
+//
+//                },
+//                Die_year,
+//                Die_month,
+//                Die_day
+//
+//            )
+//            dpd.show()
+//            dpd.getDatePicker().setMinDate(System.currentTimeMillis() + 86400000)
         }
 
 
 
         Save_create.setOnClickListener {
             Log.d("TAG", " button clicked")
-            val userName = username_create_material.text.toString()
-            val userAge = birthDay_create.text.toString()
-            val userDie = birthDay_create.text.toString()
+            val userName = username_create.text.toString()
+            val userAge = calanderButton_create.text.toString()
+            val userDie = calanderButton_create2.text.toString()
 
             Log.d("save", "userAge edit text:$userAge ")
 

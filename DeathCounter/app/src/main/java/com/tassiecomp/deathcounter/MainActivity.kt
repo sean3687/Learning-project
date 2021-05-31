@@ -69,6 +69,7 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this@MainActivity, CreateProfile::class.java)
                 intent.putExtra("from", 0)
                 startActivity(intent)
+                finish()
 
 
 

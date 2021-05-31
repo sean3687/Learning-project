@@ -7,108 +7,121 @@
     tools:context=".CreateProfile">
 
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/deathcounter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/title_create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="204dp"
         android:text="Create Profile"
         android:textColor="@color/black"
-        android:textSize="25dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/username_create_material"
+        app:layout_constraintStart_toStartOf="@+id/username_create_material"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Welcome! In order to start calculate your remaining life time, please set basic informations."
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="@+id/title_create"
+        app:layout_constraintTop_toBottomOf="@+id/title_create" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/username_create_material"
-        android:layout_width="200dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@+id/title_create"
-        app:layout_constraintStart_toStartOf="@+id/title_create"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_create">
 
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/username_create"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:hint="Username"
-        android:textSize="15dp"
-        android:maxLength="15" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/username_create"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:backgroundTint="#736378"
+            android:hint="Username"
+            android:maxLength="15"
+            android:singleLine="true"
+            android:textSize="15dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@+id/username_create_material"
         app:layout_constraintStart_toStartOf="@+id/username_create_material"
         app:layout_constraintTop_toBottomOf="@+id/username_create_material">
 
-        <EditText
-            android:id="@+id/birthDay_create"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:focusableInTouchMode="false"
-            android:hint="Set Birthdate"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/calanderButton_create"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/title_button_shape"
-            android:src="@drawable/calender_icon"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="@+id/birthDay_create"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/birthDay_create"
-            app:layout_constraintVertical_bias="0.476" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayout2"
-        app:layout_constraintStart_toStartOf="@+id/constraintLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+        android:layout_marginTop="20dp"
+        android:background="@drawable/ripple"
+        android:backgroundTint="#736378"
+        app:layout_constraintEnd_toEndOf="@+id/username_create_material"
+        app:layout_constraintStart_toStartOf="@+id/username_create_material"
+        app:layout_constraintTop_toBottomOf="@+id/username_create_material">
 
-        <EditText
-            android:id="@+id/dieAge_Create"
-            android:layout_width="0dp"
+
+        <Button
+            android:id="@+id/calanderButton_create2"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:focusableInTouchMode="false"
-            android:hint="Die Date"
-            android:inputType="number"
-            android:maxLength="10"
-            android:textSize="15dp"
+            android:backgroundTint="#00FFFFFF"
+            android:text="Die date"
+            android:textSize="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView3"
+            app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" - "
+            android:textColor="@color/white"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/calanderButton_create2"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/title_button_shape"
-            android:hint="Your Birthday"
-            android:src="@drawable/calender_icon"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="@+id/dieAge_Create"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/dieAge_Create"
-            app:layout_constraintVertical_bias="0.476" />
-
+        <Button
+            android:id="@+id/calanderButton_create"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:text="birthday"
+            android:textSize="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView3"
+            app:layout_constraintEnd_toStartOf="@+id/textView3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView3" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -123,15 +136,18 @@
         app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
-        <Button
-            android:id="@+id/Save_create"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/title_button_shape"
-            android:text="Next"
-            app:layout_constraintEnd_toEndOf="@+id/notification"
-            app:layout_constraintStart_toStartOf="@+id/notification"
-            app:layout_constraintTop_toBottomOf="@+id/notification" />
+    <Button
+        android:id="@+id/Save_create"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/ripple"
+        android:backgroundTint="#38CDFF"
+        android:text="Next"
+        android:textSize="12dp"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout3"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
