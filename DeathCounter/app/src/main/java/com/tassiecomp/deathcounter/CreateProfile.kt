@@ -34,6 +34,7 @@ open class CreateProfile : AppCompatActivity() {
             title_create.text = "Create Profile"
         } else {
             title_create.text = "Edit Profile"
+            sub_title.text = "If you want to keep profile data press backspace"
             Save_create.text = "Done"
 
         }

@@ -70,13 +70,20 @@ class timer : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        HH_edit.setText("0")
+        MM_edit.setText("0")
+        SS_edit.setText("0")
+
 
         countdown_start.setOnClickListener {
             //if is null set 0
+
+
+
             var input_HH = HH_edit?.text.toString().toLong()
             var input_MM = MM_edit?.text.toString().toLong()
             var input_SS = SS_edit?.text.toString().toLong()
-            var runtimerMilli = (input_HH + input_MM + input_SS )
+            var runtimerMilli = (input_HH *3600000 + input_MM *60000+ input_SS*1000 )
 
             CountdownTimer(runtimerMilli, runtimerMilli * 100)
             countdown_settimer.visibility = GONE
