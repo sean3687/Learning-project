@@ -3,6 +3,7 @@
     package="com.tassiecomp.deathcounter">
 
     <application
+
         android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_deathcounter"
@@ -26,6 +27,11 @@
             android:theme="@style/CreateProfileTheme">
 
         </activity>
+<!--google admob-->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8358259317968297~6978716326"/>
+
     </application>
 
 </manifest>

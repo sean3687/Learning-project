@@ -4,13 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.MobileAds
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import kotlinx.android.synthetic.main.activity_create_profile.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,12 +22,13 @@ import kotlinx.android.synthetic.main.nav_header.*
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.util.*
-import kotlin.math.roundToInt
 
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var toggle: ActionBarDrawerToggle
+    lateinit var mAdView : AdView
+    private lateinit var mInterstitialAd: InterstitialAd
 
     override fun onPause() {
         super.onPause()
@@ -36,6 +40,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //banner
+        MobileAds.initialize(this)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
+
+        //interstitialad
+        mInterstitialAd = InterstitialAd(this)
+        mInterstitialAd.adUnitId = "ca-app-pub-8358259317968297/8476464976"
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
 
         //navigation
         toggle = ActionBarDrawerToggle(this, drawerlayout, R.string.open, R.string.close)
@@ -104,6 +118,10 @@ class MainActivity : AppCompatActivity() {
         main_stopwatch.setOnClickListener{
             startActivity(intentTimer)
         }
+        main_Calendar.setOnClickListener{
+            Toast.makeText(this,"See you on next update!", Toast.LENGTH_SHORT
+            ).show()
+        }
 
 
 
@@ -113,9 +131,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.profileIcon ->
                     startActivity(intentProfile)
 
-
-
-
                 R.id.settingIcon -> Toast.makeText(
                     applicationContext,
                     "Clicked setting", Toast.LENGTH_SHORT
@@ -124,10 +139,17 @@ class MainActivity : AppCompatActivity() {
                     applicationContext,
                     "Clicked help", Toast.LENGTH_SHORT
                 ).show()
+                R.id.donation ->if (mInterstitialAd.isLoaded) {
+                    mInterstitialAd.show()
+                } else {
+                    Log.d("TAG", "The interstitial wasn't loaded yet.")
+                }
 
             }
             true
         }
+
+
 
 
         //circular progress bar

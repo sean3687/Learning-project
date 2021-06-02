@@ -13,4 +13,8 @@
         android:id="@+id/helpIcon"
         android:icon="@drawable/help_icon"
         android:title="Help"/>
+    <item
+        android:id="@+id/donation"
+        android:icon="@drawable/ic_baseline_do_not_touch_24"
+        android:title="Do not touch"/>
 </menu>

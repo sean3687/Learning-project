@@ -70,28 +70,43 @@ class timer : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        HH_edit.setText("0")
-        MM_edit.setText("0")
-        SS_edit.setText("0")
+
+
 
 
         countdown_start.setOnClickListener {
             //if is null set 0
+            var HHtext:Long? = 0
+            var MMtext:Long? = 0
+            var SStext:Long? = 0
+//
+//            if (HHtext != null && HHtext.length > 0) {
+//                HHtext.toString().toLong()
+//            } else {
+//                HHtext = 0.toString().toLong()
+//            }
 
 
 
-            var input_HH = HH_edit?.text.toString().toLong()
-            var input_MM = MM_edit?.text.toString().toLong()
-            var input_SS = SS_edit?.text.toString().toLong()
-            var runtimerMilli = (input_HH *3600000 + input_MM *60000+ input_SS*1000 )
+            var input_HH = HHtext.toString().toLong()
+            var input_MM = MMtext.toString().toLong()
+            var input_SS = SStext.toString().toLong()
 
-            CountdownTimer(runtimerMilli, runtimerMilli * 100)
+            Log.d("editText", "$HHtext, $MMtext,$SStext")
+            Log.d("editText", "$input_HH, $input_MM,$input_SS")
+
+
+
+            var runtimerMilli = (input_HH *3600000 + input_MM *60000+ input_SS*1000)
+
+            CountdownTimer(runtimerMilli, runtimerMilli * 1000)
             countdown_settimer.visibility = GONE
             countdown_pause.visibility = VISIBLE
             countdown_reset.visibility = VISIBLE
             chronometer_timer.visibility = VISIBLE
 
         }
+
 
 
 
@@ -131,5 +146,7 @@ class timer : Fragment() {
             }
         }.start()
     }
+
+
 //COUNTDOWN SUB-VIEW END
 }
