@@ -1,6 +1,7 @@
 package com.tassiecomp.deathcounter
 
 import android.app.Application
+import com.google.android.gms.ads.AdView
 
 class App: Application() {
     companion object{

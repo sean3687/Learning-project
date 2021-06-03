@@ -280,7 +280,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     app:adSize="BANNER"
-                    app:adUnitId="ca-app-pub-8358259317968297/5006131431"
+                    app:adUnitId="ca-app-pub-3940256099942544/1033173712"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">

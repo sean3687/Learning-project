@@ -10,10 +10,9 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.InterstitialAd
-import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import kotlinx.android.synthetic.main.activity_create_profile.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var toggle: ActionBarDrawerToggle
     lateinit var mAdView : AdView
-    private lateinit var mInterstitialAd: InterstitialAd
+    private var mInterstitialAd: InterstitialAd? = null
 
     override fun onPause() {
         super.onPause()
@@ -41,15 +40,42 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //banner
-        MobileAds.initialize(this)
+        MobileAds.initialize(this) {}
+        mAdView = findViewById(R.id.adView)
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
 
 
-        //interstitialad
-        mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd.adUnitId = "ca-app-pub-8358259317968297/8476464976"
-        mInterstitialAd.loadAd(AdRequest.Builder().build())
+        //InterstitialAd
+        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                mInterstitialAd = null
+                Log.d("TAG", "NULL")
+            }
+
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+
+                mInterstitialAd = interstitialAd
+                Log.d("TAG", "LOADED")
+            }
+        })
+
+        mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+            override fun onAdDismissedFullScreenContent() {
+                Log.d("TAG", "Ad was dismissed.")
+            }
+
+            override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
+                Log.d("TAG", "Ad failed to show.")
+            }
+
+            override fun onAdShowedFullScreenContent() {
+                Log.d("TAG", "Ad showed fullscreen content.")
+                mInterstitialAd = null;
+            }
+        }
+
+
 
         //navigation
         toggle = ActionBarDrawerToggle(this, drawerlayout, R.string.open, R.string.close)
@@ -139,12 +165,14 @@ class MainActivity : AppCompatActivity() {
                     applicationContext,
                     "Clicked help", Toast.LENGTH_SHORT
                 ).show()
-                R.id.donation ->if (mInterstitialAd.isLoaded) {
-                    mInterstitialAd.show()
+                R.id.donation -> if (mInterstitialAd != null) {
+                    mInterstitialAd?.show(this)
                 } else {
-                    Log.d("TAG", "The interstitial wasn't loaded yet.")
+                    Toast.makeText(
+                        applicationContext,
+                        "Please don't click", Toast.LENGTH_SHORT
+                    ).show()
                 }
-
             }
             true
         }
