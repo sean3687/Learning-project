@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
 
         //InterstitialAd
-        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
+        InterstitialAd.load(this,"ca-app-pub-8358259317968297/8476464976", adRequest, object : InterstitialAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 mInterstitialAd = null
                 Log.d("TAG", "NULL")
@@ -170,7 +170,7 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(
                         applicationContext,
-                        "Please don't click", Toast.LENGTH_SHORT
+                        "Not loaded", Toast.LENGTH_SHORT
                     ).show()
                 }
             }
