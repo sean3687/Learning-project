@@ -152,7 +152,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        navView.setNavigationItemSelectedListener {
+            navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.profileIcon ->
                     startActivity(intentProfile)
